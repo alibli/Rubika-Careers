@@ -1,8 +1,13 @@
+import { Link } from "react-router-dom";
+
 function Jobs() {
     return (
         <div>
             <p>Jobs</p>
-            <button>Details</button>
+            <Link to="/job-details">
+                <button>Details</button>
+            </Link>
+
         </div>
     );
 }
