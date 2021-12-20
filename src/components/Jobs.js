@@ -1,8 +1,13 @@
+import Banner from "./Banner";
+import '../styles/Jobs.css';
 function Jobs() {
     return (
-        <div>
-            <p>Jobs</p>
-            <button>Details</button>
+        <div className="container">
+            <Banner></Banner>
+            <div id="jobs">
+                <p>Jobs</p>
+                <button>Details</button>
+            </div>
         </div>
     );
 }
