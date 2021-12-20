@@ -5,7 +5,7 @@ import Dropdown from './Dropdown';
 
 function Header() {
 
-    const userMuck = { name: 'علی', isLoggedIn: true };
+    const userMuck = { name: 'علی', isLoggedIn: false };
     const isLoggedIn = userMuck.isLoggedIn;
     const regLoginBtn = <a className="btn" id='regLogin' href="#">ورود/ثبت نام</a>;
 

@@ -11,9 +11,10 @@ function App() {
   return (
     <>
       <Header></Header>
-      <Jobs />
       <BrowserRouter>
         <Routes>
+
+          <Route path="/" element={<Jobs />} />
           <Route path="apply" element={<ApplyModal />} />
           <Route path="job-details" element={<JobDetails />} />
         </Routes>
@@ -21,6 +22,7 @@ function App() {
 
 
       <Footer></Footer>
+      
     </>
   );
 }
