@@ -1,0 +1,30 @@
+nav{
+    background-color: #803333;
+}
+#reg-login-btn{
+    background-color: #F3B073;
+}
+.dropdownClass{
+    background-color: #F3B073;
+    color: white;
+    border-radius: 5px;
+}
+#navbarDropdown{
+    color: black;
+    text-decoration: none;
+}
+
+#userDropdown{
+    background-color: #F3B073;
+}
+#navbarDropdown{
+    color: white;
+    padding: 3px;
+}
+
+#regLogin{
+    background-color: #F3B073;
+    color: white;
+    /* height: 40px; */
+    padding: 10px;
+}
