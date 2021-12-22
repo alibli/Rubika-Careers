@@ -10,7 +10,7 @@ function Jobs() {
                     <p>Jobs</p>
                     <button>Details</button>
                 </div>
-                {/* <Table></Table> */}
+                <Table></Table>
             </div>
         </>
     );

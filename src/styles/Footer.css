@@ -1,10 +1,9 @@
-.footer{
-    display: block;
+footer{
+    margin-top: auto;
     background-color: #803333;
     width: 100%;
     color: white;
     padding: 10px;
-
 }
 
 .footerInfo{

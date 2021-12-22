@@ -1,4 +1,4 @@
-
+import '../../styles/TableHead.css';
 function TableHead({headerList}){
 
     return(

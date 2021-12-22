@@ -4,7 +4,7 @@ import '../styles/Footer.css';
 function Footer() {
 
     return (
-        <footer dir="rtl" className="footer">
+        <footer dir="rtl">
             <div className='footerInfo'>
                 <p className="col col-9"><i className=' fa fa-map-marker'></i> خیابان ونک </p>
                 <p className="col col-9"><i className=' fa fa-phone'></i> 02188123456</p>

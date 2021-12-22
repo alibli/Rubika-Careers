@@ -17,7 +17,7 @@ function App() {
         <Routes>
 
           <Route path="/" element={<Jobs />} />
-          <Route path="apply" element={<ApplyModal />} />
+          <Route path="/apply" element={<ApplyModal />} />
           <Route path="job-details" element={<JobDetails />} />
           <Route path="test" element={<Table />} />
 
