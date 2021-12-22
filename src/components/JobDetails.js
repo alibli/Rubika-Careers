@@ -1,9 +1,6 @@
-import LoginModal from './LoginModal';
-import { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import LoginSignupModal from './LoginSignupModal';
 
 function JobDetails() {
-    const [modalShow, setModalShow] = useState(false);
 
     return (
         <div>
@@ -11,16 +8,7 @@ function JobDetails() {
             <p>Job Description</p>
             <p>Task</p>
 
-            <Button variant="primary" onClick={() => {
-                setModalShow(true)
-                console.log(modalShow)
-            }}>
-                Apply
-            </Button>
-
-            <LoginModal
-                show={modalShow}
-                onHide={() => setModalShow(false)} />
+            <LoginSignupModal />
         </div >
     );
 }

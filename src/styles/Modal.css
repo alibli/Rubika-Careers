@@ -1,0 +1,17 @@
+.modal-dialog {
+    direction: rtl;
+}
+
+.modal-dialog .modal-content .modal-header,
+.modal-dialog .modal-content .modal-footer {
+    border: 0px;
+}
+
+.row > * {
+    padding-right: 0px !important;
+    padding-bottom: 0.25em;
+}
+
+.row .modal-input {
+    margin-bottom: 0.5em;
+}

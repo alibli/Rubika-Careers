@@ -1,5 +1,5 @@
 import { Modal, Container, Row, Button } from 'react-bootstrap';
-// import './LoginModalComponent.css';
+import '../../styles/Modal.css';
 
 function LoginModalComponent(props) {
     return (
@@ -10,35 +10,36 @@ function LoginModalComponent(props) {
             </Modal.Header>
             <Modal.Body>
                 <Container>
-                    <Row>
-                        <label htmlFor='email'>
-                            ایمیل
-                        </label>
-                        <input
-                            className='modal-input'
-                            name='email'
-                            type='email' />
-                    </Row>
-                    <Row>
-                        <label htmlFor='password'>
-                            رمزعبور
-                        </label>
-                        <input
-                            className='modal-input'
-                            name='password'
-                            type='password' />
-                    </Row>
+                   {props.rows.map((row, index) => (
+                       <Row key={index}>
+                           {row.elements}
+                       </Row>
+                   ))}
                 </Container>
             </Modal.Body>
-            <Modal.Footer className='row justify-content-center'>
-                    <div className='col-auto'>
+
+            <Modal.Footer className='row flex-column justify-content-center'>
+                <div 
+                className='col-auto'>
+                    {props.buttons.map(button => (
                         <Button
                             onClick={props.onHide}
-                            className='login-button'>
-                            ورود
+                            key={button.label}>
+                            {button.label}
                         </Button>
-                    </div>
+                    ))}
+                </div>
+
+                <div className='col-auto'>
+                    {props.bottom.map((item, index) => (
+                        <div key={index}> 
+                            {item.elements}
+                        </div>
+                    ))}
+                </div>
+
             </Modal.Footer>
+
         </Modal>
     );
 }
