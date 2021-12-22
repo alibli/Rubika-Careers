@@ -7,6 +7,7 @@ import ApplyModal from './components/ApplyModal';
 import JobDetails from './components/JobDetails';
 import Jobs from './components/Jobs';
 import Table from './components/Core/Table';
+import Notification from './components/Core/Notification';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route path="/" element={<Jobs />} />
           <Route path="/apply" element={<ApplyModal />} />
           <Route path="job-details" element={<JobDetails />} />
-          <Route path="test" element={<Table />} />
+          <Route path="test" element={<Notification alertModel={"alert-success"} message={'this is some msg'}/>} />
 
         </Routes>
       </BrowserRouter>

@@ -15,7 +15,7 @@ function Jobs() {
                         <button>Details</button>
                     </Link>
                 </div>
-                <Table></Table>
+                {/* <Table></Table> */}
             </div>
         </>
     );
