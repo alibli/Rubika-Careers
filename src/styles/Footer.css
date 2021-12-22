@@ -1,10 +1,6 @@
 .footer{
     display: block;
-    /* height: 110px; */
     background-color: #803333;
-    position: fixed;
-    left: 0;
-    bottom: 0;
     width: 100%;
     color: white;
     padding: 10px;
