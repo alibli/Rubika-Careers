@@ -11,9 +11,10 @@ import Table from './components/Core/Table';
 function App() {
   return (
     <>
-      <Header></Header>
 
       <BrowserRouter>
+        <Header></Header>
+
         <Routes>
 
           <Route path="/" element={<Jobs />} />
@@ -22,9 +23,10 @@ function App() {
           <Route path="test" element={<Table />} />
 
         </Routes>
+        <Footer></Footer>
+
       </BrowserRouter>
 
-      <Footer></Footer>
 
     </>
   );

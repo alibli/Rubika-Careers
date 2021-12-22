@@ -3,7 +3,8 @@ import Modal from "./Core/Modal";
 function SignupModal(props) {
     const buttons = [
         {
-            label: 'ثبت‌نام'
+            label: 'ثبت‌نام',
+            onClickHandler: () => {}
         }
     ]
 

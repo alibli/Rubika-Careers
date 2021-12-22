@@ -3,7 +3,7 @@ import SignupModal from './SignupModal';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 
-function LoginSignupModal() {
+function LoginSignupModal(props) {
     const [loginModalShow, setLoginModalShow] = useState(false);
 
     const [signupModalShow, setSignupModalShow] = useState(false);
@@ -12,7 +12,7 @@ function LoginSignupModal() {
     return (
         <div>
             <Button variant="primary" onClick={() => setLoginModalShow(true)}>
-                Apply
+                {props.buttonLabel}
             </Button>
 
             <LoginModal

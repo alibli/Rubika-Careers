@@ -23,7 +23,7 @@ function LoginModalComponent(props) {
                 className='col-auto'>
                     {props.buttons.map(button => (
                         <Button
-                            onClick={props.onHide}
+                            onClick={button.onClickHandler}
                             key={button.label}>
                             {button.label}
                         </Button>

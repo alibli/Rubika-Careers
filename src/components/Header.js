@@ -1,36 +1,46 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/Header.css';
 import logo from '../assets/images/rubikaLogo.png';
-import Dropdown from './Dropdown';
+import HeaderDropdown from './HeaderDropdown';
+import userService from '../Service/UserService';
+import LoginSignupModal from './LoginSignupModal';
+import { Link } from 'react-router-dom';
 
 function Header() {
 
-    const userMuck = { name: 'علی', isLoggedIn: false };
-    const isLoggedIn = userMuck.isLoggedIn;
-    const regLoginBtn = <a className="btn" id='regLogin' href="#">ورود/ثبت نام</a>;
+    const [loggedin, setLoggedin] = useState(userService.getLoggedin());
 
-    const userDropdown = (
-        <li className="nav-item dropdown btn" id="userDropdown">
-            <a className="dropdown-toggle btn " type="button" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            سلام {userMuck.name}
-            </a>
-            <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a className="dropdown-item" href="#">اطلاعات</a></li>
-                    <hr className="dropdown-divider" />
-                <li><a className="dropdown-item" href="#">درخواست ها</a></li>
-            </ul>
-        </li>
-    )
+    const userObserver = (e) => {
+        switch (e.action) {
+            case 'USER-LOGGIN':
+                setLoggedin(userService.getLoggedin());
+                break;
 
-    const dd = <Dropdown userName={userMuck.name} ></Dropdown>  //will be used after adding react router 
+            default:
+                break;
+        }
+    }
+
+    useEffect(() => {
+        userService.userSubject.subscribe(userObserver);
+
+        return userService.userSubject.unsubscribe(userObserver);
+
+    }, [])
 
     return (
         <nav dir='rtl' className="navbar navbar-expand-lg static-top">
             <div className="container">
-                <a className="navbar-brand" href="#">
-                    <img src={logo} alt={"Rubika"} height="36" />
-                </a>
-                {isLoggedIn ? userDropdown : regLoginBtn}
+
+                <Link to="/">
+                    <img src={logo} alt="Rubika" height="36" />
+                </Link>
+
+                {
+                    loggedin
+                        ? <HeaderDropdown />
+                        : <LoginSignupModal buttonLabel="ورود / ثبت‌نام" />
+                }
             </div>
 
         </nav>
