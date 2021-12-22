@@ -1,10 +1,15 @@
 import Modal from "./Core/Modal";
+import userService from '../Service/UserService';
 
 function LoginModal(props) {
 
     const buttons = [
         {
-            label: 'ورود'
+            label: 'ورود',
+            onClickHandler: () => {
+                userService.setLoggedinTrue()
+                props.onHide();
+            }
         }
     ]
 

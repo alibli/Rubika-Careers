@@ -12,9 +12,10 @@ import Notification from './components/Core/Notification';
 function App() {
   return (
     <>
-      <Header></Header>
 
       <BrowserRouter>
+        <Header></Header>
+
         <Routes>
 
           <Route path="/" element={<Jobs />} />
@@ -23,9 +24,10 @@ function App() {
           <Route path="test" element={<Notification alertModel={"alert-success"} message={'this is some msg'}/>} />
 
         </Routes>
+        <Footer></Footer>
+
       </BrowserRouter>
 
-      <Footer></Footer>
 
     </>
   );
