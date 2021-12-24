@@ -14,7 +14,8 @@ function LoginSignupModal(props) {
         <div className='login-signup-modal'>
             <Button
                 className='btn'
-                variant="warning"
+                variant={props.variant}
+                id={props.id}
                 onClick={() => setLoginModalShow(true)}>
                 {props.buttonLabel}
             </Button>

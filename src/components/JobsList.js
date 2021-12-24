@@ -8,7 +8,7 @@ function JobsList() {
     const [jobsList, setJobsList] = useState(jobsService.getJobsList());
 
     useEffect(() => {
-        // API call
+        // API call (setJobsList(data) & jobService.setJobLists(data) -> if data is not empty)
     }, [])
 
     return (
@@ -22,7 +22,9 @@ function JobsList() {
                         {job.title}
 
                         <Link to="/job-details">
-                            <button className="btn">
+                            <button 
+                            className="btn"
+                            onClick={() => jobsService.setCurrentJobDetails(job.id)}>
                                 درخواست
                             </button>
                         </Link>

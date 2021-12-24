@@ -1,0 +1,14 @@
+.job-details {
+    direction: rtl;
+    padding: 4em;
+}
+
+.job-details h4 {
+    color: #803333;
+}
+
+.descript {
+    padding: 0.5em;
+    margin-bottom: 1em;
+    height: 100%;
+}

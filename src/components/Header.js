@@ -26,7 +26,9 @@ function Header() {
     useEffect(() => {
         userService.userSubject.subscribe(userObserver);
 
-        return userService.userSubject.unsubscribe(userObserver);
+        return () => {
+            userService.userSubject.unsubscribe(userObserver)
+        };
 
     }, [])
 
@@ -41,7 +43,10 @@ function Header() {
                 {
                     loggedin
                         ? <HeaderDropdown />
-                        : <LoginSignupModal buttonLabel="ورود / ثبت‌نام" />
+                        : <LoginSignupModal
+                            buttonLabel="ورود / ثبت‌نام"
+                            id="header" 
+                            variant="warning" />
                 }
             </div>
 

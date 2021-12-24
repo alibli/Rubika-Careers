@@ -2,10 +2,10 @@ import Banner from "./Banner";
 import '../styles/JobsPage.css';
 import JobsList from "./JobsList";
 
-function Jobs() {
+function JobsPage() {
     return (
         <>
-            <div className="jobs">
+            <div className="jobs-page">
                 <Banner></Banner>
                 <JobsList />
             </div>
@@ -13,4 +13,4 @@ function Jobs() {
     );
 }
 
-export default Jobs;
+export default JobsPage;

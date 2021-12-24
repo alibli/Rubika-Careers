@@ -1,26 +1,16 @@
-.login-signup-modal #header {
-    color: #803333;
-}
-
-.login-signup-modal #header:hover {
-    background-color: #F3B073;
-    color: #803333;
-}
-
-.login-signup-modal #apply {
+.apply-btn {
     border: none !important;
     background-color: #803333 !important;
     color: whitesmoke !important;
     margin: auto;
 }
 
-.login-signup-modal #apply:hover {
+.apply-btn:hover {
     border: none !important;
     background-color: #803333 !important;
     color: #F3B073 !important;
 }
 
-.login-signup-modal {
+.apply-modal {
     display: flex;
 }
-
