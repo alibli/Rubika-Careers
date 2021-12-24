@@ -7,7 +7,7 @@ function LoginModal(props) {
         {
             label: 'ورود',
             onClickHandler: () => {
-                userService.setLoggedinTrue()
+                userService.login('token', 'علی')
                 props.onHide();
             }
         }

@@ -12,7 +12,9 @@ function Header() {
 
     const userObserver = (e) => {
         switch (e.action) {
-            case 'USER-LOGGIN':
+            case 'USER-LOGIN':
+            case 'USER-LOGOUT':
+            case 'STORAGE-CHANGE':
                 setLoggedin(userService.getLoggedin());
                 break;
 

@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import userService from '../Service/UserService';
-import { Dropdown } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
+import { Button, Dropdown } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap'
 
 function HeaderDropdown() {
     const [userFirstname, setUserFirstname] = useState(userService.getUserFirstname);
 
     const userObserver = (e) => {
         switch (e.action) {
-            case 'USER-LOGGIN':
-                setUserFirstname(userService.getUserFirstname);
+            case 'USER-LOGIN':
+            case 'USER-LOGOUT':
+            case 'STORAGE-CHANGE':
+                setUserFirstname(userService.getUserFirstname());
                 break;
 
             default:
@@ -27,12 +29,12 @@ function HeaderDropdown() {
 
     return (
         <> {
-            userFirstname === 'admin'
+            userFirstname === 'ادمین'
                 ?
                 <>
                     <Link to='/job-details'>
                         <Button variant="primary">
-                           سلام ادمین
+                            سلام ادمین
                         </Button>
                     </Link>
                 </>
@@ -43,16 +45,24 @@ function HeaderDropdown() {
                         {'سلام ' + userFirstname}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item>
-                            <Link to='/job-details'>
+
+                        <LinkContainer to='/job-details'>
+                            <Dropdown.Item>
                                 مشخصات
-                            </Link>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            <Link to="/job-details">
+                            </Dropdown.Item>
+
+                        </LinkContainer>
+                        <LinkContainer to="/job-details">
+                            <Dropdown.Item>
                                 درخواست‌ها
-                            </Link>
-                        </Dropdown.Item>
+                            </Dropdown.Item>
+                        </LinkContainer>
+                        <LinkContainer to="/">
+                            <Dropdown.Item
+                            onClick={() => userService.logout()}>
+                                خروج
+                            </Dropdown.Item>
+                        </LinkContainer>
                     </Dropdown.Menu>
                 </Dropdown>
         }
