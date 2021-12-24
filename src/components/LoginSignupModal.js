@@ -2,6 +2,7 @@ import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import '../styles/LoginSignupModal.css'
 
 function LoginSignupModal(props) {
     const [loginModalShow, setLoginModalShow] = useState(false);
@@ -10,8 +11,11 @@ function LoginSignupModal(props) {
 
 
     return (
-        <div>
-            <Button variant="primary" onClick={() => setLoginModalShow(true)}>
+        <div className='login-signup-modal'>
+            <Button
+                className='btn'
+                variant="warning"
+                onClick={() => setLoginModalShow(true)}>
                 {props.buttonLabel}
             </Button>
 

@@ -1,0 +1,40 @@
+.jobs-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.jobs-list .btn {
+    background-color: #803333;
+    color: whitesmoke;
+}
+
+.jobs-list .btn:hover {
+    color: #F3B073;
+}
+
+.job-title {
+    direction: rtl;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    padding: 2em;
+    margin: 2em;
+    color: #803333;
+    font-weight: 600;
+}
+
+@media screen and (max-width: 600px) {
+    .job-title {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .job-title {
+        width: 100%;
+    }
+}

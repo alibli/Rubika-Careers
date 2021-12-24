@@ -1,0 +1,8 @@
+.login-signup-modal .btn {
+    color: #803333;
+}
+
+.login-signup-modal .btn:hover {
+    background-color: #F3B073;
+    color: #803333;
+}

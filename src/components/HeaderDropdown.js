@@ -33,7 +33,7 @@ function HeaderDropdown() {
                 ?
                 <>
                     <Link to='/job-details'>
-                        <Button variant="primary">
+                        <Button variant="warning">
                             سلام ادمین
                         </Button>
                     </Link>
@@ -41,11 +41,12 @@ function HeaderDropdown() {
 
                 :
                 <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    <Dropdown.Toggle
+                        variant="warning"
+                        id="dropdown-basic">
                         {'سلام ' + userFirstname}
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
-
+                    <Dropdown.Menu className="header-dropdown">
                         <LinkContainer to='/job-details'>
                             <Dropdown.Item>
                                 مشخصات
@@ -59,7 +60,7 @@ function HeaderDropdown() {
                         </LinkContainer>
                         <LinkContainer to="/">
                             <Dropdown.Item
-                            onClick={() => userService.logout()}>
+                                onClick={() => userService.logout()}>
                                 خروج
                             </Dropdown.Item>
                         </LinkContainer>
