@@ -7,11 +7,14 @@ function TableRow({ rowList, actions }) {
             {rowList.map((myRow) =>
                 <tr key={myRow.id} className="alert" role="alert">
                     {myRow.fields.map((rowField, i) => <td key={i}>{rowField}</td>)}
-                    <td>
-                        {(actions || []).map((action) => (
+
+                    {(actions || []).map((action) => (
+                        <td>
                             <a onClick={() => { action.onClick(myRow.id) }}>{action.caption}</a>
-                        ))}
-                    </td>
+                        </td>
+
+                    ))}
+
                 </tr>)}
 
         </tbody>
