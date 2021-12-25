@@ -74,13 +74,7 @@ function JobDetails() {
                             : <LoginSignupModal
                                 buttonLabel="درخواست"
                                 variant="danger"
-                                id="apply"
-                                style={{
-                                    outline: 'none !important',
-                                    backgroundColor: '#803333 !important',
-                                    color: 'whitesmoke !important',
-                                    'margin': 'auto'
-                                 }} />
+                                id="apply" />
                     }
                 </div >
             ))}

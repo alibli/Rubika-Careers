@@ -5,7 +5,7 @@ class JobsService {
                                         ? window.localStorage.getItem('currentJobDetails')
                                         : [];
         const CURRENTJOBDETAILS = detailsInLocalStorage.length !== 0 
-                                    ? JSON.parse(window.localStorage.currentJobDetails)
+                                    ? JSON.parse(detailsInLocalStorage) 
                                     : []
         this.currentJobDetails = CURRENTJOBDETAILS;
 
