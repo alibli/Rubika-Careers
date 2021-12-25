@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import userService from '../Service/UserService';
-import { Button, Dropdown } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 
 function HeaderDropdown() {
@@ -33,13 +33,28 @@ function HeaderDropdown() {
         <> {
             userFirstname === 'ادمین'
                 ?
-                <>
-                    <Link to='/job-details'>
-                        <Button variant="warning">
-                            سلام ادمین
-                        </Button>
-                    </Link>
-                </>
+
+                <Dropdown>
+                    <Dropdown.Toggle
+                        variant="warning"
+                        id="dropdown-basic">
+                        سلام ادمین
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu className="header-dropdown">
+                        <LinkContainer to='/job-positions'>
+                            <Dropdown.Item>
+                                موقعیت های شغلی
+                            </Dropdown.Item>
+                        </LinkContainer>
+
+                        <LinkContainer to="/">
+                            <Dropdown.Item
+                                onClick={() => userService.logout()}>
+                                خروج
+                            </Dropdown.Item>
+                        </LinkContainer>
+                    </Dropdown.Menu>
+                </Dropdown>
 
                 :
                 <Dropdown>
