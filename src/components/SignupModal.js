@@ -4,7 +4,7 @@ function SignupModal(props) {
     const buttons = [
         {
             label: 'ثبت‌نام',
-            onClickHandler: () => {}
+            onClickHandler: () => { }
         }
     ]
 
@@ -79,6 +79,7 @@ function SignupModal(props) {
 
     return (
         <Modal
+            size="sm"
             show={props.show}
             onHide={props.onHide}
             buttons={buttons}

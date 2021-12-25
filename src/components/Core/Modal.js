@@ -5,7 +5,7 @@ function LoginModalComponent(props) {
     return (
         <Modal
             {...props}
-            size="sm">
+            size={props.size}>
             <Modal.Header closeButton>
             </Modal.Header>
             <Modal.Body>

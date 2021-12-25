@@ -1,0 +1,13 @@
+.edit-icon {
+    color: #883131;
+}
+
+.edit-job-modal .button{
+    background-color: transparent ;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-job-modal .btn {
+   transition: none;
+}

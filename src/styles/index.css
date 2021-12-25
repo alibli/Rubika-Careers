@@ -7,3 +7,12 @@ html, body, #root {
 #root {
     position: relative;
 }
+
+@font-face {
+    font-family: "IranSans";
+    src: url('../assets/font/IranSans.ttf');
+}
+
+* {
+    font-family: IranSans;
+}

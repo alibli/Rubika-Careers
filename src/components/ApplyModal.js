@@ -5,7 +5,7 @@ function ApplyModal(props) {
     const buttons = [
         {
             label: 'ارسال',
-            onClickHandler: () => {}
+            onClickHandler: () => { }
         }
     ]
 
@@ -65,6 +65,7 @@ function ApplyModal(props) {
 
     return (
         <Modal
+            size="sm"
             show={props.show}
             onHide={props.onHide}
             buttons={buttons}

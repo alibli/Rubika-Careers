@@ -1,14 +1,14 @@
 import Table from '../Core/Table';
 
 function UserRequestsTable(){
-    hList = [
+    const hList = [
         { id: 0, name: "2عنوان" },
         { id: 1, name: "2تاریخ ارسال" }, 
         { id: 2, name: "2وضعیت" },
         { id: 3, name: "2جزییات" }
     ];
 
-    rList = [
+    const rList = [
         { id: 0, fields: ["front-end" , "1/1/1400" , "rejected" , "details..."] },
         { id: 1, fields: ["front-end2" , "1/1/1400" , "rejected" , "details..."] }, 
         { id: 2, fields: ["front-end3" , "1/1/1400" , "rejected" , "details..."] },
