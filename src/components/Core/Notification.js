@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import '../../styles/Notification.css';
 
 function Notification({message , alertModel}) {     
-    //example : alertModel={alert-primary}
+    //example : alertModel={primary}
    const [isShowing , setShow] = useState(true); 
 
     
@@ -14,7 +14,7 @@ function Notification({message , alertModel}) {
 
     return (
         <div dir='rtl' className="container" id='notification'>
-            <div className={`alert alert-dismissible fade${isShowing ? ' show' : ''} ${alertModel}`} role="alert">
+            <div className={`alert alert-dismissible fade${isShowing ? ' show' : ''} alert-${alertModel}`} role="alert">
                  {message}
             </div>
         </div>
