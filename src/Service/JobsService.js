@@ -1,8 +1,13 @@
 import Subject from "./Subject";
 class JobsService {
     constructor() {
-        const CURRENTJOBDETAILS = JSON.parse(window.localStorage.currentJobDetails);
-        this.currentJobDetails = CURRENTJOBDETAILS.length !== 0 ? CURRENTJOBDETAILS : [];
+        const detailsInLocalStorage = window.localStorage.getItem('currentJobDetails') 
+                                        ? window.localStorage.getItem('currentJobDetails')
+                                        : [];
+        const CURRENTJOBDETAILS = detailsInLocalStorage.length !== 0 
+                                    ? JSON.parse(window.localStorage.currentJobDetails)
+                                    : []
+        this.currentJobDetails = CURRENTJOBDETAILS;
 
         this.jobsList = [
             {
