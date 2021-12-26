@@ -8,14 +8,16 @@ import { Link } from 'react-router-dom';
 
 function Header() {
 
-    const [loggedin, setLoggedin] = useState(userService.getLoggedin());
+    const loggedinValue = userService.getLoggedin();
+    const [loggedin, setLoggedin] = useState(loggedinValue);
 
     const userObserver = (e) => {
         switch (e.action) {
             case 'USER-LOGIN':
             case 'USER-LOGOUT':
             case 'STORAGE-CHANGE':
-                setLoggedin(userService.getLoggedin());
+                const loggedinValue = userService.getLoggedin();
+                setLoggedin(loggedinValue);
                 break;
 
             default:
@@ -45,7 +47,7 @@ function Header() {
                         ? <HeaderDropdown />
                         : <LoginSignupModal
                             buttonLabel="ورود / ثبت‌نام"
-                            id="header" 
+                            id="header"
                             variant="warning" />
                 }
             </div>

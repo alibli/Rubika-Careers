@@ -1,70 +1,65 @@
-import Modal from "./Core/Modal";
+import ModalComponent from "./Core/ModalComponent";
 import userService from '../Service/UserService';
+import { Container, Row, Button } from 'react-bootstrap';
 
 function LoginModal(props) {
 
-    const buttons = [
-        {
-            label: 'ورود',
-            onClickHandler: () => {
-                userService.login('token', 'علی')
-                props.onHide();
-            }
-        }
-    ]
+    const body = <Container>
+        <Row>
+            <label htmlFor='email'>
+                ایمیل
+            </label>
+            <input
+                className='modal-input'
+                name='email'
+                type='email' />
+        </Row>
 
-    const rows = [
-        {
-            elements:
-                <>
-                    <label htmlFor='email'>
-                        ایمیل
-                    </label>
-                    <input
-                        className='modal-input'
-                        name='email'
-                        type='email' />
-                </>
-        },
-        {
-            elements:
-                <>
-                    <label htmlFor='password'>
-                        رمزعبور
-                    </label>
-                    <input
-                        className='modal-input'
-                        name='password'
-                        type='password' />
-                </>
-        }
+        <Row>
+            <label htmlFor='password'>
+                رمزعبور
+            </label>
+            <input
+                className='modal-input'
+                name='password'
+                type='password' />
+        </Row>
+    </Container>;
 
-    ]
+    const footer = <>
+        <div
+            className='col-auto'>
+            <Button
+                onClick={() => {
+                    userService.login('token', 'علی')
+                    props.onHide();
+                }}>
+                ورود
+            </Button>
+        </div>
 
-    const bottom = [
-        {
-            elements:
-                <p>
-                    ثبت‌نام نکرده‌اید؟
-                    <span
-                        style={{
-                            cursor: 'pointer'
-                        }}
-                        onClick={props.onSignupModalShow}
-                    >
-                        {' '} ثبت‌نام کنید
-                    </span>
-                </p>
-        }
-    ]
+        <div className='col-auto'>
+            <p>
+                ثبت‌نام نکرده‌اید؟
+                <span
+                    style={{
+                        cursor: 'pointer'
+                    }}
+                    onClick={props.onSignupModalShow}>
+                    {' '} ثبت‌نام کنید
+                </span>
+            </p>
+        </div>
+    </>;
+
 
     return (
-        <Modal
+        <ModalComponent
+            size="sm"
+            body={body}
+            footer={footer}
             show={props.show}
-            onHide={props.onHide}
-            buttons={buttons}
-            rows={rows}
-            bottom={bottom} />
+            onHide={props.onHide} />
     );
 }
 

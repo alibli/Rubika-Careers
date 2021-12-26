@@ -1,89 +1,82 @@
-import Modal from "./Core/Modal";
+import ModalComponent from "./Core/ModalComponent";
+import { Container, Row, Button } from 'react-bootstrap';
 
 function SignupModal(props) {
-    const buttons = [
-        {
-            label: 'ثبت‌نام',
-            onClickHandler: () => {}
-        }
-    ]
 
-    const rows = [
-        {
-            elements:
-                <>
-                    <label htmlFor='firstname'>
-                        نام
-                    </label>
-                    <input
-                        className='modal-input'
-                        name='firstname'
-                        type='text' />
-                </>
-        },
-        {
-            elements:
-                <>
-                    <label htmlFor='lastname'>
-                        نام خانوادگی
-                    </label>
-                    <input
-                        className='modal-input'
-                        name='lastname'
-                        type='text' />
-                </>
-        },
-        {
-            elements:
-                <>
-                    <label htmlFor='password'>
-                        رمزعبور
-                    </label>
-                    <input
-                        className='modal-input'
-                        name='password'
-                        type='password' />
-                </>
-        },
-        {
-            elements:
-                <>
-                    <label htmlFor='password-confrim'>
-                        تکرار رمزعبور
-                    </label>
-                    <input
-                        className='modal-input'
-                        name='password-confrim'
-                        type='password' />
-                </>
-        }
+    const body = <Container>
+        <Row>
+            <label htmlFor='firstname'>
+                نام
+            </label>
+            <input
+                className='modal-input'
+                name='firstname'
+                type='text' />
+        </Row>
 
+        <Row>
+            <label htmlFor='lastname'>
+                نام خانوادگی
+            </label>
+            <input
+                className='modal-input'
+                name='lastname'
+                type='text' />
+        </Row>
 
-    ]
+        <Row>
 
-    const bottom = [
-        {
-            elements:
-                <p>
-                    قبلاً ثبت‌نام کرده‌اید؟
-                    <span
-                        style={{
-                            cursor: 'pointer'
-                        }}
-                        onClick={props.onLoginModalShow}>
-                        {' '} وارد شوید
-                    </span>
-                </p>
-        }
-    ]
+            <label htmlFor='password'>
+                رمزعبور
+            </label>
+            <input
+                className='modal-input'
+                name='password'
+                type='password' />
+        </Row>
+
+        <Row>
+            <>
+                <label htmlFor='password-confrim'>
+                    تکرار رمزعبور
+                </label>
+                <input
+                    className='modal-input'
+                    name='password-confrim'
+                    type='password' />
+            </>
+        </Row>
+    </Container>;
+
+    const footer = <>
+        <div
+            className='col-auto'>
+                <Button>
+                    ثبت‌نام
+                </Button>
+        </div>
+
+        <div className='col-auto'>
+            <p>
+                قبلاً ثبت‌نام کرده‌اید؟
+                <span
+                    style={{
+                        cursor: 'pointer'
+                    }}
+                    onClick={props.onSignupModalShow}>
+                    {' '} وارد شوید
+                </span>
+            </p>
+        </div>
+    </>;
 
     return (
-        <Modal
+        <ModalComponent
+            size="sm"
+            body={body}
+            footer={footer}
             show={props.show}
-            onHide={props.onHide}
-            buttons={buttons}
-            rows={rows}
-            bottom={bottom} />
+            onHide={props.onHide} />
     );
 }
 

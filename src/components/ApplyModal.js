@@ -1,75 +1,73 @@
-import Modal from "./Core/Modal";
+import ModalComponent from "./Core/ModalComponent";
+import { Container, Row, Button } from 'react-bootstrap';
 
 function ApplyModal(props) {
 
-    const buttons = [
-        {
-            label: 'ارسال',
-            onClickHandler: () => {}
-        }
-    ]
+    const body = <Container>
+        <Row>
+            <>
+                <label htmlFor='salary-question'>
+                    حقوق مورد نظر شما:
+                </label>
+                <input
+                    className='modal-input'
+                    name='salary-question'
+                    type='text' />
+            </>
+        </Row>
 
-    const rows = [
-        {
-            elements:
-                <>
-                    <label htmlFor='salary-question'>
-                        حقوق مورد نظر شما:
-                    </label>
-                    <input
-                        className='modal-input'
-                        name='salary-question'
-                        type='text' />
-                </>
-        },
-        {
-            elements:
-                <>
-                    <label htmlFor='years-question'>
-                        پیش‌بینی می‌کنید چه مدت کنار ما باشید؟
-                    </label>
-                    <input
-                        className='modal-input'
-                        name='years-question'
-                        type='text' />
-                </>
-        },
-        {
-            elements:
-                <>
-                    <label htmlFor='resume'>
-                        رزومه
-                    </label>
-                    <input
-                        className='modal-input'
-                        name='resume'
-                        type='file' />
-                </>
-        },
-        {
-            elements:
-                <>
-                    <label htmlFor='task-answer'>
-                        پاسخ تسک
-                    </label>
-                    <input
-                        className='modal-input'
-                        name='task-answer'
-                        type='file' />
-                </>
-        }
+        <Row>
+            <label htmlFor='years-question'>
+                پیش‌بینی می‌کنید چه مدت کنار ما باشید؟
+            </label>
+            <input
+                className='modal-input'
+                name='years-question'
+                type='text' />
+        </Row>
 
-    ]
+        <Row>
 
-    const bottom = []
+            <>
+                <label htmlFor='resume'>
+                    رزومه
+                </label>
+                <input
+                    className='modal-input'
+                    name='resume'
+                    type='file' />
+            </>
+        </Row>
+
+        <Row>
+            <>
+                <label htmlFor='task-answer'>
+                    پاسخ تسک
+                </label>
+                <input
+                    className='modal-input'
+                    name='task-answer'
+                    type='file' />
+            </>
+        </Row>
+    </Container>;
+
+    const footer = <>
+        <div
+            className='col-auto'>
+            <Button>
+                ارسال
+            </Button>
+        </div>
+    </>;
 
     return (
-        <Modal
+        <ModalComponent
+            size="sm"
+            body={body}
+            footer={footer}
             show={props.show}
-            onHide={props.onHide}
-            buttons={buttons}
-            rows={rows}
-            bottom={bottom} />
+            onHide={props.onHide} />
     );
 }
 

@@ -6,28 +6,21 @@ import jobsService from "../Service/JobsService";
 import { useState, useEffect } from 'react';
 import '../styles/JobDetails.css';
 
-function JobDetails() {
-    const [loggedin, setLoggedin] = useState(userService.getLoggedin());
+function JobDetails({ jobId }) {
 
-    const [jobDetails, setJobDetails] = useState(jobsService.getCurrentJobDetails());
+    const loggedinValue = userService.getLoggedin();
+    const [loggedin, setLoggedin] = useState(loggedinValue);
 
-    const detailsObserver = (e) => {
-        console.log(e)
-        switch (e.action) {
-            case 'JOB-CHOSEN':
-                setJobDetails(jobsService.getCurrentJobDetails());
-                break;
-            default:
-                break;
-        }
-    }
+    const [jobDetails, setJobDetails] = useState([]);
+
 
     const userObserver = (e) => {
         switch (e.action) {
             case 'USER-LOGIN':
             case 'USER-LOGOUT':
             case 'STORAGE-CHANGE':
-                setLoggedin(userService.getLoggedin());
+                const loggedinValue = userService.getLoggedin();
+                setLoggedin(loggedinValue);
                 break;
 
             default:
@@ -36,48 +29,63 @@ function JobDetails() {
     };
 
     useEffect(() => {
-        jobsService.jobDetailsSubject.subscribe(detailsObserver);
         userService.userSubject.subscribe(userObserver);
 
         return () => {
-            jobsService.jobDetailsSubject.unsubscribe(detailsObserver);
             userService.userSubject.unsubscribe(userObserver);
         };
     }, []);
 
+    useEffect(() => {
+        const jobDetails = jobsService.getJobDetailsById(jobId);
+        setJobDetails(jobDetails);
+    }, [jobId]);
+
     return (
         <>
-            {jobDetails.map(job => (
-                <div
-                    className='job-details'
-                    key={job.id}>
-                    <h4>
-                        {job.title}
-                    </h4>
-                    <div className='descript bg-warning rounded'>
-                        <p >
-                            {job.description}
-                        </p>
-                        <p>
-                            <a
-                                href={job.taskURL}
-                                target="_blank">
-                                دانلود فایل تسک
-                            </a>
-                        </p>
+            {
+                typeof (jobDetails) === 'object'
+                    ?
+                    jobDetails.map(job => (
+                        <div
+                            className='job-details'
+                            key={job.id}>
+                            <></>
+                            <h4>
+                                {job.title}
+                            </h4>
+                            <div className='descript bg-warning rounded'>
+                                <p >
+                                    {job.description}
+                                </p>
+                                <p>
+                                    <a
+                                        href={job.taskURL}
+                                        target="_blank">
+                                        دانلود فایل تسک
+                                    </a>
+                                </p>
+                            </div>
+
+
+                            {
+                                loggedin
+                                    ? <ApplyModalContainer />
+                                    : <LoginSignupModal
+                                        buttonLabel="درخواست"
+                                        variant="danger"
+                                        id="apply" />
+                            }
+                        </div >
+                    ))
+
+                    :
+
+                    <div className='job-details'>
+                        <p>موقعیت شغلی مورد نظر یافت نشد.</p>
                     </div>
+            }
 
-
-                    {
-                        loggedin
-                            ? <ApplyModalContainer />
-                            : <LoginSignupModal
-                                buttonLabel="درخواست"
-                                variant="danger"
-                                id="apply" />
-                    }
-                </div >
-            ))}
         </>
     );
 }
