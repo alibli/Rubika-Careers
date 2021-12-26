@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import userService from '../Service/UserService';
 import { Dropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 
 function HeaderDropdown() {
-    const [userFirstname, setUserFirstname] = useState(userService.getUserFirstname);
+
+    const userFirstnameValue = userService.getUserFirstname();
+    const [userFirstname, setUserFirstname] = useState(userFirstnameValue);
 
     const userObserver = (e) => {
         switch (e.action) {
             case 'USER-LOGIN':
             case 'USER-LOGOUT':
             case 'STORAGE-CHANGE':
-                setUserFirstname(userService.getUserFirstname());
+                const userFirstnameValue = userService.getUserFirstname();
+                setUserFirstname(userFirstnameValue);
                 break;
 
             default:
@@ -29,11 +31,14 @@ function HeaderDropdown() {
 
     }, []);
 
+    function onLogout() {
+        userService.logout();
+    }
+
     return (
         <> {
             userFirstname === 'ادمین'
                 ?
-
                 <Dropdown>
                     <Dropdown.Toggle
                         variant="warning"
@@ -49,7 +54,7 @@ function HeaderDropdown() {
 
                         <LinkContainer to="/">
                             <Dropdown.Item
-                                onClick={() => userService.logout()}>
+                                onClick={onLogout}>
                                 خروج
                             </Dropdown.Item>
                         </LinkContainer>
@@ -77,7 +82,7 @@ function HeaderDropdown() {
                         </LinkContainer>
                         <LinkContainer to="/">
                             <Dropdown.Item
-                                onClick={() => userService.logout()}>
+                                onClick={onLogout}>
                                 خروج
                             </Dropdown.Item>
                         </LinkContainer>

@@ -7,14 +7,20 @@ function EditJobModalContainer() {
 
     return (
         <div className='edit-job-modal'>
-            
-            <button className='button'>
-               
+
+            <button className='button'
+                onClick={() => setEditJobModalShow(true)}>
+                Edit
             </button>
 
-            <EditJobModal 
-            show={editJobModalShow}
-            onHide={() => setEditJobModalShow(false)}/>
+            <EditJobModal
+                buttons={[
+                    {
+                        label: 'ذخیره'
+                    }
+                ]}
+                show={editJobModalShow}
+                onHide={() => setEditJobModalShow(false)} />
 
 
         </div >

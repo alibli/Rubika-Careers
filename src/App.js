@@ -5,7 +5,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ApplyModal from './components/ApplyModal';
 import JobsPage from './components/JobsPage';
 import JobDetailsPage from './components/JobDetailsPage';
-import EditJobModalContainer from './components/AdminPanel/EditJobModalContainer';
 
 function App() {
   return (
@@ -17,9 +16,8 @@ function App() {
         <Routes>
 
           <Route path="/" element={<JobsPage />} />
+          <Route path="job-details/:jobId" element={<JobDetailsPage />} />
           <Route path="/apply" element={<ApplyModal />} />
-          <Route path="job-details" element={<JobDetailsPage />} />
-          <Route path="edit-job-position" element={<EditJobModalContainer />} />
           
         </Routes>
         <Footer></Footer>

@@ -1,73 +1,80 @@
-import Modal from "../Core/Modal";
+import ModalComponent from "../Core/ModalComponent";
+import { Container, Row, Button } from 'react-bootstrap';
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import '../../styles/EditJobModal.css';
 
 function EditJobModal(props) {
 
-    const buttons = [
-        {
-            label: 'ذخیره',
-            onClickHandler: () => { }
-        }
-    ]
+    const body = <Container>
+        <Row>
+            <label htmlFor='edit-job-title'>
+                عنوان
+            </label>
+            <input
+                className='modal-input'
+                name='edit-job-title'
+                type='text' />
+        </Row>
 
-    const rows = [
-        {
-            elements:
-                <>
-                    <label htmlFor='edit-job-title'>
-                        عنوان
-                    </label>
-                    <input
-                        className='modal-input'
-                        name='edit-job-title'
-                        type='text' />
-                </>
-        },
-        {
-            elements:
-                <>
-                    <label htmlFor='edit-job-descrip'>
-                        شرح
-                    </label>
-                    <textarea
-                        className='modal-input'
-                        name='edit-job-descrip'
-                        type='text'
-                        style={{
-                            height: '500px'
-                        }} />
-                </>
-        },
-        {
-            elements:
-                <div style={{ 
-                    display: 'flex',
-                    justifyCongtent: 'space-between',
-                    width: '60%'
+        <Row>
+            <label htmlFor='edit-job-descrip'>
+                شرح
+            </label>
+        </Row>
+        <div style={{
+            direction: 'ltr',
+            textDecoration: 'none'
+        }}>
+            <Editor
+                wrapperClassName="job-position-editor-wrapper"
+                editorClassName="job-position-editor"
+            />
+        </div>
+
+        <Row>
+            <div style={{
+                display: 'flex',
+                justifyCongtent: 'space-between',
+                width: '70%'
+            }}>
+                <label 
+                htmlFor='edit-job-task'
+                style={{
+                        margin: '0.5em'
                 }}>
-                    <label htmlFor='edit-job-task'>
-                        فایل تسک
-                    </label>
-                    <input
-                        style={{
-                            margin: 'auto'
-                        }}
-                        className='modal-input'
-                        name='edit-job-task'
-                        type='file' />
-                </div>
-        }
-    ]
+                    فایل تسک
+                </label>
+                <input
+                    className='modal-input'
+                    name='edit-job-task'
+                    type='file' />
+            </div>
+        </Row>
+    </Container>;
 
-    const bottom = [];
+    const footer = <>
+        <div
+            className='col-auto'>
+                {
+                    props.buttons.map((button, index) => (
+                        <Button 
+                        key={index}
+                        style={button.style}>
+                            {button.label}
+                        </Button>
+                    ))
+                }
+        </div>
+    </>;
 
     return (
-        <Modal
-            size="lg"
+        <ModalComponent
+            size={'lg'}
+            body={body}
+            footer={footer}
             show={props.show}
-            onHide={props.onHide}
-            buttons={buttons}
-            rows={rows}
-            bottom={bottom} />
+            onHide={props.onHide} />
     );
 }
 
