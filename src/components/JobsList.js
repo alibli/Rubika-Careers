@@ -25,7 +25,8 @@ function JobsList() {
     //     jobsService.jobsListSubject.subscribe(jobsListObserver);
 
     //     const handleResponse = apiService.handleJobsList;
-    //     apiService.getRequest('https://0.0.0.0:8000/v1/jobs', handleResponse)
+    //     const handleErr = apiService.handleError;
+    //     apiService.getRequest('https://0.0.0.0:8000/v1/jobs', handleResponse, handleErr)
     //     // API call (setJobsList(data) & jobService.setJobLists(data) -> if data is not empty)
 
     //     return () => {

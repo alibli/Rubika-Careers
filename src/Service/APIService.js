@@ -32,6 +32,10 @@ class APIService {
         }
     }
 
+    handleError = (err) => {
+        console.log(err);
+    }
+
 
 }
 
