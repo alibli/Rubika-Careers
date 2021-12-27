@@ -6,3 +6,18 @@ h3{
 .container{
     margin: 5px;
 }
+
+.dropdown .dropdown-toggle {
+    background-color: transparent;
+    border: none;
+}
+
+.admin-status-dropdown {
+    background-color: transparent;
+    border: none;
+    color: #803333;
+}
+
+.admin-status-dropdown::after {
+    color: #803333;
+}
