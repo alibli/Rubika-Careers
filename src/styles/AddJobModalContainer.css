@@ -1,10 +1,11 @@
-.add-job-modal .btn-danger {
+.login-signup-modal #apply {
     border: none !important;
     background-color: #803333 !important;
     color: whitesmoke !important;
+    margin: auto;
 }
 
-.add-job-modal .btn-danger:hover {
+.login-signup-modal #apply:hover {
     border: none !important;
     background-color: #803333 !important;
     color: #F3B073 !important;

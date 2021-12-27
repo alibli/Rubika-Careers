@@ -1,14 +1,5 @@
-import Subject from "./Subject";
 class JobsService {
     constructor() {
-        const detailsInLocalStorage = window.localStorage.getItem('currentJobDetails') 
-                                        ? window.localStorage.getItem('currentJobDetails')
-                                        : [];
-        const CURRENTJOBDETAILS = detailsInLocalStorage.length !== 0 
-                                    ? JSON.parse(detailsInLocalStorage) 
-                                    : []
-        this.currentJobDetails = CURRENTJOBDETAILS;
-
         this.jobsList = [
             {
                 id: 1,
@@ -30,8 +21,6 @@ class JobsService {
             },
         ];
 
-        this.jobDetailsSubject = new Subject();
-    
     }
 
     //public
@@ -39,24 +28,16 @@ class JobsService {
         return this.jobsList;
     }
 
-    getCurrentJobDetails = () => {
-        return this.currentJobDetails;
-    }
-
     setJobsList = (jobsList) => {
         this.jobsList = jobsList;
     }
 
-    setCurrentJobDetails = (id) => {
-        const details = this.getJobDetailsById(id)
-        this.currentJobDetails = details;
-        window.localStorage.setItem('currentJobDetails', JSON.stringify(details))
-        this.jobDetailsSubject.notify({ action: 'JOB-CHOSEN' });
-    }
-
-    //private
     getJobDetailsById = (id) => {
-        return this.jobsList.filter(job => job.id === id);
+        // eslint-disable-next-line eqeqeq
+        const details = this.jobsList.filter(job => job.id == id);
+        if (details.length !== 0) {
+            return details;
+        }
     }
 }
 

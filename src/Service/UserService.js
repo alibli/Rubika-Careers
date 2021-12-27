@@ -2,10 +2,10 @@ import Subject from "./Subject";
 
 class UserService {
     constructor() {
-        const LOGGEDIN = window.localStorage.getItem('loggedin');
-        this.loggedin = LOGGEDIN === 'true' ? true : false;
-
         const USERTOKEN = window.localStorage.getItem('userToken');
+
+        this.loggedin = USERTOKEN ? true : false;
+
         this.userToken = USERTOKEN ? USERTOKEN : null;
 
         const USERFIRSTNAME = window.localStorage.getItem('userFirstname');
@@ -14,11 +14,13 @@ class UserService {
         this.userSubject = new Subject();
 
         window.onstorage = () => {
-            this.setLoggedin(window.localStorage.getItem('loggedin') === 'true' ? true : false);
-            this.setUserToken(window.localStorage.getItem('userToken'));
+            const USERTOKENREFRESH = window.localStorage.getItem('userToken');
+
+            this.setLoggedin(USERTOKENREFRESH ? true : false);
+            this.setUserToken(USERTOKENREFRESH);
             this.setUserFirstname(window.localStorage.getItem('userFirstname'));
 
-            this.userSubject.notify({ action: 'STORAGE-CHANGE'});
+            this.userSubject.notify({ action: 'STORAGE-CHANGE' });
         }
     }
 
@@ -72,7 +74,6 @@ class UserService {
     setLoggedin = (value) => {
         if (typeof (value) === 'boolean') {
             this.loggedin = value;
-            window.localStorage.setItem('loggedin', value);
         }
     };
 }

@@ -1,0 +1,11 @@
+.job-position-editor {
+    height: 300px;
+}
+
+.job-position-editor-wrapper {
+    border: 1px solid black;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 0.5em;
+    width: 100%;
+}

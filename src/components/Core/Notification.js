@@ -10,7 +10,7 @@ function Notification({message , alertModel}) {
         setTimeout(() => {
             setShow(false); 
         }, 3000);
-    });
+    } , []);
 
     return (
         <div dir='rtl' className="container" id='notification'>
