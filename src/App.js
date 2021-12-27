@@ -7,6 +7,7 @@ import JobsPage from './components/JobsPage';
 import JobDetailsPage from './components/JobDetailsPage';
 import UserRequestsTable from './components/UserPanel/UserRequestsTable';
 import AdminRequestsTable from './components/AdminPanel/AdminJobRequests';
+import AdminJobRequestDetails from './components/AdminPanel/AdminJobRequestDetails';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="job-details" element={<JobDetailsPage />} />
           <Route path="test2" element={<UserRequestsTable />} />
           <Route path="test3" element={<AdminRequestsTable />} />
+          <Route path="test4" element={<AdminJobRequestDetails />} />
 
         </Routes>
         <Footer></Footer>
