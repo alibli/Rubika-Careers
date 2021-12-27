@@ -1,3 +1,4 @@
+import apiService from "./APIService";
 import Subject from "./Subject";
 class JobsService {
     constructor() {
@@ -27,8 +28,15 @@ class JobsService {
     }
 
     //public
-    getJobsList = () => {
-        return this.jobsList;
+    getJobsList() {
+        return apiService.getRequest('https://0.0.0.0:8000/v1/jobs')
+        return new Promise((resolve, reject) => {
+            apiService.getRequest(, (response) => {
+                resolve(response);
+            }, (err)=>{
+                reject(err);
+            })
+        });
     }
 
     setJobsList = (jobsList) => {

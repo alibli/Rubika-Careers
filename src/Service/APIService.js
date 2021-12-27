@@ -1,14 +1,20 @@
 import axios from "axios";
 import jobsService from "./JobsService";
+import Notification from "../components/Core/Notification";
 
 class APIService {
     //public
-    getRequest(url, handleResponse, handleError) {
-        axios.get(url)
-        .then(rsp => rsp.json())
-        .then(data => handleResponse(data))
-        .catch(err => handleError(err));
+    async getRequest(url) {
+        try {
+            const res = await axios.get(url);
+            return res.json();
+        }
+        catch (err) {
+            
+            throw err;
+        }
     }
+
 
     postRequest(url, body) {
         return axios.post(url, body);
@@ -33,7 +39,8 @@ class APIService {
     }
 
     handleError = (err) => {
-        console.log(err);
+        <Notification message={err.message} alertModel={"danger"}></Notification>
+        console.log(err.message);
     }
 
 
