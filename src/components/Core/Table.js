@@ -7,6 +7,7 @@ function Table({headerListMuck , rowListMuck,actions}) {
         <table dir='rtl' className='table container'>
             <TableHead headerList={headerListMuck} />
             <TableRow  rowList={rowListMuck} actions={actions}/>
+            
         </table>
 
     );

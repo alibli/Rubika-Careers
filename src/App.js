@@ -12,7 +12,6 @@ import AdminJobRequestDetails from './components/AdminPanel/AdminJobRequestDetai
 function App() {
   return (
     <>
-
       <BrowserRouter>
         <Header></Header>
 
@@ -31,8 +30,6 @@ function App() {
         <Footer></Footer>
 
       </BrowserRouter>
-
-
     </>
   );
 }
