@@ -1,3 +1,4 @@
+import Subject from "./Subject";
 class JobsService {
     constructor() {
         this.jobsList = [
@@ -21,6 +22,8 @@ class JobsService {
             },
         ];
 
+        this.jobsListSubject = new Subject();
+
     }
 
     //public
@@ -30,6 +33,7 @@ class JobsService {
 
     setJobsList = (jobsList) => {
         this.jobsList = jobsList;
+        this.jobsListSubject.notify({ action: 'JOBS-LIST-FILLED' });
     }
 
     getJobDetailsById = (id) => {
