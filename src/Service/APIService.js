@@ -2,7 +2,7 @@ import axios from "axios";
 import jobsService from "./JobsService";
 import Notification from "../components/Core/Notification";
 
-axios.create({baseURL: 'https://0.0.0.0:8000/v1'});
+// axios.create({baseURL: 'https://0.0.0.0:8000/v1/'});
 
 class APIService {
 

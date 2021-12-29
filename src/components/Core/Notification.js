@@ -10,6 +10,8 @@ function Notification() {
 
 
     const toastObserver = e => {
+        console.log(e);
+
         switch (e.action) {
             case 'SHOW-TOAST':
                 setShow(true);
@@ -19,7 +21,6 @@ function Notification() {
                 setTimeout(() => {
                     setShow(false);
                 }, 3000);
-
                 break;
 
             default:
@@ -29,6 +30,7 @@ function Notification() {
 
 
     useEffect(() => {
+        console.log('h');
         toastService.toastSubject.subscribe(toastObserver);
 
         return () => {

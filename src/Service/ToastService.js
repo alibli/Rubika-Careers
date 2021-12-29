@@ -13,6 +13,7 @@ class ToastService {
             message: msg,
             alertModel: alrtModel
         });
+        
     };
 
 }

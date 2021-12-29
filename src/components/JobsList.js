@@ -33,7 +33,7 @@ function JobsList() {
     useEffect(() => {
         const data = jobsService.getJobsList();
 
-        if (data.status === 200) {
+        if (data) {
             if(data.length === 0){
                 toastService.showToast('در حال حاضر موقعیت شغلی فعالی وجود ندارد' , 'warning')
             }
@@ -41,11 +41,12 @@ function JobsList() {
                 setJobsList(data);
             }
         } else {
-            toastService.showToast( 'some server Error', 'warning')
+            console.log('Error to connect to the server');
+            toastService.showToast( 'some server Error', 'warning');
         }
     }, []);
 
-    if (jobsList.length !== 0) {
+    
         return (
             <>
                 <div className="jobs-list">
@@ -70,7 +71,6 @@ function JobsList() {
                 </div>
             </>
         );
-    }
 
 }
 
