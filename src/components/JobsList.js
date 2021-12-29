@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import jobsService from '../Service/JobsService';
-import apiService from "../Service/APIService";
 import '../styles/JobsList.css';
-import toastService from "../Service/ToastService";
 
 function JobsList() {
     // const jobsList = [
@@ -31,46 +29,39 @@ function JobsList() {
 
 
     useEffect(() => {
-        const data = jobsService.getJobsList();
+        const res = jobsService.getJobsList();
 
-        if (data) {
-            if(data.length === 0){
-                toastService.showToast('در حال حاضر موقعیت شغلی فعالی وجود ندارد' , 'warning')
-            }
-            else{
-                setJobsList(data);
-            }
-        } else {
-            console.log('Error to connect to the server');
-            toastService.showToast( 'some server Error', 'warning');
+        if(res) {
+            setJobsList(res);
         }
+
     }, []);
 
-    
-        return (
-            <>
-                <div className="jobs-list">
-                    {
-                        jobsList.map(job => (
-                            <div
-                                className="job-title bg-warning rounded"
-                                key={job.id}>
-                                {job.title}
 
-                                <Link to={`/job-details/${job.id}`}>
-                                    <button
-                                        className="btn" >
-                                        درخواست
-                                    </button>
-                                </Link>
-                            </div>
-                        ))
+    return (
+        <>
+            <div className="jobs-list">
+                {
+                    jobsList.map(job => (
+                        <div
+                            className="job-title bg-warning rounded"
+                            key={job.id}>
+                            {job.title}
 
-                    }
+                            <Link to={`/job-details/${job.id}`}>
+                                <button
+                                    className="btn" >
+                                    درخواست
+                                </button>
+                            </Link>
+                        </div>
+                    ))
 
-                </div>
-            </>
-        );
+                }
+
+            </div>
+        </>
+    );
 
 }
 

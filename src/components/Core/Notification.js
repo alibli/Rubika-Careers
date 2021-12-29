@@ -4,13 +4,12 @@ import toastService from '../../Service/ToastService';
 
 function Notification() {
 
-    const [isShowing, setShow] = useState(true);
+    const [isShowing, setShow] = useState(false);
     const [message, setMessage] = useState('');
     const [alertModel, setAlertModel] = useState('');
 
 
     const toastObserver = e => {
-        console.log(e);
 
         switch (e.action) {
             case 'SHOW-TOAST':
@@ -28,16 +27,7 @@ function Notification() {
         }
     }
 
-
-    useEffect(() => {
-        console.log('h');
-        toastService.toastSubject.subscribe(toastObserver);
-
-        return () => {
-            toastService.toastSubject.unsubscribe(toastObserver);
-        }
-
-    }, []);
+    toastService.toastSubject.subscribe(toastObserver);
 
     return (
         <div dir='rtl' className="container" id='notification'>

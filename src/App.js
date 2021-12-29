@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ApplyModal from './components/ApplyModal';
 import JobsPage from './components/JobsPage';
 import JobDetailsPage from './components/JobDetailsPage';
+import Notification from './components/Core/Notification';
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
           <Route path="/apply" element={<ApplyModal />} />
           
         </Routes>
+        
+        <Notification />
         <Footer></Footer>
 
       </BrowserRouter>

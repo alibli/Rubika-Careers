@@ -1,18 +1,21 @@
 import apiService from "./APIService";
+import toastService from "./ToastService";
 
 class JobsService {
 
     //public
     getJobsList() {
-        const result = apiService.getRequest('https://0.0.0.0:8000/v1/jobs');
+        const result = apiService.getRequest('/jobs');
         result.then((res) => {
-            return {
-                status: res.status,
-                body: res.body
-            };
+            if (res.data.length === 0) {
+                toastService.showToast('در حال حاضر موقعیت شغلی فعالی وجود ندارد', 'warning')
+            }
+            else {
+                return res;
+            }
         },
             (err) => {
-                return err;
+                toastService.showToast('Some Server Error', 'danger');
             });
     }
 }
