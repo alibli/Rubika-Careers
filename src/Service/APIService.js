@@ -2,7 +2,10 @@ import axios from "axios";
 import jobsService from "./JobsService";
 import Notification from "../components/Core/Notification";
 
+axios.create({baseURL: 'https://0.0.0.0:8000/v1'});
+
 class APIService {
+
     //public
     async getRequest(url) {
         try {
@@ -10,10 +13,11 @@ class APIService {
             return res.json();
         }
         catch (err) {
-            
             throw err;
         }
     }
+
+
 
 
     postRequest(url, body) {
