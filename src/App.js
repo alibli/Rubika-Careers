@@ -6,6 +6,7 @@ import ApplyModal from './components/ApplyModal';
 import JobsPage from './components/JobsPage';
 import JobDetailsPage from './components/JobDetailsPage';
 import Notification from './components/Core/Notification';
+import SignupModal from './components/SignupModal';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<JobsPage />} />
           <Route path="job-details/:jobId" element={<JobDetailsPage />} />
           <Route path="/apply" element={<ApplyModal />} />
+          
           
         </Routes>
         

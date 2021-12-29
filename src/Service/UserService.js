@@ -1,3 +1,4 @@
+import apiService from "./APIService";
 import Subject from "./Subject";
 
 class UserService {
@@ -45,6 +46,7 @@ class UserService {
     };
 
     login = (token, firstname) => {
+
         this.setUserToken(token);
         this.setUserFirstname(firstname);
         this.setLoggedin(true);
@@ -76,6 +78,63 @@ class UserService {
             this.loggedin = value;
         }
     };
+
+
+//ali
+
+    setUserSignup = (firstName , lastName , email , password) =>{
+        const response = apiService.postRequest('/user/register' , 
+        {
+            first_name : firstName,
+            last_name : lastName,
+            email : email,
+            password : password
+        },
+        {
+            //null header
+        });
+
+        response.then((res) =>{
+            if (res.data.length) {
+                this.setUserToken(response.data.token); // token
+            }
+            else{
+                return;
+            }
+        },
+        (err) =>{
+            console.log('signUp error :' + err);
+        });
+    }
+
+
+    setUserLogin = (email , password) =>{
+        const response = apiService.postRequest('/user/login' , 
+        {
+            email : email,
+            password : password
+        },
+        {
+            //null header
+        });
+
+        response.then((res) =>{
+            if (res.data.length) {
+                this.setUserFirstname(res.data.first_name);
+                this.setUserToken(res.data.token);
+            }
+            else{
+                return;
+            }
+        },
+        (err) =>{
+            console.log('signUp error :' + err);
+        });
+    }
+
+    
+
+
 }
 
 const userService = new UserService();

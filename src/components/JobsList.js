@@ -30,7 +30,6 @@ function JobsList() {
 
     useEffect(() => {
         const res = jobsService.getJobsList();
-
         if(res) {
             setJobsList(res);
         }

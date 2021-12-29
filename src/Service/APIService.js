@@ -6,6 +6,15 @@ const axiosInstance = axios.create({
 
 class APIService {
 
+    constructor() {
+        axiosInstance.interceptors.request.use(x => {
+            x.headers['token'] = localStorage.getItem('token');
+        })
+
+        axiosInstance.interceptors.response.use(x => {
+            x.headers['token'] = localStorage.getItem('token');
+        })
+    }
     //public
     async getRequest(url) {
         try {
@@ -16,6 +25,23 @@ class APIService {
             throw err;
         }
     }
+
+    async postRequest(url, body, header) {
+        try {
+            const res = await axiosInstance.post(url, body, header);
+            return res.json();
+        } catch (err) {
+            throw err;
+        }
+    }
+
+
+
+
+    applyForJob(){
+        
+    }
+
 
 }
 

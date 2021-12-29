@@ -3,7 +3,8 @@ import { Container, Row, Button } from 'react-bootstrap';
 
 function SignupModal(props) {
 
-    const body = <Container>
+    const body = 
+    <Container>
         <Row>
             <label htmlFor='firstname'>
                 نام

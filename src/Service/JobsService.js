@@ -4,19 +4,23 @@ import toastService from "./ToastService";
 class JobsService {
 
     //public
-    getJobsList() {
-        const result = apiService.getRequest('/jobs');
-        result.then((res) => {
-            if (res.data.length === 0) {
-                toastService.showToast('در حال حاضر موقعیت شغلی فعالی وجود ندارد', 'warning')
+    async getJobsList() {
+        // debugger
+        try {
+            console.log('try');
+            const jobs = await apiService.getRequest('/jobs');
+            console.log(jobs);
+            if (jobs.data.length === 0) {
+                toastService.showToast('در حال حاضر موقعیت شغلی فعالی وجود ندارد', 'warning');
             }
-            else {
-                return res;
-            }
-        },
-            (err) => {
-                toastService.showToast('Some Server Error', 'danger');
-            });
+            return jobs.data;
+        }
+        catch (err) {
+            console.log('some err');
+            toastService.showToast('Some Server Error', 'danger');
+            // throw err;
+        }
+
     }
 
     getJobDetails(id) {
