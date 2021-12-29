@@ -4,7 +4,7 @@ import jobsService from '../Service/JobsService';
 import '../styles/JobsList.css';
 
 function JobsList() {
-    // const jobsList = [
+    // const jobsListValue = [
     //     {
     //         id: 1,
     //         title: 'برنامه‌نویس ارشد فرانت',
