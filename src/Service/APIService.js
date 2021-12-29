@@ -7,9 +7,9 @@ const axiosInstance = axios.create({
 class APIService {
 
     //public
-    async getRequest(url, params) {
+    async getRequest(url) {
         try {
-            const res = await axiosInstance.get(url, { params: params });
+            const res = await axiosInstance.get(url);
             return res.json();
         }
         catch (err) {
