@@ -62,7 +62,7 @@ class JobsService {
 
     //editJobInfo
     setAdminJobInfo(id , token , title , description , task , isDeactive , isDeleted){  
-        return apiService.putRequest('/jobs/{'+id+'}/edit' , 
+        return apiService.putRequest('/jobs/'+id+'/edit' , 
         {
             title: title,
             description: description,
@@ -79,7 +79,7 @@ class JobsService {
 
     //editOneField
     setEditOneField(id , token , title , description , task , isDeactive , isDeleted){
-        return apiService.patchRequest('/jobs/{'+id+'}/edit',
+        return apiService.patchRequest('/jobs/'+id+'/edit',
         {
             title: title,
             description: description,

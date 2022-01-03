@@ -2,13 +2,19 @@ import ModalComponent from "./Core/ModalComponent";
 import { Container, Row, Button } from 'react-bootstrap';
 import apiService from "../Service/APIService";
 import Notification from "./Core/Notification";
+import applicationService from "../Service/ApplicationService";
 
 function ApplyModal(props) {
+
 
     const apiTest = apiService.getRequest('url test' , handleRes );
     function handleRes(data){
         console.log('handle');
         <Notification message={'some message'} alertModel={'primary'}></Notification>
+    }
+
+    function sendApply(){
+        // applicationService.setUserApply()
     }
 
     const body = <Container>
@@ -63,7 +69,7 @@ function ApplyModal(props) {
     const footer = <>
         <div
             className='col-auto'>
-            <Button onClick={apiTest}>
+            <Button onClick={sendApply}>
                 ارسال
             </Button>
         </div>

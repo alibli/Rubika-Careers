@@ -29,4 +29,6 @@ class ApplicationService{
 
 }
 
-export default ApplicationService;
+const applicationService = new ApplicationService();
+
+export default applicationService;

@@ -141,7 +141,7 @@ class UserService {
 
     //userApplicationEdit
     setUserEditInfo(id , token , resume , taskSolution , salary , contractInterest ){
-        return apiService.putRequest('/user/profile/applications/{'+id+'}/edit', 
+        return apiService.putRequest('/user/profile/applications/'+id+'/edit', 
         {//body
             resume : resume,
             task_solution: taskSolution,
@@ -179,7 +179,7 @@ class UserService {
 
 
     setAdminChangeAppStatus(jobId , id , token , newStatus){
-        return apiService.patchRequest('/admin-panel/{'+jobId+'}/applications/{'+id+'}/edit-status',
+        return apiService.patchRequest('/admin-panel/'+jobId+'/applications/'+id+'/edit-status',
         {params:{
             applicationStatus: newStatus
         }},
@@ -190,7 +190,7 @@ class UserService {
 
     
     setUserAppOneFieldEdit(id , token , resume , taskSolution , salary , contractInterest  ){
-        return apiService.patchRequest('/user/profile/applications/{'+id+'}/edit',
+        return apiService.patchRequest('/user/profile/applications/'+id+'/edit',
         {params:{
             resume : resume,
             task_solution: taskSolution,

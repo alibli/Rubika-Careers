@@ -1,7 +1,32 @@
 import ModalComponent from "./Core/ModalComponent";
 import { Container, Row, Button } from 'react-bootstrap';
+import { useState } from "react";
+import userService from "../Service/UserService";
+import toastService from "../Service/ToastService";
 
 function SignupModal(props) {
+
+    
+    const [signpBody , setSignup] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirm: '',
+    });
+
+    async function sendSignup(){
+        const res = await userService.setUserSignup(signpBody.firstName , signpBody.lastName , signpBody.email , signpBody.password);
+        try{
+            if(signpBody.password === signpBody.confirm){
+              userService.setUserToken(res.data); //token
+            }
+        }
+        catch(err){
+            console.log(err);
+            toastService.showToast(res.data , 'danger');
+        }
+    }
 
     const body = 
     <Container>
@@ -12,7 +37,8 @@ function SignupModal(props) {
             <input
                 className='modal-input'
                 name='firstname'
-                type='text' />
+                type='text' 
+                value={signpBody.firstName}/>
         </Row>
 
         <Row>
@@ -22,7 +48,8 @@ function SignupModal(props) {
             <input
                 className='modal-input'
                 name='lastname'
-                type='text' />
+                type='text' 
+                value={signpBody.lastName}/>
         </Row>
 
         <Row>
@@ -33,7 +60,8 @@ function SignupModal(props) {
             <input
                 className='modal-input'
                 name='password'
-                type='password' />
+                type='password' 
+                value={signpBody.password}/>
         </Row>
 
         <Row>
@@ -44,15 +72,17 @@ function SignupModal(props) {
                 <input
                     className='modal-input'
                     name='password-confrim'
-                    type='password' />
+                    type='password' 
+                    value={signpBody.confirm}/>
             </>
         </Row>
     </Container>;
 
-    const footer = <>
+    const footer = 
+    <>
         <div
             className='col-auto'>
-                <Button>
+                <Button onClick={sendSignup}>
                     ثبت‌نام
                 </Button>
         </div>
