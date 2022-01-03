@@ -2,6 +2,7 @@ import Banner from "./Banner";
 import '../styles/JobsPage.css';
 import JobDetails from "./JobDetails";
 import { useParams } from "react-router-dom";
+import '../styles/JobDetailsPage.css';
 
 function JobDetailsPage() {
     let params = useParams();

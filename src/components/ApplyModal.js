@@ -1,7 +1,15 @@
 import ModalComponent from "./Core/ModalComponent";
 import { Container, Row, Button } from 'react-bootstrap';
+import apiService from "../Service/APIService";
+import Notification from "./Core/Notification";
 
 function ApplyModal(props) {
+
+    const apiTest = apiService.getRequest('url test' , handleRes );
+    function handleRes(data){
+        console.log('handle');
+        <Notification message={'some message'} alertModel={'primary'}></Notification>
+    }
 
     const body = <Container>
         <Row>
@@ -55,7 +63,7 @@ function ApplyModal(props) {
     const footer = <>
         <div
             className='col-auto'>
-            <Button>
+            <Button onClick={apiTest}>
                 ارسال
             </Button>
         </div>

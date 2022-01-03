@@ -1,47 +1,47 @@
-import Subject from "./Subject";
+import apiService from "./APIService";
+import toastService from "./ToastService";
+
 class JobsService {
-    constructor() {
-        this.jobsList = [
-            {
-                id: 1,
-                title: 'برنامه‌نویس ارشد فرانت',
-                description: 'نیازمندی‌ها...',
-                taskURL: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
-            },
-            {
-                id: 2,
-                title: 'دیجیتال مارکتر',
-                description: 'نیازمندی‌ها...',
-                taskURL: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
-            },
-            {
-                id: 3,
-                title: 'کارشناس منابع انسانی',
-                description: 'نیازمندی‌ها...',
-                taskURL: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
-            },
-        ];
-
-        this.jobsListSubject = new Subject();
-
-    }
 
     //public
-    getJobsList = () => {
-        return this.jobsList;
-    }
-
-    setJobsList = (jobsList) => {
-        this.jobsList = jobsList;
-        this.jobsListSubject.notify({ action: 'JOBS-LIST-FILLED' });
-    }
-
-    getJobDetailsById = (id) => {
-        // eslint-disable-next-line eqeqeq
-        const details = this.jobsList.filter(job => job.id == id);
-        if (details.length !== 0) {
-            return details;
+    // incorrect:
+    async getJobsList() {
+        try {
+            console.log('try');
+            const jobs = await apiService.getRequest('/jobs');
+            console.log(jobs);
+            if (jobs.data.length === 0) {
+                toastService.showToast('در حال حاضر موقعیت شغلی فعالی وجود ندارد', 'warning');
+            }
+            return jobs.data;
         }
+        catch (err) {
+            console.log('some err');
+            toastService.showToast('Some Server Error', 'danger');
+            // throw err;
+        }
+
+    }
+    // correct:
+    getJobsList2(){
+        const jobs = apiService.getRequest('/jobs');
+        return jobs;
+        //this is just a bridge between apiService to jobsList!
+    }
+
+    getJobDetails(id) {
+        const result = apiService.getRequest('/jobs/' + id);
+        result.then((res) => {
+            if (res.status === 200) {
+                return res;
+            }
+            else if (res.status === 404) {
+                toastService.showToast('موقعیت شغلی مورد نظر یافت نشد', 'warning');
+            }
+        },
+            (err) => {
+                toastService.showToast('Some Server Error', 'danger');
+            });
     }
 }
 

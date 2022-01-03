@@ -1,21 +1,38 @@
 import { useEffect, useState } from 'react';
 import '../../styles/Notification.css';
+import toastService from '../../Service/ToastService';
 
-function Notification({message , alertModel}) {     
-    //example : alertModel={primary}
-   const [isShowing , setShow] = useState(true); 
+function Notification() {
 
-    
-    useEffect(() =>{
-        setTimeout(() => {
-            setShow(false); 
-        }, 3000);
-    } , []);
+    const [isShowing, setShow] = useState(false);
+    const [message, setMessage] = useState('');
+    const [alertModel, setAlertModel] = useState('');
+
+
+    const toastObserver = e => {
+
+        switch (e.action) {
+            case 'SHOW-TOAST':
+                setShow(true);
+                setMessage(e.message);
+                setAlertModel(e.alertModel);
+
+                setTimeout(() => {
+                    setShow(false);
+                }, 3000);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    toastService.toastSubject.subscribe(toastObserver);
 
     return (
         <div dir='rtl' className="container" id='notification'>
             <div className={`alert alert-dismissible fade${isShowing ? ' show' : ''} alert-${alertModel}`} role="alert">
-                 {message}
+                {message}
             </div>
         </div>
     );

@@ -37,15 +37,16 @@ function JobDetails({ jobId }) {
     }, []);
 
     useEffect(() => {
-        const jobDetails = jobsService.getJobDetailsById(jobId);
-        setJobDetails(jobDetails);
+        const jobDetails = jobsService.getJobDetails(jobId);
+
+        if (jobDetails) {
+            setJobDetails(jobDetails);
+        }
     }, [jobId]);
 
     return (
         <>
             {
-                typeof (jobDetails) === 'object'
-                    ?
                     jobDetails.map(job => (
                         <div
                             className='job-details'
@@ -78,12 +79,6 @@ function JobDetails({ jobId }) {
                             }
                         </div >
                     ))
-
-                    :
-
-                    <div className='job-details'>
-                        <p>موقعیت شغلی مورد نظر یافت نشد.</p>
-                    </div>
             }
 
         </>
