@@ -15,7 +15,7 @@ class APIService {
             x.headers['token'] = localStorage.getItem('token');
         })
     }
-    //public
+//public
     async getRequest(url , header , params) {
         try {
             const res = await axiosInstance.get(url , header , params);
@@ -61,15 +61,6 @@ class APIService {
         } catch (err) {
             throw err;
         }
-    }
-
-
-
-
-
-
-    applyForJob(){
-        
     }
 
 

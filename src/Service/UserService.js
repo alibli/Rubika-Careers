@@ -25,7 +25,7 @@ class UserService {
         }
     }
 
-    //public
+//public
     getLoggedin = () => {
         return this.loggedin;
     };
@@ -62,7 +62,8 @@ class UserService {
         this.userSubject.notify({ action: 'USER-LOGOUT' });
     };
 
-    //private
+//private
+
     setUserToken = (token) => {
         this.userToken = token;
         window.localStorage.setItem('userToken', token);
@@ -81,7 +82,7 @@ class UserService {
 
 
 //ali
-
+    //userRegister
     setUserSignup = (firstName , lastName , email , password) =>{
         const response = apiService.postRequest('/user/register' , 
         {
@@ -107,7 +108,7 @@ class UserService {
         });
     }
 
-
+    //loginPage
     setUserLogin = (email , password) =>{
         const response = apiService.postRequest('/user/login' , 
         {
@@ -132,12 +133,15 @@ class UserService {
         });
     }
 //13dey
+
+    //logoutPage
     setUserLogout(){
         return apiService.getRequest('logout');
     }
 
+    //userApplicationEdit
     setUserEditInfo(id , token , resume , taskSolution , salary , contractInterest ){
-        return apiService.putRequest('/user/profile/applications/'+id+'/edit', 
+        return apiService.putRequest('/user/profile/applications/{'+id+'}/edit', 
         {//body
             resume : resume,
             task_solution: taskSolution,
@@ -149,13 +153,14 @@ class UserService {
         );
     }
 
-
+    //userProfile
     getUserProfile(token){
         return apiService.getRequest('/user/profile' ,
         {headers:{token}},
         {params:{}} 
         );
     }
+
 
     setUserDelete(token){
         return apiService.deleteRequest('/user/profile' ,
@@ -174,7 +179,7 @@ class UserService {
 
 
     setAdminChangeAppStatus(jobId , id , token , newStatus){
-        return apiService.patchRequest('/admin-panel/'+jobId+'/applications/'+id+'/edit-status',
+        return apiService.patchRequest('/admin-panel/{'+jobId+'}/applications/{'+id+'}/edit-status',
         {params:{
             applicationStatus: newStatus
         }},
@@ -185,7 +190,7 @@ class UserService {
 
     
     setUserAppOneFieldEdit(id , token , resume , taskSolution , salary , contractInterest  ){
-        return apiService.patchRequest('/user/profile/applications/'+id+'/edit',
+        return apiService.patchRequest('/user/profile/applications/{'+id+'}/edit',
         {params:{
             resume : resume,
             task_solution: taskSolution,
@@ -211,8 +216,6 @@ class UserService {
     }
 
     
-
-
 
 }
 
