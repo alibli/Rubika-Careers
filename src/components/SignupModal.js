@@ -1,7 +1,7 @@
 import ModalComponent from "./Core/ModalComponent";
 import { Container, Row, Button } from 'react-bootstrap';
-import { useState } from "react";
 import userService from "../Service/UserService";
+import { useState } from "react";
 import toastService from "../Service/ToastService";
 
 function SignupModal(props) {
@@ -19,7 +19,7 @@ function SignupModal(props) {
         const res = await userService.setUserSignup(signpBody.firstName , signpBody.lastName , signpBody.email , signpBody.password);
         try{
             if(signpBody.password === signpBody.confirm){
-              userService.setUserToken(res.data); //token
+              userService.setUserToken(res.data.token); //token
             }
         }
         catch(err){

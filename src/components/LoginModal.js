@@ -1,8 +1,28 @@
 import ModalComponent from "./Core/ModalComponent";
 import userService from '../Service/UserService';
 import { Container, Row, Button } from 'react-bootstrap';
+import { useState } from "react";
+import toastService from "../Service/ToastService";
+
 
 function LoginModal(props) {
+
+    const [loginBody, setlogin] = useState({
+        email: '',
+        password: '',
+    });
+
+    async function sendLogin(){
+        const res = await userService.setUserLogin(loginBody.email , loginBody.password);
+        try {
+            userService.setUserFirstname(res.data.first_name);
+            userService.setUserToken(res.data.token);
+        } catch (err) {
+            console.log(err);
+            toastService.showToast(res.data , 'danger');
+        }
+    }
+
 
     const body = <Container>
         <Row>
@@ -12,7 +32,8 @@ function LoginModal(props) {
             <input
                 className='modal-input'
                 name='email'
-                type='email' />
+                type='email'
+                value={loginBody.email} />
         </Row>
 
         <Row>
@@ -22,7 +43,8 @@ function LoginModal(props) {
             <input
                 className='modal-input'
                 name='password'
-                type='password' />
+                type='password' 
+                value={loginBody.password}/>
         </Row>
     </Container>;
 
