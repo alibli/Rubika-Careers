@@ -4,8 +4,8 @@ import toastService from "./ToastService";
 class JobsService {
 
     //public
+    // incorrect:
     async getJobsList() {
-        // debugger
         try {
             console.log('try');
             const jobs = await apiService.getRequest('/jobs');
@@ -21,6 +21,12 @@ class JobsService {
             // throw err;
         }
 
+    }
+    // correct:
+    getJobsList2(){
+        const jobs = apiService.getRequest('/jobs');
+        return jobs;
+        //this is just a bridge between apiService to jobsList!
     }
 
     getJobDetails(id) {

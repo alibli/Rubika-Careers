@@ -16,9 +16,9 @@ class APIService {
         })
     }
     //public
-    async getRequest(url) {
+    async getRequest(url , header , params) {
         try {
-            const res = await axiosInstance.get(url);
+            const res = await axiosInstance.get(url , header , params);
             return res.json();
         }
         catch (err) {
@@ -34,6 +34,36 @@ class APIService {
             throw err;
         }
     }
+
+//13 dey
+    async putRequest(url, body, header){
+        try {
+            const res = await axiosInstance.put(url, body, header);
+            return res.json();
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async patchRequest(url, body, header){
+        try {
+            const res = await axiosInstance.patch(url, body, header);
+            return res.json();
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async deleteRequest(url , header){
+        try {
+            const res = await axiosInstance.put(url , header);
+            return res.json();
+        } catch (err) {
+            throw err;
+        }
+    }
+
+
 
 
 

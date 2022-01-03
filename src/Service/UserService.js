@@ -131,8 +131,87 @@ class UserService {
             console.log('signUp error :' + err);
         });
     }
+//13dey
+    setUserLogout(){
+        return apiService.getRequest('logout');
+    }
+
+    setUserEditInfo(id , token , resume , taskSolution , salary , contractInterest ){
+        return apiService.putRequest('/user/profile/applications/'+id+'/edit', 
+        {//body
+            resume : resume,
+            task_solution: taskSolution,
+            salary: salary,
+            contract_interest: contractInterest
+        },
+        {headers:{token:token}
+        }
+        );
+    }
+
+
+    getUserProfile(token){
+        return apiService.getRequest('/user/profile' ,
+        {headers:{token}},
+        {params:{}} 
+        );
+    }
+
+    setUserDelete(token){
+        return apiService.deleteRequest('/user/profile' ,
+        {headers:{token}} );
+    }
+    
+    setUserResumeEdit(token ,resumeName ){
+        return apiService.patchRequest('/user/profile' ,
+        {params:{
+            resume: resumeName
+        }},
+        {headers:{
+            token
+        }});
+    }
+
+
+    setAdminChangeAppStatus(jobId , id , token , newStatus){
+        return apiService.patchRequest('/admin-panel/'+jobId+'/applications/'+id+'/edit-status',
+        {params:{
+            applicationStatus: newStatus
+        }},
+        {headers:{
+            token
+        }});
+    }
 
     
+    setUserAppOneFieldEdit(id , token , resume , taskSolution , salary , contractInterest  ){
+        return apiService.patchRequest('/user/profile/applications/'+id+'/edit',
+        {params:{
+            resume : resume,
+            task_solution: taskSolution,
+            salary: salary,
+            contract_interest: contractInterest
+        }},
+        {headers:{
+            token
+        }});
+    }
+
+    
+    getAdminPanel(token){
+        return apiService.getRequest('/admin-panel' ,
+        {headers: token},
+    {params:{/*null*/}} )
+    }
+
+    getAdminJobsApplicationsList(token , jobId ){
+        return apiService.getRequest('/admin-panel'+jobId+'/applications' ,
+        {headers: token},
+    {params:{/*null*/}} )
+    }
+
+    
+
 
 
 }
