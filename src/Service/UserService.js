@@ -1,6 +1,8 @@
 import apiService from "./APIService";
 import Subject from "./Subject";
 
+import apiModel from "../components/Core/ApiModel";
+
 class UserService {
     constructor() {
         const USERTOKEN = window.localStorage.getItem('userToken');
@@ -25,7 +27,7 @@ class UserService {
         }
     }
 
-//public
+    //public
     getLoggedin = () => {
         return this.loggedin;
     };
@@ -62,7 +64,7 @@ class UserService {
         this.userSubject.notify({ action: 'USER-LOGOUT' });
     };
 
-//private
+    //private
 
     setUserToken = (token) => {
         this.userToken = token;
@@ -81,141 +83,141 @@ class UserService {
     };
 
 
-//ali
+    //ali
     //userRegister
-    setUserSignup = (firstName , lastName , email , password) =>{
-        const response = apiService.postRequest('/user/register' , 
-        {
-            first_name : firstName,
-            last_name : lastName,
-            email : email,
-            password : password
-        },
-        {
-            //null header
-        });
+    setUserSignup = (firstName, lastName, email, password) => {
+        const response = apiService.postRequest('/user/register',
+            {
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                password: password
+            },
+            // {
+            //     //null header
+            // }
+        );
 
-        response.then((res) =>{
-            if (res.data.length) {
-                this.setUserToken(response.data.token); // token
-            }
-            else{
-                return;
-            }
-        },
-        (err) =>{
-            console.log('signUp error :' + err);
-        });
+        return response;
+    }
+
+    setUserSignup2 = (apiModel) => {
+        const response = apiService.apiCall(apiModel);
+        return response;
     }
 
     //loginPage
-    setUserLogin = (email , password) =>{
-        const response = apiService.postRequest('/user/login' , 
-        {
-            email : email,
-            password : password
-        },
-        {
-            //null header
-        });
-
-        response.then((res) =>{
-            if (res.data.length) {
-                this.setUserFirstname(res.data.first_name);
-                this.setUserToken(res.data.token);
-            }
-            else{
-                return;
-            }
-        },
-        (err) =>{
-            console.log('signUp error :' + err);
-        });
+    setUserLogin = (email, password) => {
+        const response = apiService.postRequest('/user/login',
+            {
+                email: email,
+                password: password
+            });
+        return response;
+        // response.then((res) =>{
+        //     if (res.data.length) {
+        //         this.setUserFirstname(res.data.first_name);
+        //         this.setUserToken(res.data.token);
+        //     }
+        //     else{
+        //         return;
+        //     }
+        // },
+        // (err) =>{
+        //     console.log('signUp error :' + err);
+        // });
     }
-//13dey
 
+    //13dey
     //logoutPage
-    setUserLogout(){
+    setUserLogout() {
         return apiService.getRequest('logout');
     }
 
     //userApplicationEdit
-    setUserEditInfo(id , token , resume , taskSolution , salary , contractInterest ){
-        return apiService.putRequest('/user/profile/applications/'+id+'/edit', 
-        {//body
-            resume : resume,
-            task_solution: taskSolution,
-            salary: salary,
-            contract_interest: contractInterest
-        },
-        {headers:{token:token}
-        }
+    setUserEditInfo(id, token, resume, taskSolution, salary, contractInterest) {
+        return apiService.putRequest('/user/profile/applications/' + id + '/edit',
+            {//body
+                resume: resume,
+                task_solution: taskSolution,
+                salary: salary,
+                contract_interest: contractInterest
+            },
+            // {
+            //     headers: { token: token }
+            // }
         );
     }
 
     //userProfile
-    getUserProfile(token){
-        return apiService.getRequest('/user/profile' ,
-        {headers:{token}},
-        {params:{}} 
+    getUserProfile(token) {
+        return apiService.getRequest('/user/profile',
+            // { headers: { token } },
+            // { params: {} }
         );
     }
 
 
-    setUserDelete(token){
-        return apiService.deleteRequest('/user/profile' ,
-        {headers:{token}} );
+    setUserDelete(token) {
+        return apiService.deleteRequest('/user/profile'
+            // {headers: {token}}
+        );
     }
-    
-    setUserResumeEdit(token ,resumeName ){
-        return apiService.patchRequest('/user/profile' ,
-        {params:{
-            resume: resumeName
-        }},
-        {headers:{
-            token
-        }});
+
+    setUserResumeEdit(token, resumeName) {
+        return apiService.patchRequest('/user/profile',
+            {
+                params: {
+                    resume: resumeName
+                }
+            }
+            // {headers: {token}}
+        );
+    }
+
+
+    setAdminChangeAppStatus(jobId, id, token, newStatus) {
+        return apiService.patchRequest('/admin-panel/' + jobId + '/applications/' + id + '/edit-status',
+            {
+                params: {
+                    applicationStatus: newStatus
+                }
+            }
+            // {headers: {token}}
+        );
+    }
+
+
+    setUserAppOneFieldEdit(id, token, resume, taskSolution, salary, contractInterest) {
+        return apiService.patchRequest('/user/profile/applications/' + id + '/edit',
+            {
+                params: {
+                    resume: resume,
+                    task_solution: taskSolution,
+                    salary: salary,
+                    contract_interest: contractInterest
+                }
+            }
+            // {headers: {token}}
+        );
+    }
+
+
+    getAdminPanel(token) {
+        return apiService.getRequest('/admin-panel'
+            // { headers: token })
+            // { params: { } })
+        )
+    }
+
+    getAdminJobsApplicationsList(token, jobId) {
+        return apiService.getRequest('/admin-panel' + jobId + '/applications'
+            // { headers: token }
+            // { params: {/*null*/ } })
+        )
     }
 
 
-    setAdminChangeAppStatus(jobId , id , token , newStatus){
-        return apiService.patchRequest('/admin-panel/'+jobId+'/applications/'+id+'/edit-status',
-        {params:{
-            applicationStatus: newStatus
-        }},
-        {headers:{
-            token
-        }});
-    }
-
-    
-    setUserAppOneFieldEdit(id , token , resume , taskSolution , salary , contractInterest  ){
-        return apiService.patchRequest('/user/profile/applications/'+id+'/edit',
-        {params:{
-            resume : resume,
-            task_solution: taskSolution,
-            salary: salary,
-            contract_interest: contractInterest
-        }},
-        {headers:{
-            token
-        }});
-    }
-
-    
-    getAdminPanel(token){
-        return apiService.getRequest('/admin-panel' ,
-        {headers: token},
-    {params:{/*null*/}} )
-    }
-
-    getAdminJobsApplicationsList(token , jobId ){
-        return apiService.getRequest('/admin-panel'+jobId+'/applications' ,
-        {headers: token},
-    {params:{/*null*/}} )
-    }
-
-    
 
 }
 

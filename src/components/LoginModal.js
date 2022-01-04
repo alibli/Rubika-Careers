@@ -13,16 +13,15 @@ function LoginModal(props) {
     });
 
     async function sendLogin(){
-        const res = await userService.setUserLogin(loginBody.email , loginBody.password);
         try {
+            const res = await userService.setUserLogin(loginBody);
             userService.setUserFirstname(res.data.first_name);
             userService.setUserToken(res.data.token);
         } catch (err) {
             console.log(err);
-            toastService.showToast(res.data , 'danger');
+            toastService.showToast(err , 'danger');
         }
     }
-
 
     const body = <Container>
         <Row>

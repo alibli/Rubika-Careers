@@ -6,8 +6,8 @@ import toastService from "../Service/ToastService";
 
 function SignupModal(props) {
 
-    
-    const [signpBody , setSignup] = useState({
+
+    const [signupBody, setSignup] = useState({
         firstName: '',
         lastName: '',
         email: '',
@@ -15,91 +15,109 @@ function SignupModal(props) {
         confirm: '',
     });
 
-    async function sendSignup(){
-        const res = await userService.setUserSignup(signpBody.firstName , signpBody.lastName , signpBody.email , signpBody.password);
-        try{
-            if(signpBody.password === signpBody.confirm){
-              userService.setUserToken(res.data.token); //token
+    async function sendSignup() {
+        try {
+            
+            const res = await userService.setUserSignup(signupBody);
+            if (signupBody.password === signupBody.confirm) { //validation..
+                userService.setUserToken(res.data.token); //token
             }
         }
-        catch(err){
+        catch (err) {
             console.log(err);
-            toastService.showToast(res.data , 'danger');
+            toastService.showToast(err, 'danger');
         }
     }
 
-    const body = 
-    <Container>
-        <Row>
-            <label htmlFor='firstname'>
-                نام
-            </label>
-            <input
-                className='modal-input'
-                name='firstname'
-                type='text' 
-                value={signpBody.firstName}/>
-        </Row>
 
-        <Row>
-            <label htmlFor='lastname'>
-                نام خانوادگی
-            </label>
-            <input
-                className='modal-input'
-                name='lastname'
-                type='text' 
-                value={signpBody.lastName}/>
-        </Row>
+    async function sendSignup2() {
+        try {
+            const model = { ...signupBody };
+            delete model.confirm;
+            const res = await userService.setUserSignup2({body: model , method: 'post' , url : '/user/register' });
+            if (signupBody.password === signupBody.confirm) { //validation..
+                userService.setUserToken(res.data.token); //token
+            }
+        }
+        catch (err) {
+            console.log(err);
+            toastService.showToast(err, 'danger');
+        }
+    }
 
-        <Row>
 
-            <label htmlFor='password'>
-                رمزعبور
-            </label>
-            <input
-                className='modal-input'
-                name='password'
-                type='password' 
-                value={signpBody.password}/>
-        </Row>
-
-        <Row>
-            <>
-                <label htmlFor='password-confrim'>
-                    تکرار رمزعبور
+    const body =
+        <Container>
+            <Row>
+                <label htmlFor='firstname'>
+                    نام
                 </label>
                 <input
                     className='modal-input'
-                    name='password-confrim'
-                    type='password' 
-                    value={signpBody.confirm}/>
-            </>
-        </Row>
-    </Container>;
+                    name='firstname'
+                    type='text'
+                    value={signupBody.firstName} />
+            </Row>
 
-    const footer = 
-    <>
-        <div
-            className='col-auto'>
+            <Row>
+                <label htmlFor='lastname'>
+                    نام خانوادگی
+                </label>
+                <input
+                    className='modal-input'
+                    name='lastname'
+                    type='text'
+                    value={signupBody.lastName} />
+            </Row>
+
+            <Row>
+
+                <label htmlFor='password'>
+                    رمزعبور
+                </label>
+                <input
+                    className='modal-input'
+                    name='password'
+                    type='password'
+                    value={signupBody.password} />
+            </Row>
+
+            <Row>
+                <>
+                    <label htmlFor='password-confrim'>
+                        تکرار رمزعبور
+                    </label>
+                    <input
+                        className='modal-input'
+                        name='password-confrim'
+                        type='password'
+                        value={signupBody.confirm} />
+                </>
+            </Row>
+        </Container>;
+
+    const footer =
+        <>
+            <div
+                className='col-auto'>
                 <Button onClick={sendSignup}>
                     ثبت‌نام
                 </Button>
-        </div>
+            </div>
 
-        <div className='col-auto'>
-            <p>
-                قبلاً ثبت‌نام کرده‌اید؟
-                <span
-                    style={{
-                        cursor: 'pointer'
-                    }}
-                    onClick={props.onSignupModalShow}>
-                    {' '} وارد شوید
-                </span>
-            </p>
-        </div>
-    </>;
+            <div className='col-auto'>
+                <p>
+                    قبلاً ثبت‌نام کرده‌اید؟
+                    <span
+                        style={{
+                            cursor: 'pointer'
+                        }}
+                        onClick={props.onSignupModalShow}>
+                        {' '} وارد شوید
+                    </span>
+                </p>
+            </div>
+        </>;
 
     return (
         <ModalComponent

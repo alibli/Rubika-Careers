@@ -3,18 +3,35 @@ import { Container, Row, Button } from 'react-bootstrap';
 import apiService from "../Service/APIService";
 import Notification from "./Core/Notification";
 import applicationService from "../Service/ApplicationService";
+import { useState } from "react";
+
+import toastService from "../Service/ToastService";
+import jobsService from "../Service/JobsService";
+ 
 
 function ApplyModal(props) {
 
 
-    const apiTest = apiService.getRequest('url test' , handleRes );
-    function handleRes(data){
+    const apiTest = apiService.getRequest('url test', handleRes);
+    function handleRes(data) {
         console.log('handle');
         <Notification message={'some message'} alertModel={'primary'}></Notification>
     }
 
-    function sendApply(){
-        // applicationService.setUserApply()
+    const [applyObject, setApplyObj] = useState({
+        resume : '',
+        task_solution : '',
+        salary : 0,
+        contract_interest : 0,
+        jobId : 0   //get from jobService
+    })
+
+    async function sendApply() {
+        try {
+            const res = await applicationService.setUserApply(applyObject);
+        } catch (error) {
+            toastService.showToast(error , 'danger');
+        }
     }
 
     const body = <Container>
@@ -26,7 +43,8 @@ function ApplyModal(props) {
                 <input
                     className='modal-input'
                     name='salary-question'
-                    type='text' />
+                    type='text' 
+                    value={applyObject.salary}/>
             </>
         </Row>
 
@@ -37,7 +55,8 @@ function ApplyModal(props) {
             <input
                 className='modal-input'
                 name='years-question'
-                type='text' />
+                type='text' 
+                value={applyObject.contract_interest}/>
         </Row>
 
         <Row>
@@ -49,7 +68,8 @@ function ApplyModal(props) {
                 <input
                     className='modal-input'
                     name='resume'
-                    type='file' />
+                    type='file' 
+                    value={applyObject.resume}/>
             </>
         </Row>
 
@@ -61,7 +81,8 @@ function ApplyModal(props) {
                 <input
                     className='modal-input'
                     name='task-answer'
-                    type='file' />
+                    type='file' 
+                    value={applyObject.task_solution}/>
             </>
         </Row>
     </Container>;

@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import apiModel from "../components/Core/ApiModel";
 const axiosInstance = axios.create({
     baseURL: 'https://0.0.0.0:8000/v1'
 });
@@ -9,16 +9,32 @@ class APIService {
     constructor() {
         axiosInstance.interceptors.request.use(x => {
             x.headers['token'] = localStorage.getItem('token');
-        })
+        });
 
         axiosInstance.interceptors.response.use(x => {
-            x.headers['token'] = localStorage.getItem('token');
         })
     }
-//public
-    async getRequest(url , header , params) {
+
+    async apiCall(apiModel) {
+        switch (apiModel.method) {
+            case 'post':
+                return this.postRequest(apiModel);
+            case 'patch':
+                return this.patchRequest(apiModel);
+            case 'delete':
+                return this.deleteRequest(apiModel);
+            case 'put':
+                return this.putRequest(apiModel);
+            case 'get':
+            default:
+                return this.getRequest(apiModel);
+        }
+    }
+
+    //public
+    async getRequest(url, params , header) {
         try {
-            const res = await axiosInstance.get(url , header , params);
+            const res = await axiosInstance.get(url, params, header);
             return res.json();
         }
         catch (err) {
@@ -35,8 +51,8 @@ class APIService {
         }
     }
 
-//13 dey
-    async putRequest(url, body, header){
+    //13 dey
+    async putRequest(url, body, header) {
         try {
             const res = await axiosInstance.put(url, body, header);
             return res.json();
@@ -45,7 +61,7 @@ class APIService {
         }
     }
 
-    async patchRequest(url, body, header){
+    async patchRequest(url, body, header) {
         try {
             const res = await axiosInstance.patch(url, body, header);
             return res.json();
@@ -54,15 +70,22 @@ class APIService {
         }
     }
 
-    async deleteRequest(url , header){
+    async deleteRequest(url, header) {
         try {
-            const res = await axiosInstance.put(url , header);
+            const res = await axiosInstance.put(url, header);
             return res.json();
         } catch (err) {
             throw err;
         }
     }
-    
+
+    configHeader(headers) {
+        const token = localStorage.getItem('token');
+        if (token) {
+            headers.token = token;
+        }
+        // return res;
+    }
 
 }
 
