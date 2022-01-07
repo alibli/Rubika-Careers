@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import userService from '../Service/UserService';
 import { Dropdown } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap';
+import '../styles/HeaderDropdown.css';
+import toastService from '../Service/ToastService';
 
 function HeaderDropdown() {
 
@@ -11,7 +13,6 @@ function HeaderDropdown() {
     const userObserver = (e) => {
         switch (e.action) {
             case 'USER-LOGIN':
-            case 'USER-LOGOUT':
             case 'STORAGE-CHANGE':
                 const userFirstnameValue = userService.getUserFirstname();
                 setUserFirstname(userFirstnameValue);
@@ -26,13 +27,20 @@ function HeaderDropdown() {
         userService.userSubject.subscribe(userObserver);
 
         return () => {
-            userService.userSubject.unsubscribe(userObserver)
+            userService.userSubject.unsubscribe(userObserver);
         };
 
     }, []);
 
     function onLogout() {
-        userService.logout();
+        const response = userService.logout();
+        response
+            .then(() => {
+                userService.setUserInfo('', '');
+                toastService.showToast('با موفقیت خارج شدید.', 'success');
+            }).catch((err) => {
+                toastService.showToast(err.message, 'danger');
+            })
     }
 
     return (

@@ -3,24 +3,40 @@ import userService from '../Service/UserService';
 import { Container, Row, Button } from 'react-bootstrap';
 import { useState } from "react";
 import toastService from "../Service/ToastService";
-
+import { useNavigate } from 'react-router-dom';
 
 function LoginModal(props) {
+    const navigate = useNavigate();
 
-    const [loginBody, setlogin] = useState({
+    const [loginInfo, setLoginInfo] = useState({
         email: '',
         password: '',
     });
 
-    async function sendLogin(){
-        try {
-            const res = await userService.setUserLogin(loginBody);
-            userService.setUserFirstname(res.data.first_name);
-            userService.setUserToken(res.data.token);
-        } catch (err) {
-            console.log(err);
-            toastService.showToast(err , 'danger');
-        }
+    function userLogin() {
+        const response = userService.login(loginInfo);
+        response
+            .then(({ data }) => {
+                if (data.isAdmin) {
+                    userService.setUserInfo(data.token, 'ادمین');
+                    navigate('/admin-panel');
+                } else {
+                    userService.setUserInfo(data.token, data.first_name);
+                    navigate('/user-panel');
+                }
+
+                toastService.showToast('با موفقیت وارد شدید.', 'success');
+            }).catch((err) => {
+
+                if (err.response) {
+                    if (err.response.status === 400) {
+                        toastService.showToast('اطلاعات وارد شده صحیح نیست.', 'danger');
+                    }
+                    
+                } else {
+                    toastService.showToast(err.message, 'danger');
+                }
+            });
     }
 
     const body = <Container>
@@ -32,7 +48,13 @@ function LoginModal(props) {
                 className='modal-input'
                 name='email'
                 type='email'
-                value={loginBody.email} />
+                onChange={(e) => {
+                    setLoginInfo((prevState) => ({
+                        ...prevState,
+                        email: e.target.value
+                    }))
+                }}
+            />
         </Row>
 
         <Row>
@@ -42,8 +64,14 @@ function LoginModal(props) {
             <input
                 className='modal-input'
                 name='password'
-                type='password' 
-                value={loginBody.password}/>
+                type='password'
+                onChange={(e) => {
+                    setLoginInfo((prevState) => ({
+                        ...prevState,
+                        password: e.target.value
+                    }))
+                }}
+            />
         </Row>
     </Container>;
 
@@ -51,8 +79,9 @@ function LoginModal(props) {
         <div
             className='col-auto'>
             <Button
+                variant="warning"
                 onClick={() => {
-                    userService.login('token', 'علی')
+                    userLogin();
                     props.onHide();
                 }}>
                 ورود

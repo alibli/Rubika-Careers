@@ -2,6 +2,11 @@
     direction: rtl;
 }
 
+.modal-dialog .modal-content {
+    background-color: #803333;
+    color: whitesmoke;
+}
+
 .modal-dialog .modal-content .modal-header,
 .modal-dialog .modal-content .modal-footer {
     border: 0px;
@@ -13,6 +18,14 @@
 }
 
 .row .modal-input {
-    margin-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+
+.row .modal-input:focus {
+    outline: none;
+}
+
+.modal-footer .btn-warning {
+    color: #803333 !important;
 }
 

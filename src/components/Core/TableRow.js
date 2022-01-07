@@ -1,18 +1,23 @@
 import '../../styles/TableRow.css';
 
-function TableRow({ rowList, actions }) {
+function TableRow({ rows, actions }) {
     return (
 
         <tbody>
-            {rowList.map((myRow) =>
-                <tr key={myRow.id} className="alert" role="alert">
-                    {myRow.fields.map((rowField, i) => <td key={i}>{rowField}</td>)}
-
-                    {(actions || []).map((action) => (
-                        <td>
-                            <a onClick={() => { action.onClick(myRow.id) }}>{action.caption}</a>
+            {rows.map((row) =>
+                <tr key={row.id}
+                    className="alert"
+                    role="alert">
+                    {row.fields.map((rowField, index) =>
+                        <td key={index}>
+                            {rowField}
                         </td>
+                    )}
 
+                    {(actions || []).map((action, index) => (
+                        <td key={index}>
+                            {action.caption}
+                        </td>
                     ))}
 
                 </tr>)}

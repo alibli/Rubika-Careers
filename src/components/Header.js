@@ -8,13 +8,19 @@ import { Link } from 'react-router-dom';
 
 function Header() {
 
-    const loggedinValue = userService.getLoggedin();
-    const [loggedin, setLoggedin] = useState(loggedinValue);
+    const isLoggedin = userService.getLoggedin();
+    const [loggedin, setLoggedin] = useState(isLoggedin);
 
     const userObserver = (e) => {
         switch (e.action) {
             case 'USER-LOGIN':
+                setLoggedin(true);
+                break;
+
             case 'USER-LOGOUT':
+                setLoggedin(false);
+                break;
+
             case 'STORAGE-CHANGE':
                 const loggedinValue = userService.getLoggedin();
                 setLoggedin(loggedinValue);
@@ -29,7 +35,7 @@ function Header() {
         userService.userSubject.subscribe(userObserver);
 
         return () => {
-            userService.userSubject.unsubscribe(userObserver)
+            userService.userSubject.unsubscribe(userObserver);
         };
 
     }, [])

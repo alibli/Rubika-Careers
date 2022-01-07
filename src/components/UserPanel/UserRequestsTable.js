@@ -1,57 +1,72 @@
 import '../../styles/UserRequestsTable.css';
-
 import Table from '../Core/Table';
-
 import userService from '../../Service/UserService';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import toastService from '../../Service/ToastService';
+import EditRequestModal from './EditRequestModal';
 
-function UserRequestsTable(){
-    const hList = [
-        { id: 0, name: "عنوان" },
-        { id: 1, name: "تاریخ ارسال" }, 
-        { id: 2, name: "وضعیت" },
-        { id: 3, name: "جزییات" }
+function UserRequestsTable() {
+    const rows = [
+        { id: 0, 
+            fields: ["front-end1", "1/1/1400", "rejected"],
+            details: [5000000, '1 سال', '', '']
+        }
     ];
 
-    const rList = [
-        { id: 0, fields: ["front-end1" , "1/1/1400" , "rejected" ] },
-        { id: 1, fields: ["front-end2" , "1/1/1400" , "rejected" ] }, 
-        { id: 2, fields: ["front-end3" , "1/1/1400" , "rejected" ] },
-        { id: 3, fields: ["front-end4" , "1/1/1400" , "rejected" ] }
-    ];
+    const [applications, setApplications] = useState(rows);
 
-    const actions = [
-        { caption:<i className="fa fa-eye"></i>, onClick:(id)=>{
-// /requestdetails/$(id)
-        }},
+    // useEffect(() => {
+    //     const response = userService.getUserProfile();
+    //     response
+    //         .then(({ data }) => {
+    //             let applicationsArray = [];
+    //             data.applications.forEach(application =>
+    //                 applicationsArray.push({
+    //                     id: application.id,
+    //                     fields: [
+    //                         application.job_title,
+    //                         application.created_at,
+    //                         application.result_status
+    //                     ],
+    //                     details: [
+    //                         application.salary,
+    //                         application.contract_interest,
+    //                         application.resume,
+    //                         application.task_solution
+    //                     ]
+    //                 }));
+    //             setApplications(applicationsArray);
+    //         })
+    //         .catch((err) => {
+    //             toastService.showToast(err.message, 'danger');
+    //         });
+    // }, [])
+
+    const columns = [
+        { id: 1, name: "عنوان" },
+        { id: 2, name: "تاریخ درخواست" },
+        { id: 3, name: "وضعیت" },
+        { id: 4, name: "جزییات" }
     ];
 
     
-
-    useEffect(() => {
-
-        async function userTable() {
-           try {
-               const response = await userService.getUserProfile();
-               if(response){
-                   rList = response.data.applications;
-               }
-
-           } catch (error) {
-            console.log(error);
-            toastService.showToast(error, 'danger');     
-           }
-            
+    const actions = [
+        {
+            caption: <EditRequestModal
+                     btnLabel="ویرایش"/> 
         }
+    ];
 
-    }, []);
 
-
-    return(
-        <div dir='rtl' className='container'>
+    return (
+        <div dir='rtl' className='container user-requests-table'>
             <h3>درخواست ها</h3>
-            <Table actions={actions} headerListMuck={hList} rowListMuck={rList} id='table'></Table>
+            <Table
+                id='table'
+                actions={actions}
+                columns={columns}
+                rows={applications}>
+            </Table>
         </div>
     );
 

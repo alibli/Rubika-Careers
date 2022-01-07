@@ -1,10 +1,14 @@
 import '../../styles/TableHead.css';
-function TableHead({headerList}){
 
-    return(
-        <thead className="">
+function TableHead({columns}) {
+    return (
+        <thead>
             <tr>
-                    {headerList.map((myHeader) => <th key={myHeader.id}>{myHeader.name}</th> )}                        
+                    {columns.map((column) => 
+                    <th key={column.id}>
+                        {column.name}
+                    </th>
+                    )}                        
             </tr>
         </thead>
     );

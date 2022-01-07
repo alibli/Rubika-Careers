@@ -1,34 +1,41 @@
 import apiService from "./APIService";
+import APIModel from "./APIModel";
 
-class ApplicationService{
-    constructor(){
+class ApplicationService {
 
-    }
-
+    //public
     //applicationUserInfo
-    getUserApplicationInfo(token){
+    getUserApplicationInfo(token) {
         return apiService.getRequest('/apply',
-        {headers:{token}},
-        {params:{}} 
+            { headers: { token } },
+            { params: {} }
         );
     }
 
     //apply
-    setUserApply(token , jobId , resume , taskSolution , salary , contractInterest){
-        return apiService.postRequest('/apply',
-        {
-            job_id: jobId,
-            resume: resume,
-            task_solution: taskSolution,
-            salary: salary,
-            contract_interest: contractInterest
+    applyForJob({ job_id, resume, task_Solution, salary, contract_interest }) {
+
+        const apiModel = new APIModel({
+            method: 'post',
+            url: '/apply',
+            body: {
+                applyInfo: {
+                    job_id: job_id,
+                    resume: resume,
+                    task_solution: task_Solution,
+                    salary: salary,
+                    contract_interest: contract_interest
+                }
+            }
         });
+
+        const userApply = apiService.apiCall(apiModel);
+        return userApply;
     }
 
-    
+
 
 }
 
 const applicationService = new ApplicationService();
-
 export default applicationService;

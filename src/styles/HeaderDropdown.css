@@ -1,0 +1,17 @@
+.dropdown .header-dropdown{
+    background-color: #ffc107 !important;
+    text-align: center;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: inherit !important;
+    background-color: transparent !important;
+}
+
+.dropdown-item:hover {
+    color: #803333 !important;
+}
+
+.dropdown-item:hover {
+    background-color: transparent !important;
+}

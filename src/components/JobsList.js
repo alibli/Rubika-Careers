@@ -40,7 +40,7 @@ function JobsList() {
                 }
             })
             .catch(err => {
-                toastService.showToast(err.message , 'warning');
+                toastService.showToast(err.message , 'danger');
             })
         // try {
         //     const response = jobsService.getJobsList();

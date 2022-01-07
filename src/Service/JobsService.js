@@ -3,9 +3,9 @@ import APIModel from './APIModel';
 
 class JobsService {
 
-    async getJobsList(){
+    getJobsList(){
         const apiModel = new APIModel({method: 'get', url: '/jobs'});
-        const jobsList = await apiService.apiCall(apiModel);
+        const jobsList = apiService.apiCall(apiModel);
         return jobsList;
     }
 

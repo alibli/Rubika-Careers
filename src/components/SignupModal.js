@@ -6,44 +6,42 @@ import toastService from "../Service/ToastService";
 
 function SignupModal(props) {
 
-
-    const [signupBody, setSignup] = useState({
-        firstName: '',
-        lastName: '',
+    const [signupInfo, setSignupInfo] = useState({
+        first_name: '',
+        last_name: '',
         email: '',
         password: '',
-        confirm: '',
+        passwordConfirm: '',
     });
 
-    async function sendSignup() {
-        try {
-            
-            const res = await userService.setUserSignup(signupBody);
-            if (signupBody.password === signupBody.confirm) { //validation..
-                userService.setUserToken(res.data.token); //token
-            }
-        }
-        catch (err) {
-            console.log(err);
-            toastService.showToast(err, 'danger');
-        }
+    function userSignup() {
+        const response = userService.signup(signupInfo);
+        response
+            .then((response) => {
+                if (response.status === 200) {
+                    toastService.showToast('ثبت‌نام شما با موفقیت انجام شد.', 'success');
+                    userService.setUserInfo(response.data.token, signupInfo.first_name);
+                }
+            }).catch((err) => {
+                toastService.showToast(err.message, 'danger');
+            });
     }
 
 
-    async function sendSignup2() {
-        try {
-            const model = { ...signupBody };
-            delete model.confirm;
-            const res = await userService.setUserSignup2({body: model , method: 'post' , url : '/user/register' });
-            if (signupBody.password === signupBody.confirm) { //validation..
-                userService.setUserToken(res.data.token); //token
-            }
-        }
-        catch (err) {
-            console.log(err);
-            toastService.showToast(err, 'danger');
-        }
-    }
+    // async function sendSignup2() {
+    //     try {
+    //         const model = { ...signupInfo };
+    //         delete model.confirm;
+    //         const res = await userService.setUserSignup2({ body: model, method: 'post', url: '/user/register' });
+    //         if (signupInfo.password === signupInfo.confirm) { //validation..
+    //             userService.setUserToken(res.data.token); //token
+    //         }
+    //     }
+    //     catch (err) {
+    //         console.log(err);
+    //         toastService.showToast(err, 'danger');
+    //     }
+    // }
 
 
     const body =
@@ -56,7 +54,13 @@ function SignupModal(props) {
                     className='modal-input'
                     name='firstname'
                     type='text'
-                    value={signupBody.firstName} />
+                    onChange={(e) => {
+                        setSignupInfo((prevState) => ({
+                            ...prevState,
+                            first_name: e.target.value
+                        }))
+                    }} 
+                />
             </Row>
 
             <Row>
@@ -67,11 +71,16 @@ function SignupModal(props) {
                     className='modal-input'
                     name='lastname'
                     type='text'
-                    value={signupBody.lastName} />
+                    onChange={(e) => {
+                        setSignupInfo((prevState) => ({
+                            ...prevState,
+                            last_name: e.target.value
+                        }))
+                    }} 
+                />
             </Row>
 
             <Row>
-
                 <label htmlFor='password'>
                     رمزعبور
                 </label>
@@ -79,7 +88,13 @@ function SignupModal(props) {
                     className='modal-input'
                     name='password'
                     type='password'
-                    value={signupBody.password} />
+                    onChange={(e) => {
+                        setSignupInfo((prevState) => ({
+                            ...prevState,
+                            password: e.target.value
+                        }))
+                    }} 
+                />
             </Row>
 
             <Row>
@@ -91,7 +106,13 @@ function SignupModal(props) {
                         className='modal-input'
                         name='password-confrim'
                         type='password'
-                        value={signupBody.confirm} />
+                        onChange={(e) => {
+                            setSignupInfo((prevState) => ({
+                                ...prevState,
+                                passwordConfirm: e.target.value
+                            }))
+                        }} 
+                    />
                 </>
             </Row>
         </Container>;
@@ -100,7 +121,9 @@ function SignupModal(props) {
         <>
             <div
                 className='col-auto'>
-                <Button onClick={sendSignup}>
+                <Button
+                    onClick={userSignup}
+                    variant="warning">
                     ثبت‌نام
                 </Button>
             </div>
@@ -112,7 +135,7 @@ function SignupModal(props) {
                         style={{
                             cursor: 'pointer'
                         }}
-                        onClick={props.onSignupModalShow}>
+                        onClick={props.onLoginModalShow}>
                         {' '} وارد شوید
                     </span>
                 </p>

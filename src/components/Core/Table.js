@@ -1,13 +1,12 @@
 import '../../styles/Table.css'
 import TableRow from './TableRow';
 import TableHead from './TableHead';
-function Table({headerListMuck , rowListMuck,actions}) {
+function Table({columns , rows, actions}) {
 
     return(
         <table dir='rtl' className='table container'>
-            <TableHead headerList={headerListMuck} />
-            <TableRow  rowList={rowListMuck} actions={actions}/>
-            
+            <TableHead columns={columns} />
+            <TableRow  rows={rows} actions={actions}/>
         </table>
 
     );

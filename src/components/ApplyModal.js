@@ -1,75 +1,109 @@
 import ModalComponent from "./Core/ModalComponent";
 import { Container, Row, Button } from 'react-bootstrap';
-import apiService from "../Service/APIService";
-import Notification from "./Core/Notification";
-import applicationService from "../Service/ApplicationService";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
-import toastService from "../Service/ToastService";
-import jobsService from "../Service/JobsService";
- 
 
 function ApplyModal(props) {
+    const {
+        btnLabel,
+        btnHandler,
+        show,
+        onHide,
+        result_state,
+        salary,
+        contract_interest,
+        resume,
+        task_solution
+    } = props;
 
+    const editable =
+        result_state === 'Unknown' || result_state === undefined
+            ? true
+            : false;
 
-    const apiTest = apiService.getRequest('url test', handleRes);
-    function handleRes(data) {
-        console.log('handle');
-        <Notification message={'some message'} alertModel={'primary'}></Notification>
-    }
+    const params = useParams();
 
-    const [applyObject, setApplyObj] = useState({
-        resume : '',
-        task_solution : '',
-        salary : 0,
-        contract_interest : 0,
-        jobId : 0   //get from jobService
+    const [applyInfo, setApplyInfo] = useState({
+        job_id: params.job_id,
+        resume: resume ? resume : '',
+        task_solution: task_solution ? task_solution : '',
+        salary: salary ? salary : 0,
+        contract_interest: contract_interest ? contract_interest : 0,
     })
-
-    async function sendApply() {
-        try {
-            const res = await applicationService.setUserApply(applyObject);
-        } catch (error) {
-            toastService.showToast(error , 'danger');
-        }
-    }
 
     const body = <Container>
         <Row>
             <>
                 <label htmlFor='salary-question'>
-                    حقوق مورد نظر شما:
+                    حقوق مورد نظر شما (تومان)
                 </label>
                 <input
                     className='modal-input'
                     name='salary-question'
-                    type='text' 
-                    value={applyObject.salary}/>
+                    type='number'
+                    style={{
+                        padding: '0 !important',
+                        margin: '0 !important'
+                    }}
+                    disabled={!editable}
+                    value={applyInfo.salary}
+                    onChange={(e) => {
+                        setApplyInfo((prevState) => ({
+                            ...prevState,
+                            salary: e.target.value
+                        }))
+                    }}
+                />
             </>
         </Row>
 
         <Row>
             <label htmlFor='years-question'>
-                پیش‌بینی می‌کنید چه مدت کنار ما باشید؟
+                پیش‌بینی می‌کنید چه مدت در کنار ما باشید؟ (ماه)
             </label>
             <input
                 className='modal-input'
                 name='years-question'
-                type='text' 
-                value={applyObject.contract_interest}/>
+                type='number'
+                style={{
+                    padding: '0 !important',
+                    margin: '0 !important'
+                }}
+                disabled={!editable}
+                value={applyInfo.contract_interest}
+                onChange={(e) => {
+                    setApplyInfo((prevState) => ({
+                        ...prevState,
+                        contract_interest: e.target.value
+                    }))
+                }}
+            />
         </Row>
 
         <Row>
-
             <>
                 <label htmlFor='resume'>
                     رزومه
                 </label>
                 <input
+                    required
                     className='modal-input'
                     name='resume'
-                    type='file' 
-                    value={applyObject.resume}/>
+                    type='file'
+                    accept=".pdf"
+                    disabled={!editable}
+                    value={applyInfo.resume}
+                    onChange={(e) => {
+                        let file = e.target.files[0];
+                        let resumeData = new FormData();
+                        resumeData.append(file.name, file);
+                        setApplyInfo((prevState) => ({
+                            ...prevState,
+                            resume: resumeData
+                        }));
+                    }}
+                />
             </>
         </Row>
 
@@ -79,10 +113,23 @@ function ApplyModal(props) {
                     پاسخ تسک
                 </label>
                 <input
+                    required
                     className='modal-input'
-                    name='task-answer'
-                    type='file' 
-                    value={applyObject.task_solution}/>
+                    name='task_solution'
+                    type='file'
+                    accept=".pdf"
+                    disabled={!editable}
+                    value={applyInfo.task_solution}
+                    onChange={(e) => {
+                        let file = e.target.files[0];
+                        let taskSolutionData = new FormData();
+                        taskSolutionData.append(file.name, file);
+                        setApplyInfo((prevState) => ({
+                            ...prevState,
+                            task_solution: taskSolutionData
+                        }));
+                    }}
+                />
             </>
         </Row>
     </Container>;
@@ -90,8 +137,10 @@ function ApplyModal(props) {
     const footer = <>
         <div
             className='col-auto'>
-            <Button onClick={sendApply}>
-                ارسال
+            <Button
+                onClick={() => btnHandler(applyInfo)}
+                variant="warning">
+                {btnLabel}
             </Button>
         </div>
     </>;
@@ -101,8 +150,8 @@ function ApplyModal(props) {
             size="sm"
             body={body}
             footer={footer}
-            show={props.show}
-            onHide={props.onHide} />
+            show={show}
+            onHide={onHide} />
     );
 }
 
