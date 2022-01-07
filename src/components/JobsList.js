@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import jobsService from '../Service/JobsService';
+import toastService from "../Service/ToastService";
 import '../styles/JobsList.css';
 
 function JobsList() {
@@ -29,10 +30,29 @@ function JobsList() {
 
 
     useEffect(() => {
-        const res = jobsService.getJobsList();
-        if(res) {
-            setJobsList(res);
-        }
+        const response = jobsService.getJobsList();
+        response
+            .then(({ data }) => {
+                if (data.length === 0) {
+                    toastService.showToast('در حال حاضر موقعیت شغلی  فعالی وجود ندارد', 'warning');
+                } else {
+                    setJobsList(data);
+                }
+            })
+            .catch(err => {
+                toastService.showToast(err.message , 'warning');
+            })
+        // try {
+        //     const response = jobsService.getJobsList();
+        //     if (!response.data) {
+        //         toastService.showToast('در حال حاضر موقعیت شغلی فعالی وجود ندارد', 'warning');
+        //     } else {
+        //         setJobsList(response.data);
+        //     }
+        // }
+        // catch (err) {
+        //     toastService.showToast(err.message, 'danger');
+        // }
 
     }, []);
 

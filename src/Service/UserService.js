@@ -1,8 +1,5 @@
 import apiService from "./APIService";
 import Subject from "./Subject";
-
-import apiModel from "../components/Core/ApiModel";
-
 class UserService {
     constructor() {
         const USERTOKEN = window.localStorage.getItem('userToken');
@@ -36,15 +33,16 @@ class UserService {
         if (this.loggedin) {
             return this.userFirstname;
         }
+        console.log('User is not logged in. (getUserFirstname from UserService)');
+        return;
     };
 
     getUserToken = () => {
         if (this.loggedin) {
             return this.userToken;
-        } else if (!this.loggedin) {
-            console.log("User haven't loggedin (from getUserToken in UserService)");
-            return;
         }
+        console.log("User is not logged in (from getUserToken in UserService)");
+        return;
     };
 
     login = (token, firstname) => {
@@ -65,7 +63,6 @@ class UserService {
     };
 
     //private
-
     setUserToken = (token) => {
         this.userToken = token;
         window.localStorage.setItem('userToken', token);

@@ -6,7 +6,6 @@ class ToastService {
     }
 
     //public
-
     showToast = (msg, alrtModel) => {
         this.toastSubject.notify({
             action: 'SHOW-TOAST',
