@@ -1,12 +1,12 @@
 import '../../styles/Table.css'
 import TableRow from './TableRow';
 import TableHead from './TableHead';
-function Table({columns , rows, actions}) {
+function Table({ columns, rows, actions }) {
 
-    return(
+    return (
         <table dir='rtl' className='table container'>
             <TableHead columns={columns} />
-            <TableRow  rows={rows} actions={actions}/>
+            <TableRow rows={rows} />
         </table>
 
     );

@@ -63,40 +63,22 @@ function JobDetails({ jobId }) {
         };
     }, []);
 
+    const getDetails = async () => {
+        try {
+            const jobDetailsResponse = await getDetails(jobId);
+            if (jobDetailsResponse.data.is_deactive ||
+                jobDetailsResponse.data.is_deleted) {
+                toastService.showToast('در حال حاضر موقعیت شغلی مورد نظر فعال نیست', 'warning');
+            } else {
+                setJobDetails(jobDetailsResponse.data);
+            }
+        } catch (err) {
+            toastService.showToast(err.message, 'danger');
+        }
+    }
+
     useEffect(() => {
-        const response = jobsService.getJobDetails(jobId);
-        response
-            .then(({ data }) => {
-                if (data.is_deactive || data.is_deleted) {
-                    toastService.showToast('در حال حاضر موقعیت شغلی مورد نظر فعال نیست', 'warning');
-                } else {
-                    setJobDetails(data);
-                }
-            })
-            .catch(err => {
-                if (err.response) {
-                    if (err.response.status === 404) {
-                        toastService.showToast('موقعیت شغلی مورد نظر یافت نشد', 'warning');
-                    }
-                } else {
-                    toastService.showToast(err.message, 'danger');
-                }
-            })
-        // try {
-        //     const response = jobsService.getJobDetails(jobId);
-        //     const details = response.data;
-        //     if (details) {
-        //         if (details.is_deactive || details.is_deleted) {
-        //             toastService.showToast('در حال حاضر موقعیت شغلی مورد نظر فعال نیست', 'warning');
-        //         } else {
-        //             setJobDetails(details);
-        //         }
-        //     } else {
-        //         toastService.showToast('موقعیت شغلی مورد نظر یافت نشد', 'warning');
-        //     }
-        // } catch (err) {
-        //     toastService.showToast(err.message, 'danger');
-        // }
+        getDetails();
     }, [jobId]);
 
     return (
@@ -106,7 +88,6 @@ function JobDetails({ jobId }) {
                     <div
                         className='job-details'
                         key={job.id}>
-                        <></>
                         <h4>
                             {job.title}
                         </h4>
@@ -122,8 +103,6 @@ function JobDetails({ jobId }) {
                                 </a>
                             </p>
                         </div>
-
-
                         {
                             loggedin
                                 ? <ApplyModalContainer />

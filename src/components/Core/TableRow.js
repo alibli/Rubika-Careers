@@ -14,11 +14,11 @@ function TableRow({ rows, actions }) {
                         </td>
                     )}
 
-                    {(actions || []).map((action, index) => (
-                        <td key={index}>
-                            {action.caption}
+                    {/* {(actions || []).map((action, index) => ( */}
+                        <td>
+                            {row.details}
                         </td>
-                    ))}
+                    {/* ))} */}
 
                 </tr>)}
 

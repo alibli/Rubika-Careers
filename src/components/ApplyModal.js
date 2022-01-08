@@ -10,6 +10,7 @@ function ApplyModal(props) {
         btnHandler,
         show,
         onHide,
+        applicationId,
         result_state,
         salary,
         contract_interest,
@@ -26,8 +27,16 @@ function ApplyModal(props) {
 
     const [applyInfo, setApplyInfo] = useState({
         job_id: params.job_id,
-        resume: resume ? resume : '',
-        task_solution: task_solution ? task_solution : '',
+        resume: resume,
+        newResume: {
+            byteCode: '',
+            format: ''
+        },
+        task_solution: task_solution,
+        new_task_solution: {
+            byteCode: '',
+            format: ''
+        },
         salary: salary ? salary : 0,
         contract_interest: contract_interest ? contract_interest : 0,
     })
@@ -86,24 +95,35 @@ function ApplyModal(props) {
                 <label htmlFor='resume'>
                     رزومه
                 </label>
-                <input
-                    required
-                    className='modal-input'
-                    name='resume'
-                    type='file'
-                    accept=".pdf"
-                    disabled={!editable}
-                    value={applyInfo.resume}
-                    onChange={(e) => {
-                        let file = e.target.files[0];
-                        let resumeData = new FormData();
-                        resumeData.append(file.name, file);
-                        setApplyInfo((prevState) => ({
-                            ...prevState,
-                            resume: resumeData
-                        }));
-                    }}
-                />
+
+                {
+                    applyInfo.resume.length > 0 &&
+                    <a href={applyInfo.resume}>
+                        دانلود
+                    </a>
+                }
+
+                {
+                    editable &&
+                    <input
+                        required={applyInfo.resume.length === 0}
+                        className='modal-input'
+                        name='resume'
+                        type='file'
+                        onChange={(e) => {
+                            let file = e.target.files[0];
+                            let resumeData = new FormData();
+                            resumeData.append(file.name, file);
+                            setApplyInfo((prevState) => ({
+                                ...prevState,
+                                newResume: {
+                                    byteCode: resumeData,
+                                    format: file.type
+                                }
+                            }));
+                        }}
+                    />
+                }
             </>
         </Row>
 
@@ -112,37 +132,55 @@ function ApplyModal(props) {
                 <label htmlFor='task-answer'>
                     پاسخ تسک
                 </label>
-                <input
-                    required
-                    className='modal-input'
-                    name='task_solution'
-                    type='file'
-                    accept=".pdf"
-                    disabled={!editable}
-                    value={applyInfo.task_solution}
-                    onChange={(e) => {
-                        let file = e.target.files[0];
-                        let taskSolutionData = new FormData();
-                        taskSolutionData.append(file.name, file);
-                        setApplyInfo((prevState) => ({
-                            ...prevState,
-                            task_solution: taskSolutionData
-                        }));
-                    }}
-                />
+
+                {
+                    applyInfo.task_solution.length > 0 &&
+                    <a href={applyInfo.task_solution}>
+                        دانلود
+                    </a>
+                }
+
+                {
+                    editable &&
+                    <input
+                        required={applyInfo.task_solution.length === 0}
+                        className='modal-input'
+                        name='task_solution'
+                        type='file'
+                        onChange={(e) => {
+                            let file = e.target.files[0];
+                            let taskSolutionData = new FormData();
+                            taskSolutionData.append(file.name, file);
+                            setApplyInfo((prevState) => ({
+                                ...prevState,
+                                new_task_solution: {
+                                    byteCode: taskSolutionData,
+                                    format: file.type
+                                }
+                            }));
+                        }}
+                    />
+                }
             </>
         </Row>
     </Container>;
 
     const footer = <>
-        <div
-            className='col-auto'>
-            <Button
-                onClick={() => btnHandler(applyInfo)}
-                variant="warning">
-                {btnLabel}
-            </Button>
-        </div>
+        {
+            editable &&
+            <div
+                className='col-auto'>
+                <Button
+                    onClick={() => {
+                        applicationId
+                            ? btnHandler(applyInfo, applicationId)
+                            : btnHandler(applyInfo)
+                    }}
+                    variant="warning">
+                    {btnLabel}
+                </Button>
+            </div>
+        }
     </>;
 
     return (

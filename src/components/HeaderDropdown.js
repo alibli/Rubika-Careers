@@ -4,8 +4,10 @@ import { Dropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import '../styles/HeaderDropdown.css';
 import toastService from '../Service/ToastService';
+import { useNavigate } from 'react-router-dom';
 
 function HeaderDropdown() {
+    const navigate = useNavigate();
 
     const userFirstnameValue = userService.getUserFirstname();
     const [userFirstname, setUserFirstname] = useState(userFirstnameValue);
@@ -32,77 +34,70 @@ function HeaderDropdown() {
 
     }, []);
 
-    function onLogout() {
-        const response = userService.logout();
-        response
-            .then(() => {
-                userService.setUserInfo('', '');
-                toastService.showToast('با موفقیت خارج شدید.', 'success');
-            }).catch((err) => {
-                toastService.showToast(err.message, 'danger');
-            })
+    const logout = async () => {
+        try {
+            const logOutResponse = await userService.logout();
+            userService.setUserInfo('', '');
+            toastService.showToast('با موفقیت خارج شدید.', 'success');
+            navigate('/');
+        } catch (err) {
+            toastService.showToast(err.message, 'danger');
+        }
     }
 
     return (
-        <> {
-            userFirstname === 'ادمین'
-                ?
-                <Dropdown>
-                    <Dropdown.Toggle
-                        variant="warning"
-                        id="dropdown-basic">
-                        سلام ادمین
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className="header-dropdown">
-                        <LinkContainer to='/job-positions'>
-                            <Dropdown.Item>
-                                موقعیت های شغلی
-                            </Dropdown.Item>
-                        </LinkContainer>
-
-                        <LinkContainer to="/">
+        <>
+            {
+                userFirstname === 'ادمین'
+                    ?
+                    <Dropdown>
+                        <Dropdown.Toggle
+                            variant="warning"
+                            id="dropdown-basic">
+                            سلام ادمین
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu className="header-dropdown">
+                            <LinkContainer to='/job-positions'>
+                                <Dropdown.Item>
+                                    موقعیت های شغلی
+                                </Dropdown.Item>
+                            </LinkContainer>
                             <Dropdown.Item
-                                onClick={onLogout}>
+                                onClick={logout}>
                                 خروج
                             </Dropdown.Item>
-                        </LinkContainer>
-                    </Dropdown.Menu>
-                </Dropdown>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    :
+                    <Dropdown>
+                        <Dropdown.Toggle
+                            variant="warning"
+                            id="dropdown-basic">
+                            {'سلام ' + userFirstname}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu className="header-dropdown">
+                            <LinkContainer to='/user-info'>
+                                <Dropdown.Item>
+                                    مشخصات
+                                </Dropdown.Item>
 
-                :
-                <Dropdown>
-                    <Dropdown.Toggle
-                        variant="warning"
-                        id="dropdown-basic">
-                        {'سلام ' + userFirstname}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className="header-dropdown">
-                        <LinkContainer to='/job-details'>
-                            <Dropdown.Item>
-                                مشخصات
-                            </Dropdown.Item>
-
-                        </LinkContainer>
-                        <LinkContainer to="/job-details">
-                            <Dropdown.Item>
-                                درخواست‌ها
-                            </Dropdown.Item>
-                        </LinkContainer>
-                        <LinkContainer to="/">
-                            <Dropdown.Item
-                                onClick={onLogout}>
-                                خروج
-                            </Dropdown.Item>
-                        </LinkContainer>
-                    </Dropdown.Menu>
-                </Dropdown>
-        }
+                            </LinkContainer>
+                            <LinkContainer to="/user-panel">
+                                <Dropdown.Item>
+                                    درخواست‌ها
+                                </Dropdown.Item>
+                            </LinkContainer>
+                            <LinkContainer to="/">
+                                <Dropdown.Item
+                                    onClick={logout}>
+                                    خروج
+                                </Dropdown.Item>
+                            </LinkContainer>
+                        </Dropdown.Menu>
+                    </Dropdown>
+            }
         </>
-
-
     );
-
-
 }
 
 export default HeaderDropdown;

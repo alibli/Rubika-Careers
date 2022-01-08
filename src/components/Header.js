@@ -43,11 +43,9 @@ function Header() {
     return (
         <nav dir='rtl' className="navbar navbar-expand-lg static-top">
             <div className="container">
-
                 <Link to="/">
                     <img src={logo} alt="Rubika" height="36" />
                 </Link>
-
                 {
                     loggedin
                         ? <HeaderDropdown />
@@ -57,7 +55,6 @@ function Header() {
                             variant="warning" />
                 }
             </div>
-
         </nav>
     )
 }

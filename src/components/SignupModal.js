@@ -3,46 +3,38 @@ import { Container, Row, Button } from 'react-bootstrap';
 import userService from "../Service/UserService";
 import { useState } from "react";
 import toastService from "../Service/ToastService";
+import { useNavigate } from 'react-router-dom';
 
 function SignupModal(props) {
+    const navigate = useNavigate();
 
     const [signupInfo, setSignupInfo] = useState({
-        first_name: '',
-        last_name: '',
+        firstname: '',
+        lastname: '',
         email: '',
         password: '',
         passwordConfirm: '',
     });
 
-    function userSignup() {
-        const response = userService.signup(signupInfo);
-        response
-            .then((response) => {
-                if (response.status === 200) {
-                    toastService.showToast('ثبت‌نام شما با موفقیت انجام شد.', 'success');
-                    userService.setUserInfo(response.data.token, signupInfo.first_name);
-                }
-            }).catch((err) => {
-                toastService.showToast(err.message, 'danger');
-            });
+    async function userSignup() {
+        try {
+            const signupRequestBody = {
+                firstname: signupInfo.firstname,
+                lastname: signupInfo.lastname,
+                email: signupInfo.email,
+                password: signupInfo.password
+            }
+            const signupResponse = await userService.signup(signupRequestBody);
+            const { data, status } = signupResponse;
+            if (status === 200) {
+                toastService.showToast('ثبت‌نام شما با موفقیت انجام شد.', 'success');
+                userService.setUserInfo(data.token, signupInfo.firstname);
+                navigate('/user-panel');
+            }
+        } catch (err) {
+            toastService.showToast(err.message, 'danger');
+        }
     }
-
-
-    // async function sendSignup2() {
-    //     try {
-    //         const model = { ...signupInfo };
-    //         delete model.confirm;
-    //         const res = await userService.setUserSignup2({ body: model, method: 'post', url: '/user/register' });
-    //         if (signupInfo.password === signupInfo.confirm) { //validation..
-    //             userService.setUserToken(res.data.token); //token
-    //         }
-    //     }
-    //     catch (err) {
-    //         console.log(err);
-    //         toastService.showToast(err, 'danger');
-    //     }
-    // }
-
 
     const body =
         <Container>
@@ -57,9 +49,9 @@ function SignupModal(props) {
                     onChange={(e) => {
                         setSignupInfo((prevState) => ({
                             ...prevState,
-                            first_name: e.target.value
+                            firstname: e.target.value
                         }))
-                    }} 
+                    }}
                 />
             </Row>
 
@@ -74,9 +66,9 @@ function SignupModal(props) {
                     onChange={(e) => {
                         setSignupInfo((prevState) => ({
                             ...prevState,
-                            last_name: e.target.value
+                            lastname: e.target.value
                         }))
-                    }} 
+                    }}
                 />
             </Row>
 
@@ -93,7 +85,7 @@ function SignupModal(props) {
                             ...prevState,
                             password: e.target.value
                         }))
-                    }} 
+                    }}
                 />
             </Row>
 
@@ -111,7 +103,7 @@ function SignupModal(props) {
                                 ...prevState,
                                 passwordConfirm: e.target.value
                             }))
-                        }} 
+                        }}
                     />
                 </>
             </Row>

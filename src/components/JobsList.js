@@ -28,32 +28,22 @@ function JobsList() {
 
     const [jobsList, setJobsList] = useState([]);
 
+    const getJobs = async () => {
+        try {
+            const response = await jobsService.getJobsList();
+            if (response.data.length === 0) {
+                toastService.showToast('در حال حاضر موقعیت شغلی فعالی وجود ندارد', 'warning');
+            } else {
+                setJobsList(response.data);
+            }
+        }
+        catch (err) {
+            toastService.showToast(err.message, 'danger');
+        }
+    }
 
     useEffect(() => {
-        const response = jobsService.getJobsList();
-        response
-            .then(({ data }) => {
-                if (data.length === 0) {
-                    toastService.showToast('در حال حاضر موقعیت شغلی  فعالی وجود ندارد', 'warning');
-                } else {
-                    setJobsList(data);
-                }
-            })
-            .catch(err => {
-                toastService.showToast(err.message , 'danger');
-            })
-        // try {
-        //     const response = jobsService.getJobsList();
-        //     if (!response.data) {
-        //         toastService.showToast('در حال حاضر موقعیت شغلی فعالی وجود ندارد', 'warning');
-        //     } else {
-        //         setJobsList(response.data);
-        //     }
-        // }
-        // catch (err) {
-        //     toastService.showToast(err.message, 'danger');
-        // }
-
+        getJobs();
     }, []);
 
 
@@ -75,9 +65,7 @@ function JobsList() {
                             </Link>
                         </div>
                     ))
-
                 }
-
             </div>
         </>
     );

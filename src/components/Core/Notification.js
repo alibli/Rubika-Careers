@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import '../../styles/Notification.css';
 import toastService from '../../Service/ToastService';
 

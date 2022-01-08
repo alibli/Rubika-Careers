@@ -24,8 +24,6 @@ function App() {
           <Route path="user-panel" element={<UserRequestsTable />} />
           <Route path="admin-panel" element={<AdminJobs />} />
           <Route path="test4" element={<AdminJobRequestDetails />} />
-
-          
           
         </Routes>
         

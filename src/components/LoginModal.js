@@ -13,30 +13,27 @@ function LoginModal(props) {
         password: '',
     });
 
-    function userLogin() {
-        const response = userService.login(loginInfo);
-        response
-            .then(({ data }) => {
-                if (data.isAdmin) {
-                    userService.setUserInfo(data.token, 'ادمین');
-                    navigate('/admin-panel');
-                } else {
-                    userService.setUserInfo(data.token, data.first_name);
-                    navigate('/user-panel');
+    async function userLogin() {
+        try {
+            const loginResponse = await userService.login(loginInfo);
+            const { data } = loginResponse;
+            if (data.isAdmin) {
+                userService.setUserInfo(data.token, 'ادمین');
+                navigate('/admin-panel');
+            } else {
+                userService.setUserInfo(data.token, data.first_name);
+                navigate('/user-panel');
+            }
+            toastService.showToast('با موفقیت وارد شدید.', 'success');
+        } catch (err) {
+            if (err.response) {
+                if (err.response.status === 400) {
+                    toastService.showToast('اطلاعات وارد شده صحیح نیست.', 'danger');
                 }
-
-                toastService.showToast('با موفقیت وارد شدید.', 'success');
-            }).catch((err) => {
-
-                if (err.response) {
-                    if (err.response.status === 400) {
-                        toastService.showToast('اطلاعات وارد شده صحیح نیست.', 'danger');
-                    }
-                    
-                } else {
-                    toastService.showToast(err.message, 'danger');
-                }
-            });
+            } else {
+                toastService.showToast(err.message, 'danger');
+            }
+        }
     }
 
     const body = <Container>

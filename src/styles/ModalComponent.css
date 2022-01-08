@@ -14,6 +14,7 @@
 
 .row > * {
     padding-right: 0px !important;
+    padding-left: 0px !important;
     padding-bottom: 0.25em;
 }
 

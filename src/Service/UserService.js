@@ -3,25 +3,25 @@ import Subject from "./Subject";
 import APIModel from "./APIModel";
 class UserService {
     constructor() {
-        const USERTOKEN = window.localStorage.getItem('userToken');
+        const localStorageToken = window.localStorage.getItem('userToken');
 
-        this.loggedin = USERTOKEN ? true : false;
-        // this.loggedin = true;
+        // this.loggedin = USERTOKEN ? true : false;
+        this.loggedin = true;
 
-        this.userToken = USERTOKEN ? USERTOKEN : '';
+        this.userToken = localStorageToken ? localStorageToken : '';
 
-        const USERFIRSTNAME = window.localStorage.getItem('userFirstname');
-        this.userFirstname = USERFIRSTNAME ? USERFIRSTNAME : '';
+        const localStorageFirstname = window.localStorage.getItem('userFirstname');
+        this.userFirstname = localStorageFirstname ? localStorageFirstname : '';
 
         this.userSubject = new Subject();
 
         window.onstorage = () => {
-            const USERTOKENREFRESH = window.localStorage.getItem('userToken');
-            this.setLoggedin(USERTOKENREFRESH ? true : false);
-            this.setUserToken(USERTOKENREFRESH ? USERTOKENREFRESH : '');
+            const refereshedLocalStorageToken = window.localStorage.getItem('userToken');
+            this.setLoggedin(refereshedLocalStorageToken ? true : false);
+            this.setUserToken(refereshedLocalStorageToken ? refereshedLocalStorageToken : '');
 
-            const USERFIRSTNAME = window.localStorage.getItem('userFirstname');
-            this.setUserFirstname(USERFIRSTNAME ? USERFIRSTNAME : '');
+            const refereshedLocalStorageFirstname = window.localStorage.getItem('userFirstname');
+            this.setUserFirstname(refereshedLocalStorageFirstname ? refereshedLocalStorageFirstname : '');
 
             this.userSubject.notify({ action: 'STORAGE-CHANGE' });
         }
@@ -40,7 +40,7 @@ class UserService {
         return;
     };
 
-    login({email, password}) {
+    login({ email, password }) {
         const apiModel = new APIModel({
             method: 'post',
             url: '/user/login',
@@ -51,18 +51,18 @@ class UserService {
                 }
             }
         });
-        const response = apiService.apiCall(apiModel);
-        return response;
+        const loginResponse = apiService.apiCall(apiModel);
+        return loginResponse;
     }
 
-    signup({first_name, last_name, email, password}) {
+    signup({ firstname, lastname, email, password }) {
         const apiModel = new APIModel({
             method: 'post',
             url: '/user/register',
             body: {
                 createUserInfo: {
-                    first_name: first_name,
-                    last_name: last_name,
+                    first_name: firstname,
+                    last_name: lastname,
                     email: email,
                     password: password
                 }
@@ -91,8 +91,18 @@ class UserService {
             method: 'get',
             url: '/user/profile',
         });
-        const userProfile = apiService.getRequest(apiModel);
+        const userProfile = apiService.apiCall(apiModel);
         return userProfile;
+    }
+
+    userEditResume() {
+        const apiModel = new APIModel({
+            method: 'get',
+            url: '/user/profile',
+        });
+        const userProfile = apiService.apiCall(apiModel);
+        return userProfile;
+
     }
 
     //private
@@ -117,7 +127,7 @@ class UserService {
     setLoggedin = (value) => {
         if (typeof (value) === 'boolean') {
             this.loggedin = value;
-            if(value) {
+            if (value) {
                 this.userSubject.notify({ action: 'USER-LOGIN' });
             } else {
                 this.userSubject.notify({ action: 'USER-LOGOUT' });
@@ -174,7 +184,7 @@ class UserService {
     }
 
     //userProfile
-    
+
 
 
     setUserDelete(token) {

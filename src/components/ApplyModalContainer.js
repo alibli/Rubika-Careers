@@ -11,9 +11,10 @@ function ApplyModalContainer() {
     async function apply(applyInfo) {
         const response = applicationService.applyForJob(applyInfo);
         response
-            .then(({ data }) => {
-                if (data.response === 200) {
+            .then(({ status }) => {
+                if (status === 200) {
                     toastService.showToast('درخواست شما با موفقیت ارسال شد', 'success');
+                    setApplyModalShow(false);
                 }
             }).catch((err) => {
                 if (err.response) {
@@ -28,11 +29,12 @@ function ApplyModalContainer() {
 
     return (
         <div className='apply-modal'>
+
             <Button
-            id="apply" 
-            className='apply-btn'
-            variant='danger'
-            onClick={() => setApplyModalShow(true)}>
+                id="apply"
+                className='apply-btn'
+                variant='danger'
+                onClick={() => setApplyModalShow(true)}>
                 درخواست
             </Button>
 

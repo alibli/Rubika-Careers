@@ -2,20 +2,18 @@ import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import '../styles/LoginSignupModal.css'
+import '../styles/LoginSignupModal.css';
 
 function LoginSignupModal(props) {
     const [loginModalShow, setLoginModalShow] = useState(false);
-
     const [signupModalShow, setSignupModalShow] = useState(false);
-
 
     return (
         <div className='login-signup-modal'>
             <Button
                 className='btn'
                 variant={props.variant}
-                id={props.id}
+                id={props.id} //required for styling
                 onClick={() => setLoginModalShow(true)}>
                 {props.buttonLabel}
             </Button>

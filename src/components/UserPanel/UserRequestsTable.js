@@ -3,13 +3,35 @@ import Table from '../Core/Table';
 import userService from '../../Service/UserService';
 import { useEffect, useState } from 'react';
 import toastService from '../../Service/ToastService';
-import EditRequestModal from './EditRequestModal';
+import EditApplyModal from './EditApplyModal';
 
 function UserRequestsTable() {
     const rows = [
-        { id: 0, 
-            fields: ["front-end1", "1/1/1400", "rejected"],
-            details: [5000000, '1 سال', '', '']
+        {
+            id: 0,
+            fields: ["front-end", "1/1/1400", "Unknown"],
+            details:
+                <EditApplyModal
+                    applicationId='0'
+                    result_state="Unknown"
+                    salary={5000000}
+                    contract_interest={36}
+                    resume='https://www.google.com/search?q=resume&oq=resume&aqs=chrome..69i57.1182j0j7&sourceid=chrome&ie=UTF-8'
+                    task_solution='https://www.google.com/search?q=task+solution&sxsrf=AOaemvKcnmXOUcWSYUg7CdK0r5u3IW0qPQ%3A1641632069286&ei=RVHZYaDUEJGO9u8Px8KJ4Ao&ved=0ahUKEwjgit2C5KH1AhURh_0HHUdhAqwQ4dUDCA8&uact=5&oq=task+solution&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEIAEMgUIABCABDIFCAAQgAQyBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjoHCAAQRxCwAzoHCAAQsAMQQzoECCMQJzoECAAQQzoHCCMQ6gIQJzoLCC4QgAQQxwEQ0QM6CgguEMcBEKMCEEM6CgguEMcBENEDEEM6BAguEEM6BQguEIAEOgUIABCRAjoHCAAQgAQQCjoKCAAQgAQQhwIQFDoICAAQgAQQyQNKBAhBGABKBAhGGABQ1QxYoDRg7TZoBnACeASAAYEDiAGnIpIBCDAuMTQuNi4ymAEAoAEBsAEKyAEKwAEB&sclient=gws-wiz'
+                />
+        },
+        {
+            id: 1,
+            fields: ["UI/UX", "10/7/1400", "rejected"],
+            details:
+                <EditApplyModal
+                    applicationId='1'
+                    result_state="rejected"
+                    salary={6000000}
+                    contract_interest={24}
+                    resume='https://www.google.com/search?q=resume&oq=resume&aqs=chrome..69i57.1182j0j7&sourceid=chrome&ie=UTF-8'
+                    task_solution='https://www.google.com/search?q=task+solution&sxsrf=AOaemvKcnmXOUcWSYUg7CdK0r5u3IW0qPQ%3A1641632069286&ei=RVHZYaDUEJGO9u8Px8KJ4Ao&ved=0ahUKEwjgit2C5KH1AhURh_0HHUdhAqwQ4dUDCA8&uact=5&oq=task+solution&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEIAEMgUIABCABDIFCAAQgAQyBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjoHCAAQRxCwAzoHCAAQsAMQQzoECCMQJzoECAAQQzoHCCMQ6gIQJzoLCC4QgAQQxwEQ0QM6CgguEMcBEKMCEEM6CgguEMcBENEDEEM6BAguEEM6BQguEIAEOgUIABCRAjoHCAAQgAQQCjoKCAAQgAQQhwIQFDoICAAQgAQQyQNKBAhBGABKBAhGGABQ1QxYoDRg7TZoBnACeASAAYEDiAGnIpIBCDAuMTQuNi4ymAEAoAEBsAEKyAEKwAEB&sclient=gws-wiz'
+                />
         }
     ];
 
@@ -28,12 +50,14 @@ function UserRequestsTable() {
     //                         application.created_at,
     //                         application.result_status
     //                     ],
-    //                     details: [
-    //                         application.salary,
-    //                         application.contract_interest,
-    //                         application.resume,
-    //                         application.task_solution
-    //                     ]
+    //                     details:
+    //                         <EditApplyModal
+    //                                 applicationId={application.id}
+    //                             result_state={application.fields[2]}
+    //                             salary={application.details[0]}
+    //                             contract_interest={application.details[1]}
+    //                             resume={application.details[2]}
+    //                             task_solution={application.details[3]} />
     //                 }));
     //             setApplications(applicationsArray);
     //         })
@@ -49,21 +73,11 @@ function UserRequestsTable() {
         { id: 4, name: "جزییات" }
     ];
 
-    
-    const actions = [
-        {
-            caption: <EditRequestModal
-                     btnLabel="ویرایش"/> 
-        }
-    ];
-
-
     return (
         <div dir='rtl' className='container user-requests-table'>
             <h3>درخواست ها</h3>
             <Table
                 id='table'
-                actions={actions}
                 columns={columns}
                 rows={applications}>
             </Table>
