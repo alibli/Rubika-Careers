@@ -5,48 +5,46 @@ import { Row, Button } from 'react-bootstrap';
 import '../../styles/UserInfo.css';
 
 function UserInfo() {
-    const userInfoValue = {
-        firstname: '‍پریناز',
-        lastname: 'ستایشگر',
-        resume: 'https://www.google.com/search?q=resume&oq=resume&aqs=chrome..69i57.1182j0j7&sourceid=chrome&ie=UTF-8',
-        newResume: {
-            byteCode: '',
-            format: '',
-        }
-    }
-
-    const [userInfo, setUserInfo] = useState(userInfoValue);
-    const [editing, setEditing] = useState(false);
 
     // const [userInfo, setUserInfo] = useState({
     //     firstname: '',
     //     lastname: '',
-    //     resume: '',
-    //     newResume: {
+    //     resumeLink: '',
+    //     newResumeFile: {
     //         byteCode: '',
     //         format: '',
     //     }
     // });
 
+    const [userInfo, setUserInfo] = useState({
+        firstname: 'پریناز',
+        lastname: 'ستایشگر',
+        resumeLink: 'https://www.google.com/search?q=resume&oq=resume&aqs=chrome.0.69i59.2049j0j7&sourceid=chrome&ie=UTF-8',
+        newResumeFile: {
+            byteCode: '',
+            format: '',
+        }
+    });
 
+    const [editingInfo, setEditingInfo] = useState(false);
+
+    async function getUserInfo() {
+        try {
+            const userProfileRes = await userService.getUserProfile();
+            const { data } = userProfileRes;
+            setUserInfo((prevState) => ({
+                ...prevState,
+                firstname: data.first_name,
+                lastname: data.last_name,
+                resumeLink: data.resume
+            }));
+        } catch (err) {
+            toastService.showToast(err.message, 'danger');
+        }
+    }
 
     // useEffect(() => {
-    //     const response = userService.getUserProfile();
-    //     response
-    //         .then(({ data }) => {
-    //             setUserInfo({
-    //                 firstname: data.first_name,
-    //                 lastname: data.last_name,
-    //                 resume: data.resume,
-    //                 newResume: {
-    //                     byteCode: '',
-    //                     format: '',
-    //                 }
-    //             })
-    //         })
-    //         .catch((err) => {
-    //             toastService.showToast(err.message, 'danger');
-    //         });
+    //     getUserInfo();
     // }, [])
 
     return (
@@ -59,7 +57,7 @@ function UserInfo() {
                     className='modal-input'
                     name='firstname'
                     type='text'
-                    disabled={true}
+                    disabled='true'
                     value={userInfo.firstname}
                 />
             </Row>
@@ -72,7 +70,7 @@ function UserInfo() {
                     className='modal-input'
                     name='lastname'
                     type='text'
-                    disabled={true}
+                    disabled='true'
                     value={userInfo.lastname}
                 />
             </Row>
@@ -83,16 +81,15 @@ function UserInfo() {
                 </label>
 
                 {
-                    userInfo.resume.length > 0 &&
-                    <a href={userInfo.resume}>
+                    userInfo.resumeLink.length > 0 &&
+                    <a href={userInfo.resumeLink}>
                         دانلود
                     </a>
                 }
 
                 {
-                    editing &&
+                    editingInfo &&
                     <input
-                        required={userInfo.resume.length === 0}
                         className='modal-input'
                         name='resume'
                         type='file'
@@ -102,7 +99,7 @@ function UserInfo() {
                             resumeData.append(file.name, file);
                             setUserInfo((prevState) => ({
                                 ...prevState,
-                                newResume: {
+                                newResumeFile: {
                                     byteCode: resumeData,
                                     format: file.type
                                 }
@@ -114,21 +111,21 @@ function UserInfo() {
 
             </Row>
 
-                <Button
-                    onClick={() => {
-                        if (!editing) {
-                            setEditing(true);
-                        } else {
+            <Button
+                onClick={() => {
+                    if (!editingInfo) {
+                        setEditingInfo(true);
+                    } else {
 
-                        }
-                    }}
-                    variant="warning">
-                    {
-                        editing 
-                        ? 'ثبت'
-                        : 'ویرایش رزومه'
                     }
-                </Button>
+                }}
+                variant="warning">
+                {
+                    editingInfo
+                        ? 'ثبت'
+                        : 'بارگذاری رزومه'
+                }
+            </Button>
 
         </div>
     );

@@ -2,6 +2,7 @@ import ApplyModal from '../ApplyModal';
 import { useState } from 'react';
 import applicationService from '../../Service/ApplicationService';
 import toastService from '../../Service/ToastService';
+import '../../styles/EditApplyModalContainer.css'
 
 function EditApplyModalContainer(props) {
 

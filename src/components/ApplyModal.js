@@ -80,7 +80,7 @@ function ApplyModal(props) {
                 </label>
 
                 {
-                    props.resumeURL && 
+                    props.resumeURL &&
                     props.resumeURL.length > 0 &&
                     <a href={props.resumeURL}>
                         دانلود

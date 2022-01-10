@@ -23,6 +23,7 @@ function UserApplicationsTable() {
             details:
                 <EditApplyModalContainer
                     applicationId='0'
+                    jobId='1'
                     applyState="Unknown"
                     salaryInterest={5000000}
                     durationInterest={36}
@@ -46,6 +47,7 @@ function UserApplicationsTable() {
             details:
                 <EditApplyModalContainer
                     applicationId='1'
+                    jobId='0'
                     applyState="rejected"
                     salaryInterest={6000000}
                     durationInterest={24}
@@ -64,7 +66,7 @@ function UserApplicationsTable() {
     //         let customApplicationsArr = [];
     //         data.applications.forEach(application =>
     //             customApplicationsArr.push({
-    //                 id: application.id,
+    //                 id: application.id
     //                 fields: [
     //                     {
     //                         jobTitle: application.job_title
