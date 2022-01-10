@@ -20,7 +20,7 @@ function UserApplicationsTable() {
                     applyState: "Unknown"
                 }
             ],
-            details:
+            detailsModal:
                 <EditApplyModalContainer
                     applicationId='0'
                     jobId='1'
@@ -44,7 +44,7 @@ function UserApplicationsTable() {
                     applyState: "rejected"
                 }
             ],
-            details:
+            detailsModal:
                 <EditApplyModalContainer
                     applicationId='1'
                     jobId='0'
@@ -78,7 +78,7 @@ function UserApplicationsTable() {
     //                         applyState: application.result_status
     //                     }
     //                 ],
-    //                 details:
+    //                 detailsModal:
     //                     <EditApplyModalContainer
     //                         applicationId={application.id}
     //                         applyState={application.created_at}

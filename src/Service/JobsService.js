@@ -15,6 +15,13 @@ class JobsService {
         return jobDetails;
     }
 
+    getAdminJobsList(){
+        const apiModel = new APIModel({method: 'get', url: '/admin-panel'});
+        const adminJobsList = apiService.apiCall(apiModel);
+        return adminJobsList;
+    }
+
+
 
     setAdminNewJob(token , title , description , task , isDeactive){
         return apiService.postRequest('/jobs/add' ,

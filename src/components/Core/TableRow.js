@@ -1,6 +1,6 @@
 import '../../styles/TableRow.css';
 
-function TableRow({ rows, actions }) {
+function TableRow({ rows }) {
     return (
 
         <tbody>
@@ -14,8 +14,29 @@ function TableRow({ rows, actions }) {
                         </td>
                     )}
 
+
                     <td>
-                        {row.details}
+                        {
+                            row.applicationsCountModal
+                                ? row.applicationsCountModal
+                                : <></>
+                        }
+                    </td>
+
+                    <td>
+                        {
+                            row.detailsModal
+                                ? row.detailsModal
+                                : <></>
+                        }
+                    </td>
+
+                    <td>
+                        {
+                            row.editModal
+                                ? row.editModal
+                                : <></>
+                        }
                     </td>
 
                 </tr>)}
