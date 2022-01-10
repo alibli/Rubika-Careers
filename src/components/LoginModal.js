@@ -13,7 +13,7 @@ function LoginModal(props) {
         password: '',
     });
 
-    async function userLogin() {
+    async function login() {
         try {
             const loginResponse = await userService.login(loginInfo);
             const { data } = loginResponse;
@@ -78,7 +78,7 @@ function LoginModal(props) {
             <Button
                 variant="warning"
                 onClick={() => {
-                    userLogin();
+                    login();
                     props.onHide();
                 }}>
                 ورود

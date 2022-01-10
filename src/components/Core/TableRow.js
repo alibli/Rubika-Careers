@@ -8,17 +8,15 @@ function TableRow({ rows, actions }) {
                 <tr key={row.id}
                     className="alert"
                     role="alert">
-                    {row.fields.map((rowField, index) =>
+                    {row.fields.map((field, index) =>
                         <td key={index}>
-                            {rowField}
+                            {field[Object.keys(field)[0]]}
                         </td>
                     )}
 
-                    {/* {(actions || []).map((action, index) => ( */}
-                        <td>
-                            {row.details}
-                        </td>
-                    {/* ))} */}
+                    <td>
+                        {row.details}
+                    </td>
 
                 </tr>)}
 

@@ -7,32 +7,32 @@ import toastService from '../Service/ToastService';
 import { useState, useEffect } from 'react';
 import '../styles/JobDetails.css';
 
-function JobDetails({ jobId }) {
-    // const jobsListValue = [
-    //     {
-    //         id: 1,
-    //         title: 'برنامه‌نویس ارشد فرانت',
-    //         description: 'نیازمندی‌ها...',
-    //         taskURL: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
-    //     },
-    //     {
-    //         id: 2,
-    //         title: 'دیجیتال مارکتر',
-    //         description: 'نیازمندی‌ها...',
-    //         taskURL: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
-    //     },
-    //     {
-    //         id: 3,
-    //         title: 'کارشناس منابع انسانی',
-    //         description: 'نیازمندی‌ها...',
-    //         taskURL: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
-    //     },
-    // ];
+function JobDetails(props) {
+    const jobsListValue = [
+        {
+            id: 1,
+            title: 'برنامه‌نویس ارشد فرانت',
+            description: 'نیازمندی‌ها...',
+            taskURL: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
+        },
+        {
+            id: 2,
+            title: 'دیجیتال مارکتر',
+            description: 'نیازمندی‌ها...',
+            taskURL: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
+        },
+        {
+            id: 3,
+            title: 'کارشناس منابع انسانی',
+            description: 'نیازمندی‌ها...',
+            taskURL: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
+        },
+    ];
 
     const isLoggedin = userService.getLoggedin();
     const [loggedin, setLoggedin] = useState(isLoggedin);
 
-    const [jobDetails, setJobDetails] = useState([]);
+    const [jobDetails, setJobDetails] = useState([jobsListValue[0]]);
 
 
     const userObserver = (e) => {
@@ -63,9 +63,9 @@ function JobDetails({ jobId }) {
         };
     }, []);
 
-    const getDetails = async () => {
+    async function getJobDetails() {
         try {
-            const jobDetailsResponse = await getDetails(jobId);
+            const jobDetailsResponse = await getJobDetails(props.jobId);
             if (jobDetailsResponse.data.is_deactive ||
                 jobDetailsResponse.data.is_deleted) {
                 toastService.showToast('در حال حاضر موقعیت شغلی مورد نظر فعال نیست', 'warning');
@@ -77,9 +77,9 @@ function JobDetails({ jobId }) {
         }
     }
 
-    useEffect(() => {
-        getDetails();
-    }, [jobId]);
+    // useEffect(() => {
+    //     getJobDetails();
+    // }, [jobId]);
 
     return (
         <>
@@ -105,7 +105,7 @@ function JobDetails({ jobId }) {
                         </div>
                         {
                             loggedin
-                                ? <ApplyModalContainer />
+                                ? <ApplyModalContainer jobId={props.jobId}/>
                                 : <LoginSignupModal
                                     buttonLabel="درخواست"
                                     variant="danger"
@@ -114,7 +114,6 @@ function JobDetails({ jobId }) {
                     </div >
                 ))
             }
-
         </>
     );
 }

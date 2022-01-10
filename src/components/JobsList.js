@@ -28,13 +28,14 @@ function JobsList() {
 
     const [jobsList, setJobsList] = useState([]);
 
-    const getJobs = async () => {
+    const getJobsList = async () => {
         try {
-            const response = await jobsService.getJobsList();
-            if (response.data.length === 0) {
+            const jobsListRes = await jobsService.getJobsList();
+            const { data } = jobsListRes;
+            if (data.length === 0) {
                 toastService.showToast('در حال حاضر موقعیت شغلی فعالی وجود ندارد', 'warning');
             } else {
-                setJobsList(response.data);
+                setJobsList(data);
             }
         }
         catch (err) {
@@ -43,7 +44,7 @@ function JobsList() {
     }
 
     useEffect(() => {
-        getJobs();
+        getJobsList();
     }, []);
 
 
@@ -56,7 +57,6 @@ function JobsList() {
                             className="job-title bg-warning rounded"
                             key={job.id}>
                             {job.title}
-
                             <Link to={`/job-details/${job.id}`}>
                                 <button
                                     className="btn" >

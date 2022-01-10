@@ -4,18 +4,18 @@ import APIModel from "./APIModel";
 class ApplicationService {
 
     //public
-    applyForJob({ job_id, newResume, new_task_Solution, salary, contract_interest }) {
+    applyForJob({ resumeFile, taskAnswerFile, salaryInterestValue, durationInterestValue  }, jobId) {
 
         const apiModel = new APIModel({
             method: 'post',
             url: '/apply',
             body: {
                 applyInfo: {
-                    job_id: job_id,
-                    resume: newResume,
-                    task_solution: new_task_Solution,
-                    salary: salary,
-                    contract_interest: contract_interest
+                    job_id: jobId,
+                    resume: resumeFile,
+                    task_solution: taskAnswerFile,
+                    salary: salaryInterestValue,
+                    contract_interest: durationInterestValue
                 }
             }
         });
@@ -24,38 +24,31 @@ class ApplicationService {
         return editedApply;
     }
 
-    editApply(editInfo, id) {
-        const { 
-            resume, 
-            task_Solution, 
-            salary, 
-            contract_interest 
-        } = editInfo;
-
+    editJobApplication({ resumeFile, taskAnswerFile, salaryInterestValue, durationInterestValue }, applicaionId) {
         const apiModel = new APIModel({
             method: 'post',
-            url: '/user/profile/applications/'+ id + '/edit',
+            url: '/user/profile/applications/'+ applicaionId + '/edit',
             body: {
                 editInfo: {
-                    resume: resume,
-                    task_solution: task_Solution,
-                    salary: salary,
-                    contract_interest: contract_interest
+                    resume: resumeFile,
+                    task_solution: taskAnswerFile,
+                    salary: salaryInterestValue,
+                    contract_interest: durationInterestValue
                 }
             }
         });
 
-        const userApply = apiService.apiCall(apiModel);
-        return userApply;
+        const jobApply = apiService.apiCall(apiModel);
+        return jobApply;
     }
 
     //applicationUserInfo
-    getUserApplicationInfo(token) {
-        return apiService.getRequest('/apply',
-            { headers: { token } },
-            { params: {} }
-        );
-    }
+    // getUserApplicationInfo(token) {
+    //     return apiService.getRequest('/apply',
+    //         { headers: { token } },
+    //         { params: {} }
+    //     );
+    // }
 
 
 }

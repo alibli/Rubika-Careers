@@ -16,7 +16,7 @@ function SignupModal(props) {
         passwordConfirm: '',
     });
 
-    async function userSignup() {
+    async function signup() {
         try {
             const signupRequestBody = {
                 firstname: signupInfo.firstname,
@@ -114,7 +114,7 @@ function SignupModal(props) {
             <div
                 className='col-auto'>
                 <Button
-                    onClick={userSignup}
+                    onClick={signup}
                     variant="warning">
                     ثبت‌نام
                 </Button>

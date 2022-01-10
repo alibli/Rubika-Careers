@@ -3,42 +3,25 @@ import { Container, Row, Button } from 'react-bootstrap';
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-
 function ApplyModal(props) {
-    const {
-        btnLabel,
-        btnHandler,
-        show,
-        onHide,
-        applicationId,
-        result_state,
-        salary,
-        contract_interest,
-        resume,
-        task_solution
-    } = props;
+    const URLParams = useParams();
 
-    const editable =
-        result_state === 'Unknown' || result_state === undefined
+    const isApplicationEditable =
+        props.applyState === 'Unknown' || props.applyState === undefined
             ? true
             : false;
 
-    const params = useParams();
-
-    const [applyInfo, setApplyInfo] = useState({
-        job_id: params.job_id,
-        resume: resume,
-        newResume: {
+    const [applicationInfo, setApplicationInfo] = useState({
+        salaryInterestValue: props.salaryInterest ? props.salaryInterest : 0,
+        durationInterestValue: props.durationInterest ? props.durationInterest : 0,
+        resumeFile: {
             byteCode: '',
             format: ''
         },
-        task_solution: task_solution,
-        new_task_solution: {
+        taskAnswerFile: {
             byteCode: '',
             format: ''
-        },
-        salary: salary ? salary : 0,
-        contract_interest: contract_interest ? contract_interest : 0,
+        }
     })
 
     const body = <Container>
@@ -55,13 +38,13 @@ function ApplyModal(props) {
                         padding: '0 !important',
                         margin: '0 !important'
                     }}
-                    disabled={!editable}
-                    value={applyInfo.salary}
+                    disabled={!isApplicationEditable}
+                    value={applicationInfo.salaryInterestValue}
                     onChange={(e) => {
-                        setApplyInfo((prevState) => ({
+                        setApplicationInfo((prevState) => ({
                             ...prevState,
-                            salary: e.target.value
-                        }))
+                            salaryInterestValue: e.target.value
+                        }));
                     }}
                 />
             </>
@@ -79,13 +62,13 @@ function ApplyModal(props) {
                     padding: '0 !important',
                     margin: '0 !important'
                 }}
-                disabled={!editable}
-                value={applyInfo.contract_interest}
+                disabled={!isApplicationEditable}
+                value={applicationInfo.durationInterestValue}
                 onChange={(e) => {
-                    setApplyInfo((prevState) => ({
+                    setApplicationInfo((prevState) => ({
                         ...prevState,
-                        contract_interest: e.target.value
-                    }))
+                        durationInterestValue: e.target.value
+                    }));
                 }}
             />
         </Row>
@@ -97,27 +80,28 @@ function ApplyModal(props) {
                 </label>
 
                 {
-                    applyInfo.resume.length > 0 &&
-                    <a href={applyInfo.resume}>
+                    props.resumeURL && 
+                    props.resumeURL.length > 0 &&
+                    <a href={props.resumeURL}>
                         دانلود
                     </a>
                 }
 
                 {
-                    editable &&
+                    isApplicationEditable &&
                     <input
-                        required={applyInfo.resume.length === 0}
+                        required={!props.resumeURL}
                         className='modal-input'
                         name='resume'
                         type='file'
                         onChange={(e) => {
                             let file = e.target.files[0];
-                            let resumeData = new FormData();
-                            resumeData.append(file.name, file);
-                            setApplyInfo((prevState) => ({
+                            let resumeFileData = new FormData();
+                            resumeFileData.append(file.name, file);
+                            setApplicationInfo((prevState) => ({
                                 ...prevState,
-                                newResume: {
-                                    byteCode: resumeData,
+                                resumeFile: {
+                                    byteCode: resumeFileData,
                                     format: file.type
                                 }
                             }));
@@ -134,16 +118,17 @@ function ApplyModal(props) {
                 </label>
 
                 {
-                    applyInfo.task_solution.length > 0 &&
-                    <a href={applyInfo.task_solution}>
+                    props.taskAnswerURL &&
+                    props.taskAnswerURL.length > 0 &&
+                    <a href={props.taskAnswerURL}>
                         دانلود
                     </a>
                 }
 
                 {
-                    editable &&
+                    isApplicationEditable &&
                     <input
-                        required={applyInfo.task_solution.length === 0}
+                        required={!props.taskAnswerURL}
                         className='modal-input'
                         name='task_solution'
                         type='file'
@@ -151,7 +136,7 @@ function ApplyModal(props) {
                             let file = e.target.files[0];
                             let taskSolutionData = new FormData();
                             taskSolutionData.append(file.name, file);
-                            setApplyInfo((prevState) => ({
+                            setApplicationInfo((prevState) => ({
                                 ...prevState,
                                 new_task_solution: {
                                     byteCode: taskSolutionData,
@@ -167,17 +152,17 @@ function ApplyModal(props) {
 
     const footer = <>
         {
-            editable &&
+            isApplicationEditable &&
             <div
                 className='col-auto'>
                 <Button
                     onClick={() => {
-                        applicationId
-                            ? btnHandler(applyInfo, applicationId)
-                            : btnHandler(applyInfo)
+                        props.applicationId
+                            ? props.editApplication(applicationInfo, props.applicationId)
+                            : props.applyForJob(applicationInfo, URLParams.jobId)
                     }}
                     variant="warning">
-                    {btnLabel}
+                    {props.btnLabel}
                 </Button>
             </div>
         }
@@ -188,8 +173,8 @@ function ApplyModal(props) {
             size="sm"
             body={body}
             footer={footer}
-            show={show}
-            onHide={onHide} />
+            show={props.show}
+            onHide={props.onHide} />
     );
 }
 

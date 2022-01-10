@@ -14,14 +14,14 @@
     display: flex;
 }
 
-.apply-modal #apply {
+.apply-modal .apply-btn {
     border: none !important;
     background-color: #803333 !important;
     color: whitesmoke !important;
     margin: auto;
 }
 
-.apply-modal #apply:hover {
+.apply-modal .apply-btn:hover {
     border: none !important;
     background-color: #803333 !important;
     color: #F3B073 !important;
