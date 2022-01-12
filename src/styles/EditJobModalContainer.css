@@ -7,3 +7,7 @@
 .edit-job-modal .btn {
    transition: none;
 }
+
+.edit-job-modal .fa-edit:hover {
+    cursor: pointer;
+}

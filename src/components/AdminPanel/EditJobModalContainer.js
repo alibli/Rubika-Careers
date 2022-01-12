@@ -2,25 +2,23 @@ import '../../styles/EditJobModalContainer.css';
 import EditJobModal from './EditJobModal';
 import { useState } from 'react';
 
-function EditJobModalContainer() {
+function EditJobModalContainer(props) {
     const [editJobModalShow, setEditJobModalShow] = useState(false);
 
     return (
         <div className='edit-job-modal'>
 
-            <button className='button'
+            <i
+                className="fa fa-edit fa-lg"
                 onClick={() => setEditJobModalShow(true)}>
-                Edit
-            </button>
+            </i>
 
             <EditJobModal
-                buttons={[
-                    {
-                        label: 'ذخیره'
-                    }
-                ]}
                 show={editJobModalShow}
-                onHide={() => setEditJobModalShow(false)} />
+                onHide={() => setEditJobModalShow(false)} 
+                showEditButtons={true}
+                {...props}
+            />
 
 
         </div >

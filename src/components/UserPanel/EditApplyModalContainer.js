@@ -30,7 +30,7 @@ function EditApplyModalContainer(props) {
         <div className='edit-apply-modal'>
 
             <i
-                className="fa fa-eye"
+                className="fa fa-eye fa-lg"
                 onClick={() => setEditApplyModalShow(true)}>
             </i>
 
@@ -39,12 +39,7 @@ function EditApplyModalContainer(props) {
                 onHide={() => setEditApplyModalShow(false)}
                 btnLabel="ویرایش"
                 jobApplicationEdit={(editedInfo, id) => editApplication(editedInfo, id)}
-                applicationId={props.applicationId}
-                salaryInterest={props.salaryInterest}
-                durationInterest={props.durationInterest}
-                resumeURL={props.resumeURL}
-                taskAnswerURL={props.taskAnswerURL}
-                applyState={props.applyState} />
+                {...props} />
         </div >
     );
 }

@@ -1,9 +1,21 @@
-
-#addJobBtn{
+#add-job-btn{
     background-color: #803333;
     color: white;
+    margin: 2em 0;
+}
+
+#add-job-btn:hover {
+    color: #ffc107;
 }
 
 .container{
     margin-top: 5px;
+}
+
+.admin-jobs-table {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: auto !important;
+    min-height: 100%;
 }

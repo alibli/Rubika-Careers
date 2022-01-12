@@ -95,14 +95,26 @@ class UserService {
         return userProfile;
     }
 
-    userEditResume() {
+    editUserResume(resumeFile) {
         const apiModel = new APIModel({
-            method: 'get',
+            method: 'patch',
             url: '/user/profile',
+            body: {
+                resume: {
+                    bytecode: resumeFile.bytecode,
+                    format: resumeFile.format
+                }
+            }
         });
-        const userProfile = apiService.apiCall(apiModel);
-        return userProfile;
 
+        const userNewResume = apiService.apiCall(apiModel);
+        return userNewResume;
+    }
+
+    getAdminJobsList() {
+        const apiModel = new APIModel({ method: 'get', url: '/admin-panel' });
+        const adminJobsList = apiService.apiCall(apiModel);
+        return adminJobsList;
     }
 
     //private
@@ -168,83 +180,62 @@ class UserService {
     //     return apiService.getRequest('logout');
     // }
 
-    //userApplicationEdit
-    setUserEditInfo(id, token, resume, taskSolution, salary, contractInterest) {
-        return apiService.putRequest('/user/profile/applications/' + id + '/edit',
-            {//body
-                resume: resume,
-                task_solution: taskSolution,
-                salary: salary,
-                contract_interest: contractInterest
-            },
-            // {
-            //     headers: { token: token }
-            // }
-        );
-    }
 
     //userProfile
 
 
 
-    setUserDelete(token) {
-        return apiService.deleteRequest('/user/profile'
-            // {headers: {token}}
-        );
-    }
+    // setUserDelete(token) {
+    //     return apiService.deleteRequest('/user/profile'
+    //         // {headers: {token}}
+    //     );
+    // }
 
-    setUserResumeEdit(token, resumeName) {
-        return apiService.patchRequest('/user/profile',
-            {
-                params: {
-                    resume: resumeName
-                }
-            }
-            // {headers: {token}}
-        );
-    }
-
-
-    setAdminChangeAppStatus(jobId, id, token, newStatus) {
-        return apiService.patchRequest('/admin-panel/' + jobId + '/applications/' + id + '/edit-status',
-            {
-                params: {
-                    applicationStatus: newStatus
-                }
-            }
-            // {headers: {token}}
-        );
-    }
+    // setUserResumeEdit(token, resumeName) {
+    //     return apiService.patchRequest('/user/profile',
+    //         {
+    //             params: {
+    //                 resume: resumeName
+    //             }
+    //         }
+    //         // {headers: {token}}
+    //     );
+    // }
 
 
-    setUserAppOneFieldEdit(id, token, resume, taskSolution, salary, contractInterest) {
-        return apiService.patchRequest('/user/profile/applications/' + id + '/edit',
-            {
-                params: {
-                    resume: resume,
-                    task_solution: taskSolution,
-                    salary: salary,
-                    contract_interest: contractInterest
-                }
-            }
-            // {headers: {token}}
-        );
-    }
+    // setAdminChangeAppStatus(jobId, id, token, newStatus) {
+    //     return apiService.patchRequest('/admin-panel/' + jobId + '/applications/' + id + '/edit-status',
+    //         {
+    //             params: {
+    //                 applicationStatus: newStatus
+    //             }
+    //         }
+    //         // {headers: {token}}
+    //     );
+    // }
 
 
-    getAdminPanel(token) {
-        return apiService.getRequest('/admin-panel'
-            // { headers: token })
-            // { params: { } })
-        )
-    }
+    // setUserAppOneFieldEdit(id, token, resume, taskSolution, salary, contractInterest) {
+    //     return apiService.patchRequest('/user/profile/applications/' + id + '/edit',
+    //         {
+    //             params: {
+    //                 resume: resume,
+    //                 task_solution: taskSolution,
+    //                 salary: salary,
+    //                 contract_interest: contractInterest
+    //             }
+    //         }
+    //         // {headers: {token}}
+    //     );
+    // }
 
-    getAdminJobsApplicationsList(token, jobId) {
-        return apiService.getRequest('/admin-panel' + jobId + '/applications'
-            // { headers: token }
-            // { params: {/*null*/ } })
-        )
-    }
+
+    // getAdminJobsApplicationsList(token, jobId) {
+    //     return apiService.getRequest('/admin-panel' + jobId + '/applications'
+    //         // { headers: token }
+    //         // { params: {/*null*/ } })
+    //     )
+    // }
 
 
 

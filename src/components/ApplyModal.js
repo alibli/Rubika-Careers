@@ -15,11 +15,11 @@ function ApplyModal(props) {
         salaryInterestValue: props.salaryInterest ? props.salaryInterest : 0,
         durationInterestValue: props.durationInterest ? props.durationInterest : 0,
         resumeFile: {
-            byteCode: '',
+            bytecode: '',
             format: ''
         },
         taskAnswerFile: {
-            byteCode: '',
+            bytecode: '',
             format: ''
         }
     })
@@ -101,7 +101,7 @@ function ApplyModal(props) {
                             setApplicationInfo((prevState) => ({
                                 ...prevState,
                                 resumeFile: {
-                                    byteCode: resumeFileData,
+                                    bytecode: resumeFileData,
                                     format: file.type
                                 }
                             }));
@@ -139,7 +139,7 @@ function ApplyModal(props) {
                             setApplicationInfo((prevState) => ({
                                 ...prevState,
                                 new_task_solution: {
-                                    byteCode: taskSolutionData,
+                                    bytecode: taskSolutionData,
                                     format: file.type
                                 }
                             }));

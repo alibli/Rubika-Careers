@@ -65,9 +65,10 @@ function JobDetails(props) {
 
     async function getJobDetails() {
         try {
-            const jobDetailsResponse = await getJobDetails(props.jobId);
-            if (jobDetailsResponse.data.is_deactive ||
-                jobDetailsResponse.data.is_deleted) {
+            const jobDetailsResponse = await jobsService.getJobDetails(props.jobId);
+            const { data } = jobDetailsResponse;
+            if (data.is_deactive ||
+                data.is_deleted) {
                 toastService.showToast('در حال حاضر موقعیت شغلی مورد نظر فعال نیست', 'warning');
             } else {
                 setJobDetails(jobDetailsResponse.data);

@@ -13,34 +13,13 @@ function TableRow({ rows }) {
                             {field[Object.keys(field)[0]]}
                         </td>
                     )}
-
-
-                    <td>
-                        {
-                            row.applicationsCountModal
-                                ? row.applicationsCountModal
-                                : <></>
-                        }
-                    </td>
-
-                    <td>
-                        {
-                            row.detailsModal
-                                ? row.detailsModal
-                                : <></>
-                        }
-                    </td>
-
-                    <td>
-                        {
-                            row.editModal
-                                ? row.editModal
-                                : <></>
-                        }
-                    </td>
-
-                </tr>)}
-
+                    {row.modals.map((modal, index) =>
+                        <td key={index}>
+                            {modal.modalContainer}
+                        </td>
+                    )}
+                </tr>
+            )}
         </tbody>
 
     );

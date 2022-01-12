@@ -9,17 +9,33 @@ class JobsService {
         return jobsList;
     }
 
-    getJobDetails(id) {
-        const apiModel = new APIModel({method: 'get', url: '/jobs/' + id});
+    getJobDetails(jobId) {
+        const apiModel = new APIModel({method: 'get', url: '/jobs/' + jobId});
         const jobDetails = apiService.apiCall(apiModel);
         return jobDetails;
     }
 
-    getAdminJobsList(){
-        const apiModel = new APIModel({method: 'get', url: '/admin-panel'});
-        const adminJobsList = apiService.apiCall(apiModel);
-        return adminJobsList;
+    editJobPosition(jobId, { jobTitle, jobDescription, jobTaskFile, deactiveJob, deletedJob}) {
+        const apiModel = new APIModel({
+            method: 'put', 
+            url: '/jobs/' + jobId + '/edit',
+            body: {
+                title: jobTitle,
+                description: jobDescription,
+                task: {
+                    bytecode: jobTaskFile.bytecode,
+                    format: jobTaskFile.format
+                },
+                is_deactive: deactiveJob,
+                is_deleted: deletedJob
+            }
+        });
+        const editedJob = apiService.apiCall(apiModel);
+        return editedJob;
     }
+    
+
+    
 
 
 

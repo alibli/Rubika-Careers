@@ -10,8 +10,8 @@ function ApplyModalContainer() {
 
     async function applyForJob(applyInfo, jobId) {
         try {
-            const applyRes = applicationService.applyForJob(applyInfo, jobId);
-            if (applyRes.status === 200) {
+            const applyRes = await applicationService.applyForJob(applyInfo, jobId);
+            if (applyRes.status === 200) { //need this?
                 toastService.showToast('درخواست شما با موفقیت ارسال شد', 'success');
                 setApplyModalShow(false);
             }

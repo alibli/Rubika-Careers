@@ -26,7 +26,7 @@ function SignupModal(props) {
             }
             const signupResponse = await userService.signup(signupRequestBody);
             const { data, status } = signupResponse;
-            if (status === 200) {
+            if (status === 200) { //need this?
                 toastService.showToast('ثبت‌نام شما با موفقیت انجام شد.', 'success');
                 userService.setUserInfo(data.token, signupInfo.firstname);
                 navigate('/user-panel');

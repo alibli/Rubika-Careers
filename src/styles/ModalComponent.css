@@ -26,7 +26,19 @@
     outline: none;
 }
 
+.modal-body .row h5 {
+    color: #F3B073;
+}
+
+.modal-body .row p {
+    text-align: center;
+}
+
 .modal-footer .btn-warning {
     color: #803333 !important;
+}
+
+.modal-footer .edit-modal-btn {
+    margin-left: 1em;
 }
 

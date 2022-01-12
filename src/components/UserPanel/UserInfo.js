@@ -21,31 +21,47 @@ function UserInfo() {
         lastname: 'ستایشگر',
         resumeLink: 'https://www.google.com/search?q=resume&oq=resume&aqs=chrome.0.69i59.2049j0j7&sourceid=chrome&ie=UTF-8',
         newResumeFile: {
-            byteCode: '',
+            bytecode: '',
             format: '',
         }
     });
 
     const [editingInfo, setEditingInfo] = useState(false);
 
-    async function getUserInfo() {
+    async function editResume(resumeFile) {
         try {
-            const userProfileRes = await userService.getUserProfile();
-            const { data } = userProfileRes;
-            setUserInfo((prevState) => ({
-                ...prevState,
-                firstname: data.first_name,
-                lastname: data.last_name,
-                resumeLink: data.resume
-            }));
+            const editResumeRes = await userService.editUserResume(resumeFile);
+            const { status, data } = editResumeRes;
+            if (status === 200) { //need this?
+                setUserInfo((prevState) => ({
+                    ...prevState,
+                    resumeLink: data.resume
+                }));
+            }
+            toastService.showToast('رزومه شما با موفقیت بارگذاری شد.', 'success');
         } catch (err) {
             toastService.showToast(err.message, 'danger');
         }
     }
 
+    // async function getUserInfo() {
+    //     try {
+    //         const userProfileRes = await userService.getUserProfile();
+    //         const { data } = userProfileRes;
+    //         setUserInfo((prevState) => ({
+    //             ...prevState,
+    //             firstname: data.first_name,
+    //             lastname: data.last_name,
+    //             resumeLink: data.resume
+    //         }));
+    //     } catch (err) {
+    //         toastService.showToast(err.message, 'danger');
+    //     }
+    // }
+
     // useEffect(() => {
     //     getUserInfo();
-    // }, [])
+    // }, []);
 
     return (
         <div className="user-info">
@@ -57,7 +73,7 @@ function UserInfo() {
                     className='modal-input'
                     name='firstname'
                     type='text'
-                    disabled='true'
+                    disabled={true}
                     value={userInfo.firstname}
                 />
             </Row>
@@ -70,7 +86,7 @@ function UserInfo() {
                     className='modal-input'
                     name='lastname'
                     type='text'
-                    disabled='true'
+                    disabled={true}
                     value={userInfo.lastname}
                 />
             </Row>
@@ -100,15 +116,13 @@ function UserInfo() {
                             setUserInfo((prevState) => ({
                                 ...prevState,
                                 newResumeFile: {
-                                    byteCode: resumeData,
+                                    bytecode: resumeData,
                                     format: file.type
                                 }
                             }));
                         }}
                     />
                 }
-
-
             </Row>
 
             <Button
@@ -116,7 +130,7 @@ function UserInfo() {
                     if (!editingInfo) {
                         setEditingInfo(true);
                     } else {
-
+                        editResume(userInfo.newResumeFile);
                     }
                 }}
                 variant="warning">
@@ -126,7 +140,6 @@ function UserInfo() {
                         : 'بارگذاری رزومه'
                 }
             </Button>
-
         </div>
     );
 }
