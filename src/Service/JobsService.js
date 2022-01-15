@@ -33,61 +33,24 @@ class JobsService {
         const editedJob = apiService.apiCall(apiModel);
         return editedJob;
     }
-    
 
-    
-
-
-
-    setAdminNewJob(token , title , description , task , isDeactive){
-        return apiService.postRequest('/jobs/add' ,
-        {
-            title: title,
-            description: description,
-            task: task,
-            is_deactive: isDeactive
-        },
-        {headers:
-            {
-                token: token
-            }
-        } );
-    }
-
-    //editJobInfo
-    setAdminJobInfo(id , token , title , description , task , isDeactive , isDeleted){  
-        return apiService.putRequest('/jobs/'+id+'/edit' , 
-        {
-            title: title,
-            description: description,
-            task: task,
-            is_deactive: isDeactive,
-            is_deleted: isDeleted,
-        },
-        {
-            headers:{
-                token : token
+    addJobPosition({ jobTitle, jobDescription, jobTaskFile, deactiveJob }) {
+        const apiModel = new APIModel({
+            method: 'put', 
+            url: 'jobs/add',
+            body: {
+                title: jobTitle,
+                description: jobDescription,
+                task: {
+                    bytecode: jobTaskFile.bytecode,
+                    format: jobTaskFile.format
+                },
+                is_deactive: deactiveJob
             }
         });
+        const addedJob = apiService.apiCall(apiModel);
+        return addedJob;
     }
-
-    //editOneField
-    setEditOneField(id , token , title , description , task , isDeactive , isDeleted){
-        return apiService.patchRequest('/jobs/'+id+'/edit',
-        {
-            title: title,
-            description: description,
-            task: task,
-            is_deactive: isDeactive,
-            is_deleted: isDeleted,
-        },
-        {headers:{
-            token : token
-        }})
-    }
-
-    
-
 }
 
 const jobsService = new JobsService();

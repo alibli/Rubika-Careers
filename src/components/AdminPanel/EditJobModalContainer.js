@@ -16,7 +16,6 @@ function EditJobModalContainer(props) {
             <EditJobModal
                 show={editJobModalShow}
                 onHide={() => setEditJobModalShow(false)} 
-                showEditButtons={true}
                 {...props}
             />
 

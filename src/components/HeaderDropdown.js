@@ -57,7 +57,7 @@ function HeaderDropdown() {
                             سلام ادمین
                         </Dropdown.Toggle>
                         <Dropdown.Menu className="header-dropdown">
-                            <LinkContainer to='/job-positions'>
+                            <LinkContainer to='/admin-panel'>
                                 <Dropdown.Item>
                                     موقعیت های شغلی
                                 </Dropdown.Item>

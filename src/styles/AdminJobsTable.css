@@ -1,13 +1,3 @@
-#add-job-btn{
-    background-color: #803333;
-    color: white;
-    margin: 2em 0;
-}
-
-#add-job-btn:hover {
-    color: #ffc107;
-}
-
 .container{
     margin-top: 5px;
 }
@@ -18,4 +8,9 @@
     width: 100%;
     height: auto !important;
     min-height: 100%;
+}
+
+.admin-jobs-table .fa-eye {
+    color: #803333;
+    cursor: pointer;
 }

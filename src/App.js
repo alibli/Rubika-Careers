@@ -7,7 +7,7 @@ import JobsPage from './components/JobsPage';
 import JobDetailsPage from './components/JobDetailsPage';
 import UserApplicationsTable from './components/UserPanel/UserApplicationsTable';
 import AdminJobsTable from './components/AdminPanel/AdminJobsTable';
-import AdminJobRequestDetails from './components/AdminPanel/AdminJobRequestDetails';
+import JobRequestsTable from './components/AdminPanel/JobRequestsTable';
 import Notification from './components/Core/Notification';
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
           <Route path="user-info" element={<UserInfo />} />
           <Route path="user-panel" element={<UserApplicationsTable />} />
           <Route path="admin-panel" element={<AdminJobsTable />} />
-          <Route path="test4" element={<AdminJobRequestDetails />} />
+          <Route path="job-requests" element={<JobRequestsTable />} />
           
         </Routes>
         

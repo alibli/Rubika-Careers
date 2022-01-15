@@ -33,7 +33,8 @@ function UserApplicationsTable() {
                             taskAnswerURL='https://www.google.com/search?q=task+solution&sxsrf=AOaemvKcnmXOUcWSYUg7CdK0r5u3IW0qPQ%3A1641632069286&ei=RVHZYaDUEJGO9u8Px8KJ4Ao&ved=0ahUKEwjgit2C5KH1AhURh_0HHUdhAqwQ4dUDCA8&uact=5&oq=task+solution&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEIAEMgUIABCABDIFCAAQgAQyBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjoHCAAQRxCwAzoHCAAQsAMQQzoECCMQJzoECAAQQzoHCCMQ6gIQJzoLCC4QgAQQxwEQ0QM6CgguEMcBEKMCEEM6CgguEMcBENEDEEM6BAguEEM6BQguEIAEOgUIABCRAjoHCAAQgAQQCjoKCAAQgAQQhwIQFDoICAAQgAQQyQNKBAhBGABKBAhGGABQ1QxYoDRg7TZoBnACeASAAYEDiAGnIpIBCDAuMTQuNi4ymAEAoAEBsAEKyAEKwAEB&sclient=gws-wiz'
                         />
                 }
-            ]
+            ],
+            linkers: []
         },
         {
             id: 1,
@@ -61,7 +62,8 @@ function UserApplicationsTable() {
                             taskAnswerURL='https://www.google.com/search?q=task+solution&sxsrf=AOaemvKcnmXOUcWSYUg7CdK0r5u3IW0qPQ%3A1641632069286&ei=RVHZYaDUEJGO9u8Px8KJ4Ao&ved=0ahUKEwjgit2C5KH1AhURh_0HHUdhAqwQ4dUDCA8&uact=5&oq=task+solution&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEIAEMgUIABCABDIFCAAQgAQyBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjoHCAAQRxCwAzoHCAAQsAMQQzoECCMQJzoECAAQQzoHCCMQ6gIQJzoLCC4QgAQQxwEQ0QM6CgguEMcBEKMCEEM6CgguEMcBENEDEEM6BAguEEM6BQguEIAEOgUIABCRAjoHCAAQgAQQCjoKCAAQgAQQhwIQFDoICAAQgAQQyQNKBAhBGABKBAhGGABQ1QxYoDRg7TZoBnACeASAAYEDiAGnIpIBCDAuMTQuNi4ymAEAoAEBsAEKyAEKwAEB&sclient=gws-wiz'
                         />
                 }
-            ]
+            ],
+            linkers: []
         }
     ];
 
@@ -97,7 +99,8 @@ function UserApplicationsTable() {
     //                                 resumeURL={application.resume}
     //                                 taskAnswerURL={application.task_solution} />
     //                     }
-    //                 ]
+    //                 ],
+    //                 linkers: []
     //             }));
     //         setApplications(customApplicationsArr);
     //     } catch (err) {

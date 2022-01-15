@@ -1,4 +1,4 @@
-.login-signup-modal #apply {
+/* .login-signup-modal #apply {
     border: none !important;
     background-color: #803333 !important;
     color: whitesmoke !important;
@@ -9,4 +9,14 @@
     border: none !important;
     background-color: #803333 !important;
     color: #F3B073 !important;
+} */
+
+#add-job-btn{
+    background-color: #803333;
+    color: white;
+    margin: 2em 0;
+}
+
+#add-job-btn:hover {
+    color: #ffc107;
 }

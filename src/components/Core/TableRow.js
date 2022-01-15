@@ -18,6 +18,11 @@ function TableRow({ rows }) {
                             {modal.modalContainer}
                         </td>
                     )}
+                    {row.linkers.map((linker, index) =>
+                        <td key={index}>
+                            {linker.element}
+                        </td>
+                    )}
                 </tr>
             )}
         </tbody>

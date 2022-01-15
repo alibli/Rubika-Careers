@@ -3,78 +3,47 @@ import { Container, Row, Button } from 'react-bootstrap';
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import '../../styles/EditJobModal.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import toastService from "../../Service/ToastService";
 import jobsService from "../../Service/JobsService";
 
-function EditJobModal(props) {
-    const [deactiveJob, setDeactiveJob] = useState(props.isJobDeactive);
-
-    let deletedJob = false;
+function AddJobModal(props) {
+    const [deactiveJob, setDeactiveJob] = useState(false);
 
     const [jobDetails, setJobDetails] = useState({
         jobTitle: '',
         jobDescription: '',
-        jobTaskLink: '',
         jobTaskFile: {
             bytecode: '',
             format: ''
         }
     });
 
-    async function getJobDetails(id) {
+    async function addJobPosition(jobId) {
         try {
-            const jobDetailsResponse = await jobsService.getJobDetails(id);
-            const { data } = jobDetailsResponse;
-            setJobDetails((prevState) => ({
-                ...prevState,
-                jobTitle: data.title,
-                jobDescription: data.description,
-                jobTaskLink: data.task
-            }));
-        } catch (err) {
-            toastService.showToast(err.message, 'danger');
-        }
-    }
-
-    useEffect(() => {
-        getJobDetails(props.jobId);
-    }, [props.jobId]);
-
-    async function editJobPosition(jobId) {
-        try {
-            const editJobReqBody = {
+            const addJobReqBody = {
                 jobTitle: jobDetails.jobTitle,
                 jobDescription: jobDetails.jobDescription,
                 jobTaskFile: jobDetails.jobTaskFile,
                 deactiveJob: deactiveJob,
-                deletedJob: deletedJob
             }
 
-            const editJobRes = await jobsService.addJobPosition(jobId, editJobReqBody);
-            if (editJobRes.status === 200) { //need this?
+            const editJobRes = await jobsService.addJobPosition(addJobReqBody);
+            if (editJobRes.status === 201) { //need this?
                 window.location.reload();
-                toastService.showToast('موقعیت شغلی مورد نظر ویرایش شد', 'success');
+                toastService.showToast('موقعیت شغلی مورد نظر اضافه شد.', 'success');
             }
         } catch (err) {
             if (err.response) {
                 if (err.response.status === 400) {
-                    toastService.showToast('اطلاعات وارد شده صحیح نیست.', 'danger');
-                } else if (err.response.status === 403) {
-                    toastService.showToast('شما این موقعبت شغلی را ایجاد نکردید.', 'danger');
-                }
+                    toastService.showToast('عدم موفقیت در افزودن موقعیت شغلی جدید', 'danger');
+                } 
             } else {
                 toastService.showToast(err.message, 'danger');
             }
         }
     }
 
-    function deleteJobPosition() {
-        const confirmJobDelete = window.confirm('موقعیت شغلی مورد نظر حذف شود؟');
-        if (confirmJobDelete) {
-            deletedJob = true;
-        }
-    }
 
     const body = <Container>
         <Row>
@@ -140,12 +109,8 @@ function EditJobModal(props) {
                     تسک
                 </label>
 
-                <a href={jobDetails.jobTaskLink}>
-                    دانلود
-                </a>
-
                 <input
-                    required={!jobDetails.jobTaskLink.length}
+                    required
                     className='modal-input'
                     name='resume'
                     type='file'
@@ -169,15 +134,9 @@ function EditJobModal(props) {
     const footer = <>
         <div className='col-auto'>
             <Button
-                variant="danger"
-                className="edit-modal-btn"
-                onClick={() => deleteJobPosition()}>
-                حذف
-            </Button>
-            <Button
                 variant="warning"
                 className="edit-modal-btn"
-                onClick={() => editJobPosition(props.jobId)}>
+                onClick={() => addJobPosition(props.jobId)}>
                 ذخیره
             </Button>
         </div>
@@ -193,4 +152,4 @@ function EditJobModal(props) {
     );
 }
 
-export default EditJobModal;
+export default AddJobModal;
