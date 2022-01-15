@@ -1,0 +1,14 @@
+.filter-requests {
+    background-color: #f0dcb0;
+    text-align: right;
+    direction: ltr;
+}
+
+.filter-requests label{
+    color: #803333;
+    padding: 10px;
+}
+
+.filter-requests input{
+    color: white;
+}

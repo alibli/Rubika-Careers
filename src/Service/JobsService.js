@@ -51,6 +51,26 @@ class JobsService {
         const addedJob = apiService.apiCall(apiModel);
         return addedJob;
     }
+
+    getJobRequests(jobId) {
+        const apiModel = new APIModel({method: 'get', url: '/admin-panel/' + jobId + '/applications'});
+        const jobDetails = apiService.apiCall(apiModel);
+        return jobDetails;
+    }
+
+    setApplicationStatus(jobId, reqId, newStatus) {
+        const apiModel = new APIModel({
+            method: 'patch', 
+            url: '/admin-panel/' + jobId + '/applications/' + reqId + '/edit-status',
+            body: {
+                resultStatus: {
+                    result_status: newStatus
+                }
+            }
+        });
+        const editedStatus = apiService.apiCall(apiModel);
+        return editedStatus;
+    }
 }
 
 const jobsService = new JobsService();

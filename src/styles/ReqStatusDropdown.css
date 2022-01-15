@@ -1,11 +1,3 @@
-h3{
-    color: #803333;
-    margin : 5px;
-}
-
-.container{
-    margin: 5px;
-}
 
 .admin-status-dropdown {
     background-color: transparent;
@@ -15,4 +7,8 @@ h3{
 
 .admin-status-dropdown:after {
     color: #803333;
+}
+
+.disbale-dropdown {
+   background-color: rgb(187, 183, 183);
 }

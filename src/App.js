@@ -23,10 +23,11 @@ function App() {
           <Route path="user-info" element={<UserInfo />} />
           <Route path="user-panel" element={<UserApplicationsTable />} />
           <Route path="admin-panel" element={<AdminJobsTable />} />
-          <Route path="job-requests" element={<JobRequestsTable />} />
-          
-        </Routes>
+          <Route path="admin-panel/:jobId/job-requests" element={<JobRequestsTable />} />
         
+
+        </Routes>
+
         <Notification />
         <Footer></Footer>
 
