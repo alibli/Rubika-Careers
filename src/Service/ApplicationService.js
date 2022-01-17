@@ -12,8 +12,14 @@ class ApplicationService {
             body: {
                 applyInfo: {
                     job_id: jobId,
-                    resume: resumeFile,
-                    task_solution: taskAnswerFile,
+                    resume: {
+                        mime: resumeFile.format,
+                        data: resumeFile.bytecode
+                    },
+                    task_solution: {
+                        mime: taskAnswerFile.format,
+                        data: taskAnswerFile.bytecode
+                    },
                     salary: salaryInterestValue,
                     contract_interest: durationInterestValue
                 }
@@ -30,8 +36,14 @@ class ApplicationService {
             url: '/user/profile/applications/'+ applicaionId + '/edit',
             body: {
                 editInfo: {
-                    resume: resumeFile,
-                    task_solution: taskAnswerFile,
+                    resume: {
+                        mime: resumeFile.format,
+                        data: resumeFile.bytecode
+                    },
+                    task_solution: {
+                        mime: taskAnswerFile.format,
+                        data: taskAnswerFile.bytecode
+                    },
                     salary: salaryInterestValue,
                     contract_interest: durationInterestValue
                 }

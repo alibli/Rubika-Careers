@@ -38,7 +38,7 @@ function EditApplyModalContainer(props) {
                 show={editApplyModalShow}
                 onHide={() => setEditApplyModalShow(false)}
                 btnLabel="ویرایش"
-                jobApplicationEdit={(editedInfo, id) => editApplication(editedInfo, id)}
+                editApplication={(editedInfo, id) => editApplication(editedInfo, id)}
                 {...props} />
         </div >
     );

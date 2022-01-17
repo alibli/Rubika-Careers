@@ -4,6 +4,7 @@ import userService from '../../Service/UserService';
 import { useEffect, useState } from 'react';
 import toastService from '../../Service/ToastService';
 import EditApplyModalContainer from './EditApplyModalContainer';
+import BackForwardBtn from '../Core/BackForwardBtn';
 
 function UserApplicationsTable() {
     const customApplicationsArr = [
@@ -17,7 +18,7 @@ function UserApplicationsTable() {
                     applyDate: "1/1/1400"
                 },
                 {
-                    applyState: "Unknown"
+                    applyState: "جدید"
                 }
             ],
             modals: [
@@ -26,7 +27,7 @@ function UserApplicationsTable() {
                         <EditApplyModalContainer
                             applicationId='0'
                             jobId='1'
-                            applyState="Unknown"
+                            applyState="unknown"
                             salaryInterest={5000000}
                             durationInterest={36}
                             resumeURL='https://www.google.com/search?q=resume&oq=resume&aqs=chrome..69i57.1182j0j7&sourceid=chrome&ie=UTF-8'
@@ -46,7 +47,7 @@ function UserApplicationsTable() {
                     applyDate: "10/7/1400"
                 },
                 {
-                    applyState: "rejected"
+                    applyState: "رد شده"
                 }
             ],
             modals: [
@@ -69,6 +70,13 @@ function UserApplicationsTable() {
 
     const [applications, setApplications] = useState(customApplicationsArr);
 
+    // const applyStateInPersian = {
+    //     'unknown': 'جدید',
+    //     'in progress': 'در حال بررسی', 
+    //     'accept': 'تایید شده',
+    //     'reject': 'رد شده'
+    // }
+
     // async function getUserApplications() {
     //     try {
     //         const userProfileRes = await userService.getUserProfile();
@@ -85,7 +93,7 @@ function UserApplicationsTable() {
     //                         applyDate: application.created_at
     //                     },
     //                     {
-    //                         applyState: application.result_status
+    //                         applyState: applyStateInPersian[application.result_status]
     //                     }
     //                 ],
     //                 modals: [
@@ -120,14 +128,17 @@ function UserApplicationsTable() {
     ];
 
     return (
-        <div dir='rtl' className='container user-requests-table'>
-            <h3>درخواست ها</h3>
-            <Table
-                id='table'
-                columns={columns}
-                rows={applications}>
-            </Table>
-        </div>
+        <>
+            <BackForwardBtn />
+            <div dir='rtl' className='container user-requests-table'>
+                <h3>درخواست ها</h3>
+                <Table
+                    id='table'
+                    columns={columns}
+                    rows={applications}>
+                </Table>
+            </div>
+        </>
     );
 
 }

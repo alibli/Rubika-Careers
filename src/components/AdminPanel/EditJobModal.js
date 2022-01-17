@@ -76,95 +76,98 @@ function EditJobModal(props) {
         }
     }
 
-    const body = <Container>
-        <Row>
-            <Button
-                variant="info"
-                onClick={() => setDeactiveJob(!deactiveJob)}
-                style={{
-                    margin: 'auto',
-                    width: '10em'
+    const body =
+        <form id="job-form">
+            <Container>
+                <Row>
+                    <Button
+                        variant="info"
+                        onClick={() => setDeactiveJob(!deactiveJob)}
+                        style={{
+                            margin: 'auto',
+                            width: '10em'
+                        }}>
+                        {
+                            deactiveJob
+                                ? 'غیر فعال'
+                                : ' فعال'
+                        }
+                    </Button>
+                </Row>
+                <Row>
+                    <label htmlFor='edit-job-title'>
+                        عنوان
+                    </label>
+                    <input
+                        required
+                        className='modal-input'
+                        name='edit-job-title'
+                        type='text'
+                        value={jobDetails.jobTitle}
+                        onChange={(e) => {
+                            setJobDetails((prevState) => ({
+                                ...prevState,
+                                jobTitle: e.target.value
+                            }));
+                        }}
+                    />
+                </Row>
+
+                <Row>
+                    <label htmlFor='edit-job-descrip'>
+                        شرح
+                    </label>
+                </Row>
+
+                <div style={{
+                    direction: 'ltr',
+                    textDecoration: 'none'
                 }}>
-                {
-                    deactiveJob
-                        ? 'غیر فعال'
-                        : ' فعال'
-                }
-            </Button>
-        </Row>
-        <Row>
-            <label htmlFor='edit-job-title'>
-                عنوان
-            </label>
-            <input
-                required
-                className='modal-input'
-                name='edit-job-title'
-                type='text'
-                value={jobDetails.jobTitle}
-                onChange={(e) => {
-                    setJobDetails((prevState) => ({
-                        ...prevState,
-                        jobTitle: e.target.value
-                    }));
-                }}
-            />
-        </Row>
+                    <Editor
+                        editorState={jobDetails.jobDescription}
+                        wrapperClassName="job-position-editor-wrapper"
+                        editorClassName="job-position-editor"
+                        onEditorStateChange={(e) => {
+                            setJobDetails((prevState) => ({
+                                ...prevState,
+                                jobDescription: e.target.value
+                            }));
+                        }}
+                    />
+                </div>
 
-        <Row>
-            <label htmlFor='edit-job-descrip'>
-                شرح
-            </label>
-        </Row>
+                <Row>
+                    <>
+                        <label htmlFor='resume'>
+                            تسک
+                        </label>
 
-        <div style={{
-            direction: 'ltr',
-            textDecoration: 'none'
-        }}>
-            <Editor
-                editorState={jobDetails.jobDescription}
-                wrapperClassName="job-position-editor-wrapper"
-                editorClassName="job-position-editor"
-                onEditorStateChange={(e) => {
-                    setJobDetails((prevState) => ({
-                        ...prevState,
-                        jobDescription: e.target.value
-                    }));
-                }}
-            />
-        </div>
+                        <a href={jobDetails.jobTaskLink}>
+                            دانلود
+                        </a>
 
-        <Row>
-            <>
-                <label htmlFor='resume'>
-                    تسک
-                </label>
-
-                <a href={jobDetails.jobTaskLink}>
-                    دانلود
-                </a>
-
-                <input
-                    required={!jobDetails.jobTaskLink.length}
-                    className='modal-input'
-                    name='resume'
-                    type='file'
-                    onChange={(e) => {
-                        let file = e.target.files[0];
-                        let taskFileData = new FormData();
-                        taskFileData.append(file.name, file);
-                        setJobDetails((prevState) => ({
-                            ...prevState,
-                            jobTaskFile: {
-                                bytecode: taskFileData,
-                                format: file.type
-                            }
-                        }));
-                    }}
-                />
-            </>
-        </Row>
-    </Container>;
+                        <input
+                            required={!jobDetails.jobTaskLink.length}
+                            className='modal-input'
+                            name='resume'
+                            type='file'
+                            onChange={(e) => {
+                                let file = e.target.files[0];
+                                let taskFileData = new FormData();
+                                taskFileData.append(file.name, file);
+                                setJobDetails((prevState) => ({
+                                    ...prevState,
+                                    jobTaskFile: {
+                                        bytecode: taskFileData,
+                                        format: file.type
+                                    }
+                                }));
+                            }}
+                        />
+                    </>
+                </Row>
+            </Container>
+        </form>;
 
     const footer = <>
         <div className='col-auto'>
@@ -176,8 +179,10 @@ function EditJobModal(props) {
             </Button>
             <Button
                 variant="warning"
+                type="submit"
+                form="job-form"
                 className="edit-modal-btn"
-                onClick={() => editJobPosition(props.jobId)}>
+                onSubmit={() => editJobPosition(props.jobId)}>
                 ذخیره
             </Button>
         </div>

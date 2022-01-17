@@ -1,19 +1,15 @@
 import ModalComponent from "./Core/ModalComponent";
 import userService from '../Service/UserService';
 import { Container, Row, Button } from 'react-bootstrap';
-import { useState } from "react";
 import toastService from "../Service/ToastService";
 import { useNavigate } from 'react-router-dom';
+import { useForm } from "react-hook-form";
 
 function LoginModal(props) {
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
-    const [loginInfo, setLoginInfo] = useState({
-        email: '',
-        password: '',
-    });
-
-    async function login() {
+    async function login(loginInfo) {
         try {
             const loginResponse = await userService.login(loginInfo);
             const { data } = loginResponse;
@@ -25,6 +21,8 @@ function LoginModal(props) {
                 navigate('/user-panel');
             }
             toastService.showToast('با موفقیت وارد شدید.', 'success');
+        props.onHide();
+
         } catch (err) {
             if (err.response) {
                 if (err.response.status === 400) {
@@ -36,51 +34,66 @@ function LoginModal(props) {
         }
     }
 
-    const body = <Container>
-        <Row>
-            <label htmlFor='email'>
-                ایمیل
-            </label>
-            <input
-                className='modal-input'
-                name='email'
-                type='email'
-                onChange={(e) => {
-                    setLoginInfo((prevState) => ({
-                        ...prevState,
-                        email: e.target.value
-                    }))
-                }}
-            />
-        </Row>
+    const onSubmitLogin = (data) => {
+        login(data);
+    }
 
-        <Row>
-            <label htmlFor='password'>
-                رمزعبور
-            </label>
-            <input
-                className='modal-input'
-                name='password'
-                type='password'
-                onChange={(e) => {
-                    setLoginInfo((prevState) => ({
-                        ...prevState,
-                        password: e.target.value
-                    }))
-                }}
-            />
-        </Row>
-    </Container>;
+    const body =
+        <form id="login-form" onSubmit={handleSubmit(onSubmitLogin)}>
+            <Container>
+                <Row>
+                    <label htmlFor='email'>
+                        ایمیل
+                    </label>
+                    <input
+                        className='modal-input'
+                        name='email'
+                        type='email'
+                        {...register(
+                            "email",
+                            {
+                                required: true,
+                                pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+                            }
+                        )}
+                    />
+                    <div className="form-err">
+                        {errors.email?.type === 'required' && "الزامی"}
+                        {errors.email?.type === 'pattern' && "نامعتبر"}
+                    </div>
+                </Row>
+
+                <Row>
+                    <label htmlFor='password'>
+                        رمزعبور
+                    </label>
+                    <input
+                        {...register(
+                            "password",
+                            {
+                                required: true,
+                                pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+                            }
+                        )}
+                        className='modal-input'
+                        name='password'
+                        type='password'
+                    />
+                    <div className="form-err">
+                        {errors.password?.type === 'required' && "الزامی"}
+                        {errors.password?.type === 'pattern' && "حداقل ۸ کارکتر از حروف و اعداد انگلیسی"}
+                    </div>
+                </Row>
+            </Container>
+        </form>;
 
     const footer = <>
         <div
             className='col-auto'>
             <Button
                 variant="warning"
-                onClick={() => {
-                    login();
-                    props.onHide();
-                }}>
+                type="submit"
+                form="login-form">
                 ورود
             </Button>
         </div>

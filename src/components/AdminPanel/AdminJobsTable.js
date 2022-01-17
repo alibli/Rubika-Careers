@@ -7,6 +7,7 @@ import AppsCountModalContainer from './AppsCountModalContainer';
 import EditJobModalContainer from './EditJobModalContainer';
 import { Link } from 'react-router-dom';
 import AddJobModalContainer from './AddJobModalContainer';
+import BackForwardBtn from '../Core/BackForwardBtn';
 
 function AdminJobsTable() {
     const customAdminJobsArr = [
@@ -133,13 +134,13 @@ function AdminJobsTable() {
     //             }));
     //         setAdminJobs(customAdminJobsArr);
     //     } catch (err) {
-                // if (err.response) {
-                //     if (err.response.status === 403) {
-                //         toastService.showToast('احازه ی دسترسی ندارید.', 'danger');
-                //     }
-                // } else {
-                //     toastService.showToast(err.message, 'danger');
-                // }
+    // if (err.response) {
+    //     if (err.response.status === 403) {
+    //         toastService.showToast('احازه ی دسترسی ندارید.', 'danger');
+    //     }
+    // } else {
+    //     toastService.showToast(err.message, 'danger');
+    // }
     //     }
     // }
 
@@ -156,15 +157,18 @@ function AdminJobsTable() {
     ];
 
     return (
-        <div dir='rtl' className='container admin-jobs-table'>
-            <AddJobModalContainer />
-            <h3> موقعیت های شغلی</h3>
-            <Table
-                id='table'
-                columns={columns}
-                rows={adminJobs}>
-            </Table>
-        </div>
+        <>
+            <BackForwardBtn />
+            <div dir='rtl' className='container admin-jobs-table'>
+                <AddJobModalContainer />
+                <h3> موقعیت های شغلی</h3>
+                <Table
+                    id='table'
+                    columns={columns}
+                    rows={adminJobs}>
+                </Table>
+            </div>
+        </>
     );
 }
 

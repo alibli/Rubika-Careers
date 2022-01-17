@@ -3,6 +3,7 @@ import userService from '../../Service/UserService';
 import toastService from '../../Service/ToastService';
 import { Row, Button } from 'react-bootstrap';
 import '../../styles/UserInfo.css';
+import BackForwardBtn from '../Core/BackForwardBtn';
 
 function UserInfo() {
 
@@ -64,83 +65,86 @@ function UserInfo() {
     // }, []);
 
     return (
-        <div className="user-info">
-            <Row>
-                <label htmlFor='firstname'>
-                    نام
-                </label>
-                <input
-                    className='modal-input'
-                    name='firstname'
-                    type='text'
-                    disabled={true}
-                    value={userInfo.firstname}
-                />
-            </Row>
-
-            <Row>
-                <label htmlFor='lastname'>
-                    نام خانوادگی
-                </label>
-                <input
-                    className='modal-input'
-                    name='lastname'
-                    type='text'
-                    disabled={true}
-                    value={userInfo.lastname}
-                />
-            </Row>
-
-            <Row>
-                <label htmlFor='resume'>
-                    رزومه
-                </label>
-
-                {
-                    userInfo.resumeLink.length > 0 &&
-                    <a href={userInfo.resumeLink}>
-                        دانلود
-                    </a>
-                }
-
-                {
-                    editingInfo &&
+        <>
+            <BackForwardBtn />
+            <div className="user-info">
+                <Row>
+                    <label htmlFor='firstname'>
+                        نام
+                    </label>
                     <input
                         className='modal-input'
-                        name='resume'
-                        type='file'
-                        onChange={(e) => {
-                            let file = e.target.files[0];
-                            let resumeData = new FormData();
-                            resumeData.append(file.name, file);
-                            setUserInfo((prevState) => ({
-                                ...prevState,
-                                newResumeFile: {
-                                    bytecode: resumeData,
-                                    format: file.type
-                                }
-                            }));
-                        }}
+                        name='firstname'
+                        type='text'
+                        disabled={true}
+                        value={userInfo.firstname}
                     />
-                }
-            </Row>
+                </Row>
 
-            <Button
-                onClick={() => {
-                    if (!editingInfo) {
-                        setEditingInfo(true);
-                    } else {
-                        editResume(userInfo.newResumeFile);
+                <Row>
+                    <label htmlFor='lastname'>
+                        نام خانوادگی
+                    </label>
+                    <input
+                        className='modal-input'
+                        name='lastname'
+                        type='text'
+                        disabled={true}
+                        value={userInfo.lastname}
+                    />
+                </Row>
+
+                <Row>
+                    <label htmlFor='resume'>
+                        رزومه
+                    </label>
+
+                    {
+                        userInfo.resumeLink.length > 0 &&
+                        <a href={userInfo.resumeLink}>
+                            دانلود
+                        </a>
                     }
-                }}
-                variant="warning">
-                {
-                    editingInfo
-                        ? 'ثبت'
-                        : 'بارگذاری رزومه'
-                }
-            </Button>
-        </div>
+
+                    {
+                        editingInfo &&
+                        <input
+                            className='modal-input'
+                            name='resume'
+                            type='file'
+                            onChange={(e) => {
+                                let file = e.target.files[0];
+                                let resumeData = new FormData();
+                                resumeData.append(file.name, file);
+                                setUserInfo((prevState) => ({
+                                    ...prevState,
+                                    newResumeFile: {
+                                        bytecode: resumeData,
+                                        format: file.type
+                                    }
+                                }));
+                            }}
+                        />
+                    }
+                </Row>
+
+                <Button
+                    onClick={() => {
+                        if (!editingInfo) {
+                            setEditingInfo(true);
+                        } else {
+                            editResume(userInfo.newResumeFile);
+                        }
+                    }}
+                    variant="warning">
+                    {
+                        editingInfo
+                            ? 'ثبت'
+                            : 'بارگذاری رزومه'
+                    }
+                </Button>
+            </div>
+        </>
     );
 }
 

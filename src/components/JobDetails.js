@@ -5,6 +5,7 @@ import jobsService from "../Service/JobsService";
 import toastService from '../Service/ToastService';
 import { useState, useEffect } from 'react';
 import '../styles/JobDetails.css';
+import { Button } from 'react-bootstrap';
 
 function JobDetails(props) {
     const jobsListValue = [
@@ -12,19 +13,20 @@ function JobDetails(props) {
             id: 1,
             title: 'برنامه‌نویس ارشد فرانت',
             description: 'نیازمندی‌ها...',
-            taskURL: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
+            task: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8',
+            applied_before: false
         },
         {
             id: 2,
             title: 'دیجیتال مارکتر',
             description: 'نیازمندی‌ها...',
-            taskURL: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
+            task: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
         },
         {
             id: 3,
             title: 'کارشناس منابع انسانی',
             description: 'نیازمندی‌ها...',
-            taskURL: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
+            task: 'https://www.google.com/search?q=task&oq=task&aqs=chrome..69i57.1637j0j7&sourceid=chrome&ie=UTF-8'
         },
     ];
 
@@ -62,24 +64,24 @@ function JobDetails(props) {
         };
     }, []);
 
-    async function getJobDetails() {
-        try {
-            const jobDetailsResponse = await jobsService.getJobDetails(props.jobId);
-            const { data } = jobDetailsResponse;
-            if (data.is_deactive ||
-                data.is_deleted) {
-                toastService.showToast('در حال حاضر موقعیت شغلی مورد نظر فعال نیست', 'warning');
-            } else {
-                setJobDetails(jobDetailsResponse.data);
-            }
-        } catch (err) {
-            toastService.showToast(err.message, 'danger');
-        }
-    }
+    // async function getJobDetails() {
+    //     try {
+    //         const jobDetailsResponse = await jobsService.getJobDetails(props.jobId);
+    //         const { data } = jobDetailsResponse;
+    //         if (data.is_deactive ||
+    //             data.is_deleted) {
+    //             toastService.showToast('در حال حاضر موقعیت شغلی مورد نظر فعال نیست', 'warning');
+    //         } else {
+    //             setJobDetails({...jobDetailsResponse.data.job_detail, applied_before: data.applied_before});
+    //         }
+    //     } catch (err) {
+    //         toastService.showToast(err.message, 'danger');
+    //     }
+    //}
 
     // useEffect(() => {
     //     getJobDetails();
-    // }, [jobId]);
+    // }, [props.jobId]);
 
     return (
         <>
@@ -104,12 +106,25 @@ function JobDetails(props) {
                             </p>
                         </div>
                         {
-                            loggedin
-                                ? <ApplyModalContainer jobId={props.jobId}/>
-                                : <LoginSignupModal
-                                    buttonLabel="درخواست"
-                                    variant="danger"
-                                    id="apply" />
+                            !loggedin &&
+                            <LoginSignupModal
+                                buttonLabel="درخواست"
+                                variant="danger"
+                                id="apply" />
+                        }
+                        {
+                            loggedin && !job.applied_before &&
+                            <ApplyModalContainer jobId={props.jobId} />
+                        }
+
+                        {
+                            loggedin && job.applied_before &&
+                            <Button
+                                variant='danger'
+                                disabled
+                                id="disabled-apply">
+                                قبلاْ درخواست داده اید
+                            </Button>
                         }
                     </div >
                 ))

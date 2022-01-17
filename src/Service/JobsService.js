@@ -24,8 +24,8 @@ class JobsService {
                 title: jobTitle,
                 description: jobDescription,
                 task: {
-                    bytecode: jobTaskFile.bytecode,
-                    format: jobTaskFile.format
+                    mime: jobTaskFile.format,
+                    data: jobTaskFile.bytecode
                 },
                 is_deactive: deactiveJob,
                 is_deleted: deletedJob
@@ -43,8 +43,8 @@ class JobsService {
                 title: jobTitle,
                 description: jobDescription,
                 task: {
-                    bytecode: jobTaskFile.bytecode,
-                    format: jobTaskFile.format
+                    mime: jobTaskFile.format,
+                    data: jobTaskFile.bytecode
                 },
                 is_deactive: deactiveJob
             }

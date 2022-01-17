@@ -2,153 +2,208 @@ import ModalComponent from "./Core/ModalComponent";
 import { Container, Row, Button } from 'react-bootstrap';
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 function ApplyModal(props) {
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const URLParams = useParams();
 
     const isApplicationEditable =
-        props.applyState === 'Unknown' || props.applyState === undefined
+        props.applyState === 'unknown' || props.applyState === undefined
             ? true
             : false;
 
-    const [applicationInfo, setApplicationInfo] = useState({
+    const [unrequiredInfo, setApplicationInfo] = useState({
         salaryInterestValue: props.salaryInterest ? props.salaryInterest : 0,
         durationInterestValue: props.durationInterest ? props.durationInterest : 0,
-        resumeFile: {
-            bytecode: '',
-            format: ''
-        },
-        taskAnswerFile: {
-            bytecode: '',
-            format: ''
+    });
+
+
+    const onSubmitApplyForm = (data) => {
+
+        let applicationInfo = {};
+
+        if (data.resumeFile['0']) {
+            const resumeFile = data.resumeFile['0'];
+            const resumeFileData = new FormData();
+            resumeFileData.append(resumeFile.name, resumeFile);
+            applicationInfo = {
+                ...applicationInfo,
+                resumeFile: {
+                    bytecode: resumeFileData,
+                    format: resumeFile.type
+                }
+            }
+        } else {
+            applicationInfo = {
+                ...applicationInfo,
+                resumeFile: {
+                    bytecode: null,
+                    format: null
+                }
+            }
         }
-    })
 
-    const body = <Container>
-        <Row>
-            <>
-                <label htmlFor='salary-question'>
-                    حقوق مورد نظر شما (تومان)
-                </label>
-                <input
-                    className='modal-input'
-                    name='salary-question'
-                    type='number'
-                    style={{
-                        padding: '0 !important',
-                        margin: '0 !important'
-                    }}
-                    disabled={!isApplicationEditable}
-                    value={applicationInfo.salaryInterestValue}
-                    onChange={(e) => {
-                        setApplicationInfo((prevState) => ({
-                            ...prevState,
-                            salaryInterestValue: e.target.value
-                        }));
-                    }}
-                />
-            </>
-        </Row>
-
-        <Row>
-            <label htmlFor='years-question'>
-                پیش‌بینی می‌کنید چه مدت در کنار ما باشید؟ (ماه)
-            </label>
-            <input
-                className='modal-input'
-                name='years-question'
-                type='number'
-                style={{
-                    padding: '0 !important',
-                    margin: '0 !important'
-                }}
-                disabled={!isApplicationEditable}
-                value={applicationInfo.durationInterestValue}
-                onChange={(e) => {
-                    setApplicationInfo((prevState) => ({
-                        ...prevState,
-                        durationInterestValue: e.target.value
-                    }));
-                }}
-            />
-        </Row>
-
-        <Row>
-            <>
-                <label htmlFor='resume'>
-                    رزومه
-                </label>
-
-                {
-                    props.resumeURL &&
-                    props.resumeURL.length > 0 &&
-                    <a href={props.resumeURL}>
-                        دانلود
-                    </a>
+        if (data.taskAnswerFile['0']) {
+            const taskAnswerFile = data.taskAnswerFile['0'];
+            const taskAnswerFileData = new FormData();
+            taskAnswerFileData.append(taskAnswerFile.name, taskAnswerFile);
+            applicationInfo = {
+                ...applicationInfo,
+                taskAnswerFile: {
+                    bytecode: taskAnswerFileData,
+                    format: taskAnswerFile.type
                 }
+            }
+        } else {
+            applicationInfo = {
+                ...applicationInfo,
+                taskAnswerFile: {
+                    bytecode: null,
+                    format: null,
+                }
+            }
+        }
 
-                {
-                    isApplicationEditable &&
+        applicationInfo = {
+            ...applicationInfo,
+            salaryInterestValue: unrequiredInfo.salaryInterestValue,
+            durationInterestValue: unrequiredInfo.durationInterestValue,
+        }
+
+        props.applicationId
+            ? props.editApplication(applicationInfo, props.applicationId)
+            : props.applyForJob(applicationInfo, URLParams.jobId)
+    }
+
+    const body =
+        <form
+            id="apply-form"
+            onSubmit={handleSubmit(onSubmitApplyForm)}>
+            <Container>
+                <Row>
+                    <>
+                        <label htmlFor='salary-question'>
+                            حقوق مورد نظر شما (تومان)
+                        </label>
+                        <input
+                            className='modal-input'
+                            name='salary-question'
+                            type='number'
+                            min={0}
+                            style={{
+                                padding: '0 !important',
+                                margin: '0 !important'
+                            }}
+                            disabled={!isApplicationEditable}
+                            value={unrequiredInfo.salaryInterestValue}
+                            onChange={(e) => {
+                                setApplicationInfo((prevState) => ({
+                                    ...prevState,
+                                    salaryInterestValue: e.target.value
+                                }));
+                            }}
+                        />
+                    </>
+                </Row>
+
+                <Row>
+                    <label htmlFor='years-question'>
+                        پیش‌بینی می‌کنید چه مدت در کنار ما باشید؟ (ماه)
+                    </label>
                     <input
-                        required={!props.resumeURL}
                         className='modal-input'
-                        name='resume'
-                        type='file'
+                        name='years-question'
+                        type='number'
+                        min={0}
+                        style={{
+                            padding: '0 !important',
+                            margin: '0 !important'
+                        }}
+                        disabled={!isApplicationEditable}
+                        value={unrequiredInfo.durationInterestValue}
                         onChange={(e) => {
-                            let file = e.target.files[0];
-                            let resumeFileData = new FormData();
-                            resumeFileData.append(file.name, file);
                             setApplicationInfo((prevState) => ({
                                 ...prevState,
-                                resumeFile: {
-                                    bytecode: resumeFileData,
-                                    format: file.type
-                                }
+                                durationInterestValue: e.target.value
                             }));
                         }}
                     />
-                }
-            </>
-        </Row>
+                </Row>
 
-        <Row>
-            <>
-                <label htmlFor='task-answer'>
-                    پاسخ تسک
-                </label>
+                <Row>
+                    <>
+                        <label htmlFor='resume'>
+                            رزومه
+                        </label>
 
-                {
-                    props.taskAnswerURL &&
-                    props.taskAnswerURL.length > 0 &&
-                    <a href={props.taskAnswerURL}>
-                        دانلود
-                    </a>
-                }
+                        {
+                            props.resumeURL &&
+                            props.resumeURL.length > 0 &&
+                            <a href={props.resumeURL}>
+                                دانلود
+                            </a>
+                        }
 
-                {
-                    isApplicationEditable &&
-                    <input
-                        required={!props.taskAnswerURL}
-                        className='modal-input'
-                        name='task_solution'
-                        type='file'
-                        onChange={(e) => {
-                            let file = e.target.files[0];
-                            let taskSolutionData = new FormData();
-                            taskSolutionData.append(file.name, file);
-                            setApplicationInfo((prevState) => ({
-                                ...prevState,
-                                new_task_solution: {
-                                    bytecode: taskSolutionData,
-                                    format: file.type
-                                }
-                            }));
-                        }}
-                    />
-                }
-            </>
-        </Row>
-    </Container>;
+                        {
+                            isApplicationEditable &&
+                            <>
+                                <input
+                                    className='modal-input'
+                                    name='resume'
+                                    type='file'
+                                    {...register(
+                                        "resumeFile",
+                                        {
+                                            required: !props.resumeURL
+                                        }
+                                    )}
+                                />
+                                <div className="form-err">
+                                    {errors.resumeFile?.type === 'required' && "الزامی"}
+                                </div>
+                            </>
+                        }
+                    </>
+                </Row>
+
+                <Row>
+                    <>
+                        <label htmlFor='taskAnswer'>
+                            پاسخ تسک
+                        </label>
+
+                        {
+                            props.taskAnswerURL &&
+                            props.taskAnswerURL.length > 0 &&
+                            <a href={props.taskAnswerURL}>
+                                دانلود
+                            </a>
+                        }
+
+                        {
+                            isApplicationEditable &&
+                            <>
+                                <input
+                                    className='modal-input'
+                                    name='taskAnswer'
+                                    type='file'
+                                    {...register(
+                                        "taskAnswerFile",
+                                        {
+                                            required: !props.taskAnswerURL
+                                        }
+                                    )}
+                                />
+                                <div className="form-err">
+                                    {errors.taskAnswerFile?.type === 'required' && "الزامی"}
+                                </div>
+                            </>
+                        }
+                    </>
+                </Row>
+            </Container>
+        </form>;
 
     const footer = <>
         {
@@ -156,11 +211,8 @@ function ApplyModal(props) {
             <div
                 className='col-auto'>
                 <Button
-                    onClick={() => {
-                        props.applicationId
-                            ? props.editApplication(applicationInfo, props.applicationId)
-                            : props.applyForJob(applicationInfo, URLParams.jobId)
-                    }}
+                    type="submit"
+                    form="apply-form"
                     variant="warning">
                     {props.btnLabel}
                 </Button>

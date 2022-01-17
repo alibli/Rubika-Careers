@@ -30,7 +30,6 @@ function ApplyModalContainer() {
         <div className='apply-modal'>
 
             <Button
-                // id="apply"
                 className='apply-btn'
                 variant='danger'
                 onClick={() => setApplyModalShow(true)}>

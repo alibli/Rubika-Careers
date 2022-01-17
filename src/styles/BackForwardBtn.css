@@ -1,0 +1,15 @@
+.fa-arrow-right,
+.fa-arrow-left {
+    cursor: pointer;
+    text-align: right;
+    margin: 2em 2em 0 2em;
+    justify-self: flex-end ;
+    color: #803333;
+}
+
+.back-forward-buttons {
+    direction: rtl;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
