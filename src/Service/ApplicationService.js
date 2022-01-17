@@ -41,16 +41,6 @@ class ApplicationService {
         const jobApply = apiService.apiCall(apiModel);
         return jobApply;
     }
-
-    //applicationUserInfo
-    // getUserApplicationInfo(token) {
-    //     return apiService.getRequest('/apply',
-    //         { headers: { token } },
-    //         { params: {} }
-    //     );
-    // }
-
-
 }
 
 const applicationService = new ApplicationService();

@@ -1,15 +1,3 @@
-/* .add-job-modal .btn-danger {
-    border: none !important;
-    background-color: #803333 !important;
-    color: whitesmoke !important;
-}
-
-.add-job-modal .btn-danger:hover {
-    border: none !important;
-    background-color: #803333 !important;
-    color: #F3B073 !important;
-} */
-
 .apply-modal {
     display: flex;
 }

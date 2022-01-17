@@ -2,7 +2,8 @@ import apiService from "./APIService";
 import APIModel from './APIModel';
 
 class JobsService {
-
+    
+    //public
     getJobsList(){
         const apiModel = new APIModel({method: 'get', url: '/jobs'});
         const jobsList = apiService.apiCall(apiModel);

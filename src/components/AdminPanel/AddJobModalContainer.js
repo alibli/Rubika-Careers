@@ -1,4 +1,3 @@
-// import '../../styles/EditJobModalContainer.css';
 import '../../styles/AddJobModalContainer.css';
 import AddJobModal from './AddJobModal';
 import { useState } from 'react';

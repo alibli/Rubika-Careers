@@ -2,15 +2,19 @@
     margin: 5px;
 }
 
-.job-requests-table {
+.job-requests-sec {
     padding: 0;
     margin: 0;
-    width: 100%;
+    width: auto;
     height: auto !important;
     min-height: 100%;
+    direction: rtl;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
 }
 
-.job-requests-table h3 {
+.job-requests-sec h3 {
     color: #803333;
-    padding-top: 2em;
+    padding-top:2em;
 }

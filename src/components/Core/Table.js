@@ -1,7 +1,6 @@
-import '../../styles/Table.css'
 import TableRow from './TableRow';
 import TableHead from './TableHead';
-function Table({ columns, rows, actions }) {
+function Table({ columns, rows }) {
 
     return (
         <table dir='rtl' className='table container'>

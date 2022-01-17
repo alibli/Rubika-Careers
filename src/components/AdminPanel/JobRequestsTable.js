@@ -8,6 +8,8 @@ import jobsService from '../../Service/JobsService';
 import toastService from '../../Service/ToastService';
 import ReqDetailsModalContainer from './ReqDetailsModalContainer';
 
+var filteredStatuses = [];
+
 function JobRequestsTable() {
     const customJobReqsArr = [
         {
@@ -71,6 +73,68 @@ function JobRequestsTable() {
             ],
             linkers: [],
             status: 'accept'
+        },
+        {
+            id: 12,
+            fields: [
+                {
+                    reqName: 'حسین حسینی'
+                },
+                {
+                    reqDate: '۱۴۰۰/۰۸/۰۱'
+                },
+                {
+                    reqStatusDropdown:
+                        <ReqStatusDropdown
+                            jobId={0}
+                            reqId={12}
+                            reqStatus='in progress' />
+                }
+            ],
+            modals: [
+                {
+                    modalContainer:
+                        <ReqDetailsModalContainer
+                            reqSalaryInterest={5000000}
+                            reqDurationInterest={18}
+                            reqResumeLink={''}
+                            reqTaskSolutionLink={''}
+                        />,
+                }
+            ],
+            linkers: [],
+            status: 'in progress'
+        },
+        {
+            id: 13,
+            fields: [
+                {
+                    reqName: 'احمد احمدی'
+                },
+                {
+                    reqDate: '۱۴۰۰/۰۹/۰۱'
+                },
+                {
+                    reqStatusDropdown:
+                        <ReqStatusDropdown
+                            jobId={0}
+                            reqId={13}
+                            reqStatus='reject' />
+                }
+            ],
+            modals: [
+                {
+                    modalContainer:
+                        <ReqDetailsModalContainer
+                            reqSalaryInterest={5000000}
+                            reqDurationInterest={18}
+                            reqResumeLink={''}
+                            reqTaskSolutionLink={''}
+                        />,
+                }
+            ],
+            linkers: [],
+            status: 'reject'
         }
     ];
 
@@ -133,8 +197,6 @@ function JobRequestsTable() {
     // }, []);
 
 
-    //work on this
-    var filteredStatuses = [];
     function filterRequests(status, isChecked) {
         if (isChecked) {
             filteredStatuses.push(status);
@@ -142,17 +204,16 @@ function JobRequestsTable() {
             filteredStatuses.splice(filteredStatuses.indexOf(status), 1);
         }
 
-        if(filteredStatuses.length !== 0) {
+        if (filteredStatuses.length !== 0) {
             let filteredReqs = [];
             filteredStatuses.forEach(filteredStatus => {
                 customJobReqsArr.forEach(req => {
-                    if(req.status === filteredStatus) {
+                    if (req.status === filteredStatus) {
                         filteredReqs.push(req);
                     }
                 });
             });
             setJobRequests(filteredReqs);
-            debugger
         } else {
             setJobRequests(customJobReqsArr);
         }
@@ -167,19 +228,15 @@ function JobRequestsTable() {
 
     return (
 
-        <div className='row col col-lg-11 col-12 offset-1 job-requests-table' >
+        <div className='container job-requests-sec'>
+            <h3>درخواست ها </h3>
 
-            <div dir='rtl' className='col col-lg-9 col-12'>
-                <h3>درخواست ها </h3>
-                <Table
-                    columns={columns}
-                    rows={jobRequests} >
-                </Table>
-            </div>
+            <FilterRequests filterRequests={filterRequests} />
 
-            <div dir='rtl' className='col col-lg-2 offset-lg-1 col-6 offset-6 '>
-                <FilterRequests filterRequests={filterRequests} />
-            </div>
+            <Table
+                columns={columns}
+                rows={jobRequests} >
+            </Table>
 
         </div>
 

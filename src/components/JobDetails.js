@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-target-blank */
 import ApplyModalContainer from './ApplyModalContainer';
 import LoginSignupModal from './LoginSignupModal';
 import userService from '../Service/UserService';
