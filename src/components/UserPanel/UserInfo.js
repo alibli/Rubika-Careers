@@ -3,7 +3,6 @@ import userService from '../../Service/UserService';
 import toastService from '../../Service/ToastService';
 import { Row, Button } from 'react-bootstrap';
 import '../../styles/UserInfo.css';
-import BackForwardBtn from '../Core/BackForwardBtn';
 
 function UserInfo() {
 
@@ -65,8 +64,6 @@ function UserInfo() {
     // }, []);
 
     return (
-        <>
-            <BackForwardBtn />
             <div className="user-info">
                 <Row>
                     <label htmlFor='firstname'>
@@ -144,7 +141,6 @@ function UserInfo() {
                     }
                 </Button>
             </div>
-        </>
     );
 }
 

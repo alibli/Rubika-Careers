@@ -4,7 +4,6 @@ import userService from '../../Service/UserService';
 import { useEffect, useState } from 'react';
 import toastService from '../../Service/ToastService';
 import EditApplyModalContainer from './EditApplyModalContainer';
-import BackForwardBtn from '../Core/BackForwardBtn';
 
 function UserApplicationsTable() {
     const customApplicationsArr = [
@@ -128,17 +127,14 @@ function UserApplicationsTable() {
     ];
 
     return (
-        <>
-            <BackForwardBtn />
-            <div dir='rtl' className='container user-requests-table'>
-                <h3>درخواست ها</h3>
-                <Table
-                    id='table'
-                    columns={columns}
-                    rows={applications}>
-                </Table>
-            </div>
-        </>
+        <div dir='rtl' className='container user-requests-table'>
+            <h3>درخواست ها</h3>
+            <Table
+                id='table'
+                columns={columns}
+                rows={applications}>
+            </Table>
+        </div>
     );
 
 }

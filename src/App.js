@@ -8,11 +8,13 @@ import UserApplicationsTable from './components/UserPanel/UserApplicationsTable'
 import AdminJobsTable from './components/AdminPanel/AdminJobsTable';
 import JobRequestsTable from './components/AdminPanel/JobRequestsTable';
 import Notification from './components/Core/Notification';
+import BackForwardBtn from './components/Core/BackForwardBtn';
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <BackForwardBtn />
         <Header></Header>
 
         <Routes>
@@ -23,7 +25,7 @@ function App() {
           <Route path="user-panel" element={<UserApplicationsTable />} />
           <Route path="admin-panel" element={<AdminJobsTable />} />
           <Route path="admin-panel/:jobId/job-requests" element={<JobRequestsTable />} />
-        
+
 
         </Routes>
 

@@ -2,12 +2,13 @@
 .fa-arrow-left {
     cursor: pointer;
     text-align: right;
-    margin: 2em 2em 0 2em;
+    margin: 1em;
     justify-self: flex-end ;
-    color: #803333;
+    color: whitesmoke;
 }
 
 .back-forward-buttons {
+    background-color: #803333;
     direction: rtl;
     width: 100%;
     display: flex;

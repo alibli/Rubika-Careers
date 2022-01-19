@@ -7,7 +7,6 @@ import ReqStatusDropdown from './ReqStatusDropdown';
 import jobsService from '../../Service/JobsService';
 import toastService from '../../Service/ToastService';
 import ReqDetailsModalContainer from './ReqDetailsModalContainer';
-import BackForwardBtn from '../Core/BackForwardBtn';
 
 var filteredStatuses = [];
 
@@ -228,20 +227,17 @@ function JobRequestsTable() {
     ];
 
     return (
-        <>
-            <BackForwardBtn />
-            <div className='container job-requests-sec'>
-                <h3>درخواست ها </h3>
+        <div className='container job-requests-sec'>
+            <h3>درخواست ها </h3>
 
-                <FilterRequests filterRequests={filterRequests} />
+            <FilterRequests filterRequests={filterRequests} />
 
-                <Table
-                    columns={columns}
-                    rows={jobRequests} >
-                </Table>
+            <Table
+                columns={columns}
+                rows={jobRequests} >
+            </Table>
 
-            </div>
-        </>
+        </div>
     );
 }
 

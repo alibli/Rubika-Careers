@@ -49,25 +49,23 @@ function JobsList() {
 
 
     return (
-        <>
-            <div className="jobs-list">
-                {
-                    jobsList.map(job => (
-                        <div
-                            className="job-title bg-warning rounded"
-                            key={job.id}>
-                            {job.title}
-                            <Link to={`/job-details/${job.id}`}>
-                                <button
-                                    className="btn" >
-                                    درخواست
-                                </button>
-                            </Link>
-                        </div>
-                    ))
-                }
-            </div>
-        </>
+        <div className="jobs-list">
+            {
+                jobsList.map(job => (
+                    <div
+                        className="job-title bg-warning rounded"
+                        key={job.id}>
+                        {job.title}
+                        <Link to={`/job-details/${job.id}`}>
+                            <button
+                                className="btn" >
+                                درخواست
+                            </button>
+                        </Link>
+                    </div>
+                ))
+            }
+        </div>
     );
 
 }

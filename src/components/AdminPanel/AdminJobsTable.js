@@ -7,7 +7,6 @@ import AppsCountModalContainer from './AppsCountModalContainer';
 import EditJobModalContainer from './EditJobModalContainer';
 import { Link } from 'react-router-dom';
 import AddJobModalContainer from './AddJobModalContainer';
-import BackForwardBtn from '../Core/BackForwardBtn';
 
 function AdminJobsTable() {
     const customAdminJobsArr = [
@@ -157,18 +156,15 @@ function AdminJobsTable() {
     ];
 
     return (
-        <>
-            <BackForwardBtn />
-            <div dir='rtl' className='container admin-jobs-table'>
-                <AddJobModalContainer />
-                <h3> موقعیت های شغلی</h3>
-                <Table
-                    id='table'
-                    columns={columns}
-                    rows={adminJobs}>
-                </Table>
-            </div>
-        </>
+        <div dir='rtl' className='container admin-jobs-table'>
+            <AddJobModalContainer />
+            <h3> موقعیت های شغلی</h3>
+            <Table
+                id='table'
+                columns={columns}
+                rows={adminJobs}>
+            </Table>
+        </div>
     );
 }
 
