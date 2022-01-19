@@ -16,11 +16,11 @@ function BackForwardBtn() {
         <div className="back-forward-buttons">
             <i
                 className="fa fa-arrow-right fa-lg"
-                onClick={goBack}>
+                onClick={goForward}>
             </i>
             <i
                 className="fa fa-arrow-left fa-lg"
-                onClick={goForward}>
+                onClick={goBack}>
             </i>
         </div>
 
