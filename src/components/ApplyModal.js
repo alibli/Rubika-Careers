@@ -18,22 +18,60 @@ function ApplyModal(props) {
         durationInterestValue: props.durationInterest ? props.durationInterest : 0,
     });
 
+    let applicationInfo = {};
 
-    const onSubmitApplyForm = (data) => {
+    function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
 
-        let applicationInfo = {};
-
-        if (data.resumeFile['0']) {
-            const resumeFile = data.resumeFile['0'];
-            const resumeFileData = new FormData();
-            resumeFileData.append(resumeFile.name, resumeFile);
+    const getResumeFileBase64 = async (resumeFile) => {
+        try {
+            const resumeFileBase64 = await getBase64(resumeFile);
             applicationInfo = {
                 ...applicationInfo,
                 resumeFile: {
-                    bytecode: resumeFileData,
-                    format: resumeFile.type
+                    bytecode: resumeFileBase64.substring(
+                        resumeFileBase64.lastIndexOf(",") + 1),
+                    format: resumeFileBase64.substring(
+                        resumeFileBase64.lastIndexOf(":") + 1,
+                        resumeFileBase64.lastIndexOf(";")
+                    )
                 }
             }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const getTaskAnswerFileBase64 = async (taskAnswerFile) => {
+        try {
+            const taskAnswerFileBase64 = await getBase64(taskAnswerFile);
+            applicationInfo = {
+                ...applicationInfo,
+                taskAnswerFile: {
+                    bytecode: taskAnswerFileBase64.substring(
+                        taskAnswerFileBase64.lastIndexOf(",") + 1),
+                    format: taskAnswerFileBase64.substring(
+                        taskAnswerFileBase64.lastIndexOf(":") + 1,
+                        taskAnswerFileBase64.lastIndexOf(";")
+                    )
+                }
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const  onSubmitApplyForm = async (data) => {
+
+        if (data.resumeFile['0']) {
+            const resumeFile = data.resumeFile['0'];
+            await getResumeFileBase64(resumeFile);
         } else {
             applicationInfo = {
                 ...applicationInfo,
@@ -46,15 +84,7 @@ function ApplyModal(props) {
 
         if (data.taskAnswerFile['0']) {
             const taskAnswerFile = data.taskAnswerFile['0'];
-            const taskAnswerFileData = new FormData();
-            taskAnswerFileData.append(taskAnswerFile.name, taskAnswerFile);
-            applicationInfo = {
-                ...applicationInfo,
-                taskAnswerFile: {
-                    bytecode: taskAnswerFileData,
-                    format: taskAnswerFile.type
-                }
-            }
+            await getTaskAnswerFileBase64(taskAnswerFile);
         } else {
             applicationInfo = {
                 ...applicationInfo,

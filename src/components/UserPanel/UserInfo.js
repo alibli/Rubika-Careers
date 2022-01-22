@@ -28,11 +28,49 @@ function UserInfo() {
 
     const [editingInfo, setEditingInfo] = useState(false);
 
+    function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
+
+    const getResumeFileBase64 = async (resumeFile) => {
+        try {
+            const resumeFileBase64 = await getBase64(resumeFile);
+            return resumeFileBase64;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const setNewResume = (async (e) => {
+        try {
+            let resumeFile = e.target.files[0];
+            const resumeFileBase64 = await getResumeFileBase64(resumeFile);
+            setUserInfo((prevState) => ({
+                ...prevState,
+                newResumeFile: {
+                    bytecode: resumeFileBase64.substring(resumeFileBase64.lastIndexOf(",") + 1),
+                    format: resumeFileBase64.substring(
+                        resumeFileBase64.lastIndexOf(":") + 1,
+                        resumeFileBase64.lastIndexOf(";")
+                    )
+                }
+            }));
+
+        } catch (err) {
+            console.log(err);
+        }
+    })
+
     async function editResume(resumeFile) {
         try {
             const editResumeRes = await userService.editUserResume(resumeFile);
             const { status, data } = editResumeRes;
-            if (status === 200) { //need this?
+            if (status === 200) {
                 setUserInfo((prevState) => ({
                     ...prevState,
                     resumeLink: data.resume
@@ -64,83 +102,72 @@ function UserInfo() {
     // }, []);
 
     return (
-            <div className="user-info">
-                <Row>
-                    <label htmlFor='firstname'>
-                        نام
-                    </label>
+        <div className="user-info">
+            <Row>
+                <label htmlFor='firstname'>
+                    نام
+                </label>
+                <input
+                    className='modal-input'
+                    name='firstname'
+                    type='text'
+                    disabled={true}
+                    value={userInfo.firstname}
+                />
+            </Row>
+
+            <Row>
+                <label htmlFor='lastname'>
+                    نام خانوادگی
+                </label>
+                <input
+                    className='modal-input'
+                    name='lastname'
+                    type='text'
+                    disabled={true}
+                    value={userInfo.lastname}
+                />
+            </Row>
+
+            <Row>
+                <label htmlFor='resume'>
+                    رزومه
+                </label>
+
+                {
+                    userInfo.resumeLink.length > 0 &&
+                    <a href={userInfo.resumeLink}>
+                        دانلود
+                    </a>
+                }
+
+                {
+                    editingInfo &&
                     <input
                         className='modal-input'
-                        name='firstname'
-                        type='text'
-                        disabled={true}
-                        value={userInfo.firstname}
+                        name='resume'
+                        type='file'
+                        onChange={(e) => setNewResume(e)}
                     />
-                </Row>
+                }
+            </Row>
 
-                <Row>
-                    <label htmlFor='lastname'>
-                        نام خانوادگی
-                    </label>
-                    <input
-                        className='modal-input'
-                        name='lastname'
-                        type='text'
-                        disabled={true}
-                        value={userInfo.lastname}
-                    />
-                </Row>
-
-                <Row>
-                    <label htmlFor='resume'>
-                        رزومه
-                    </label>
-
-                    {
-                        userInfo.resumeLink.length > 0 &&
-                        <a href={userInfo.resumeLink}>
-                            دانلود
-                        </a>
+            <Button
+                onClick={() => {
+                    if (!editingInfo) {
+                        setEditingInfo(true);
+                    } else {
+                        editResume(userInfo.newResumeFile);
                     }
-
-                    {
-                        editingInfo &&
-                        <input
-                            className='modal-input'
-                            name='resume'
-                            type='file'
-                            onChange={(e) => {
-                                let file = e.target.files[0];
-                                let resumeData = new FormData();
-                                resumeData.append(file.name, file);
-                                setUserInfo((prevState) => ({
-                                    ...prevState,
-                                    newResumeFile: {
-                                        bytecode: resumeData,
-                                        format: file.type
-                                    }
-                                }));
-                            }}
-                        />
-                    }
-                </Row>
-
-                <Button
-                    onClick={() => {
-                        if (!editingInfo) {
-                            setEditingInfo(true);
-                        } else {
-                            editResume(userInfo.newResumeFile);
-                        }
-                    }}
-                    variant="warning">
-                    {
-                        editingInfo
-                            ? 'ثبت'
-                            : 'بارگذاری رزومه'
-                    }
-                </Button>
-            </div>
+                }}
+                variant="warning">
+                {
+                    editingInfo
+                        ? 'ثبت'
+                        : 'بارگذاری رزومه'
+                }
+            </Button>
+        </div>
     );
 }
 

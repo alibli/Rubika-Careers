@@ -19,7 +19,40 @@ function AddJobModal(props) {
         }
     });
 
-    async function addJobPosition(jobId) {
+    function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
+
+    const getTaskFileBase64 = async (taskFile) => {
+        try {
+            const taskFileBase64 = await getBase64(taskFile);
+            return taskFileBase64;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const setJobTaskFile = (async (e) => {
+        let taskFile = e.target.files[0];
+        const taskFileBase64 = await getTaskFileBase64(taskFile);
+        setJobDetails(prevState => ({
+            ...prevState,
+            jobTaskFile: {
+                bytecode: taskFileBase64.substring(taskFileBase64.lastIndexOf(",") + 1),
+                format: taskFileBase64.substring(
+                    taskFileBase64.lastIndexOf(":") + 1,
+                    taskFileBase64.lastIndexOf(";")
+                )
+            }
+        }));
+    });
+
+    async function addJobPosition() {
         try {
             const addJobReqBody = {
                 jobTitle: jobDetails.jobTitle,
@@ -29,7 +62,7 @@ function AddJobModal(props) {
             }
 
             const editJobRes = await jobsService.addJobPosition(addJobReqBody);
-            if (editJobRes.status === 201) { //need this?
+            if (editJobRes.status === 201) {
                 window.location.reload();
                 toastService.showToast('موقعیت شغلی مورد نظر اضافه شد.', 'success');
             }
@@ -37,7 +70,7 @@ function AddJobModal(props) {
             if (err.response) {
                 if (err.response.status === 400) {
                     toastService.showToast('عدم موفقیت در افزودن موقعیت شغلی جدید', 'danger');
-                } 
+                }
             } else {
                 toastService.showToast(err.message, 'danger');
             }
@@ -114,18 +147,7 @@ function AddJobModal(props) {
                     className='modal-input'
                     name='resume'
                     type='file'
-                    onChange={(e) => {
-                        let file = e.target.files[0];
-                        let taskFileData = new FormData();
-                        taskFileData.append(file.name, file);
-                        setJobDetails((prevState) => ({
-                            ...prevState,
-                            jobTaskFile: {
-                                bytecode: taskFileData,
-                                format: file.type
-                            }
-                        }));
-                    }}
+                    onChange={(e) => setJobTaskFile(e)}
                 />
             </>
         </Row>
@@ -136,7 +158,7 @@ function AddJobModal(props) {
             <Button
                 variant="warning"
                 className="edit-modal-btn"
-                onClick={() => addJobPosition(props.jobId)}>
+                onClick={() => addJobPosition()}>
                 ذخیره
             </Button>
         </div>

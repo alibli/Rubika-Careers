@@ -22,6 +22,40 @@ function EditJobModal(props) {
         }
     });
 
+    function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
+
+    const getTaskFileBase64 = async (taskFile) => {
+        try {
+            const taskFileBase64 = await getBase64(taskFile);
+            return taskFileBase64;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const setJobTaskFile = (async (e) => {
+        let taskFile = e.target.files[0];
+        const taskFileBase64 = await getTaskFileBase64(taskFile);
+        setJobDetails(prevState => ({
+            ...prevState,
+            jobTaskFile: {
+                bytecode: taskFileBase64.substring(taskFileBase64.lastIndexOf(",") + 1),
+                format: taskFileBase64.substring(
+                    taskFileBase64.lastIndexOf(":") + 1,
+                    taskFileBase64.lastIndexOf(";")
+                )
+            }
+        }));
+    });
+
+
     async function getJobDetails(id) {
         try {
             const jobDetailsResponse = await jobsService.getJobDetails(id);
@@ -52,7 +86,7 @@ function EditJobModal(props) {
             }
 
             const editJobRes = await jobsService.addJobPosition(jobId, editJobReqBody);
-            if (editJobRes.status === 200) { //need this?
+            if (editJobRes.status === 200) {
                 window.location.reload();
                 toastService.showToast('موقعیت شغلی مورد نظر ویرایش شد', 'success');
             }
@@ -151,18 +185,7 @@ function EditJobModal(props) {
                             className='modal-input'
                             name='resume'
                             type='file'
-                            onChange={(e) => {
-                                let file = e.target.files[0];
-                                let taskFileData = new FormData();
-                                taskFileData.append(file.name, file);
-                                setJobDetails((prevState) => ({
-                                    ...prevState,
-                                    jobTaskFile: {
-                                        bytecode: taskFileData,
-                                        format: file.type
-                                    }
-                                }));
-                            }}
+                            onChange={(e) => setJobTaskFile(e)}
                         />
                     </>
                 </Row>
