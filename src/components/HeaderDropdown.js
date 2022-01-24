@@ -16,7 +16,6 @@ function HeaderDropdown() {
         switch (e.action) {
             case 'USER-LOGIN':
             case 'STORAGE-CHANGE':
-                debugger    
                 const userFirstnameValue = userService.getUserFirstname();
                 setUserFirstname(userFirstnameValue);
                 break;
@@ -36,14 +35,14 @@ function HeaderDropdown() {
     }, []);
 
     const logout = async () => {
-        // try {
-        //     await userService.logout();
-            userService.setUserInfo('', '');
+        try {
+            await userService.logout();
+            userService.clearUserInfo();
             toastService.showToast('با موفقیت خارج شدید.', 'success');
             navigate('/');
-        // } catch (err) {
-        //     toastService.showToast(err.message, 'danger');
-        // }
+        } catch (err) {
+            toastService.showToast(err.message, 'danger');
+        }
     }
 
     return (

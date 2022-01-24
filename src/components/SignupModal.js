@@ -17,11 +17,8 @@ function SignupModal(props) {
             password: data.password
         }
 
-        console.log(signupRequestBody);
-
         try {
             const signupResponse = await userService.signup(signupRequestBody);
-            debugger
             const { data, status } = signupResponse;
             if (status === 200) {
                 toastService.showToast('ثبت‌نام شما با موفقیت انجام شد.', 'success');

@@ -16,16 +16,16 @@ class UserService {
 
         this.userSubject = new Subject();
 
-        window.onstorage = () => {
-            const refereshedLocalStorageToken = window.localStorage.getItem('userToken');
-            this.setLoggedin(refereshedLocalStorageToken ? true : false);
-            this.setUserToken(refereshedLocalStorageToken ? refereshedLocalStorageToken : '');
+        // window.onstorage = () => {
+        //     const refereshedLocalStorageToken = window.localStorage.getItem('userToken');
+        //     this.setLoggedin(refereshedLocalStorageToken ? true : false);
+        //     this.setUserToken(refereshedLocalStorageToken ? refereshedLocalStorageToken : '');
 
-            const refereshedLocalStorageFirstname = window.localStorage.getItem('userFirstname');
-            this.setUserFirstname(refereshedLocalStorageFirstname ? refereshedLocalStorageFirstname : '');
+        //     const refereshedLocalStorageFirstname = window.localStorage.getItem('userFirstname');
+        //     this.setUserFirstname(refereshedLocalStorageFirstname ? refereshedLocalStorageFirstname : '');
 
-            this.userSubject.notify({ action: 'STORAGE-CHANGE' });
-        }
+        //     this.userSubject.notify({ action: 'STORAGE-CHANGE' });
+        // }
     }
 
     //public
@@ -48,7 +48,7 @@ class UserService {
             body: {
                 email: email,
                 password: password
-            }
+            },
         });
         const loginResponse = apiService.apiCall(apiModel);
         return loginResponse;
@@ -79,11 +79,9 @@ class UserService {
     };
 
     setUserInfo = (token, firstname) => {
-        token = '' && firstname === ''
-            ? this.setLoggedin(false)
-            : this.setLoggedin(true);
         this.setUserToken(token);
         this.setUserFirstname(firstname);
+        this.setLoggedin(true);
     }
 
     getUserProfile() {
@@ -120,21 +118,23 @@ class UserService {
     //private
     setUserToken = (token) => {
         this.userToken = token;
-        if (token === '') {
-            window.localStorage.removeItem('userToken');
-            this.setLoggedin(false);
-        } else {
-            window.localStorage.setItem('userToken', token);
-            this.setLoggedin(true);
-        }
+
+        window.localStorage.setItem('userToken', token);
+        this.setLoggedin(true);
     };
 
     setUserFirstname = (firstname) => {
         this.userFirstname = firstname;
-        firstname === ''
-            ? window.localStorage.removeItem('userFirstname')
-            : window.localStorage.setItem('userFirstname', firstname);
+
+        window.localStorage.setItem('userFirstname', firstname);
     };
+
+    clearUserInfo = () => {
+        window.localStorage.clear();
+        this.userToken = '';
+        this.userFirstname = '';
+        this.setLoggedin(false);
+    }
 
     setLoggedin = (value) => {
         if (typeof (value) === 'boolean') {
