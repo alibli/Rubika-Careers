@@ -7,14 +7,24 @@ import '../../styles/UserInfo.css';
 function UserInfo() {
 
     const [userInfo, setUserInfo] = useState({
-        firstname: '',
+        firstname: userService.getUserFirstname(),
         lastname: '',
         resumeLink: '',
         newResumeFile: {
-            bytecode: '',
+            byteCode: '',
             format: '',
         }
     }); 
+
+    // const [userInfo, setUserInfo] = useState({
+    //     firstname: 'پریناز',
+    //     lastname: 'ستایشگر',
+    //     resumeLink: 'https://www.google.com/search?q=resume&oq=resume&aqs=chrome.0.69i59.2049j0j7&sourceid=chrome&ie=UTF-8',
+    //     newResumeFile: {
+    //         bytecode: '',
+    //         format: '',
+    //     }
+    // });
 
     const [editingInfo, setEditingInfo] = useState(false);
 
@@ -125,7 +135,7 @@ function UserInfo() {
                 </label>
 
                 {
-                    userInfo.resumeLink.length > 0 &&
+                    userInfo.resumeLink !== null &&
                     <a href={userInfo.resumeLink}>
                         دانلود
                     </a>

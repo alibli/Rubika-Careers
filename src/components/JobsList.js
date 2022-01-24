@@ -31,7 +31,6 @@ function JobsList() {
     const getJobsList = async () => {
         try {
             const jobsListRes = await jobsService.getJobsList();
-            console.log('hi from getJobsList');
             const { data } = jobsListRes;
             if (data.length === 0) {
                 toastService.showToast('در حال حاضر موقعیت شغلی فعالی وجود ندارد', 'warning');

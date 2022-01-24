@@ -4,7 +4,7 @@ import APIModel from "./APIModel";
 class ApplicationService {
 
     //public
-    applyForJob({ resumeFile, taskAnswerFile, salaryInterestValue, durationInterestValue  }, jobId) {
+    applyForJob({ resumeFile, taskAnswerFile, salaryInterestValue, durationInterestValue }, jobId) {
 
         const apiModel = new APIModel({
             method: 'post',
@@ -22,7 +22,6 @@ class ApplicationService {
                     salary: salaryInterestValue,
                     contract_interest: durationInterestValue
                 }
-            
         });
 
         const editedApply = apiService.apiCall(apiModel);
@@ -32,7 +31,7 @@ class ApplicationService {
     editJobApplication({ resumeFile, taskAnswerFile, salaryInterestValue, durationInterestValue }, applicaionId) {
         const apiModel = new APIModel({
             method: 'post',
-            url: '/user/profile/applications/'+ applicaionId + '/edit',
+            url: '/user/profile/applications/' + applicaionId + '/edit',
             body: {
                 editInfo: {
                     resume: {

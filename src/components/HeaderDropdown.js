@@ -36,7 +36,7 @@ function HeaderDropdown() {
 
     const logout = async () => {
         try {
-            const logOutResponse = await userService.logout();
+            await userService.logout();
             userService.setUserInfo('', '');
             toastService.showToast('با موفقیت خارج شدید.', 'success');
             navigate('/');
