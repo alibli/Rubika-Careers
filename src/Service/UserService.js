@@ -118,20 +118,9 @@ class UserService {
     //private
     setUserToken = (token) => {
         this.userToken = token;
-<<<<<<< HEAD
-        if (token === '') {
-            window.localStorage.removeItem('userToken');
-            
-            this.setLoggedin(false);
-        } else {
-            window.localStorage.setItem('userToken', token);
-            this.setLoggedin(true);
-        }
-=======
 
         window.localStorage.setItem('userToken', token);
         this.setLoggedin(true);
->>>>>>> bb479476bcf85ee00f92ffee1d4edc0662f57f1f
     };
 
     setUserFirstname = (firstname) => {

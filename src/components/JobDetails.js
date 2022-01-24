@@ -68,6 +68,7 @@ function JobDetails(props) {
         try {
             const jobDetailsResponse = await jobsService.getJobDetails(props.jobId);
             const { data } = jobDetailsResponse;
+console.log(data);
             if (data.is_deactive ||
                 data.is_deleted) {
                 toastService.showToast('در حال حاضر موقعیت شغلی مورد نظر فعال نیست', 'warning');
@@ -98,7 +99,7 @@ function JobDetails(props) {
                         {
                             jobDetails.task !== null &&
                             <p>
-                                <a href={jobDetails.task}>
+                                <a href={"https://192.168.88.49"+jobDetails.task}>  {/* must be changed */}
                                     دانلود فایل تسک
                                 </a>
                             </p>

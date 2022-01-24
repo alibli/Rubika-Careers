@@ -16,10 +16,6 @@ function HeaderDropdown() {
         switch (e.action) {
             case 'USER-LOGIN':
             case 'STORAGE-CHANGE':
-<<<<<<< HEAD
-                    
-=======
->>>>>>> bb479476bcf85ee00f92ffee1d4edc0662f57f1f
                 const userFirstnameValue = userService.getUserFirstname();
                 setUserFirstname(userFirstnameValue);
                 break;
@@ -41,18 +37,10 @@ function HeaderDropdown() {
     const logout = async () => {
         try {
             await userService.logout();
-<<<<<<< HEAD
-            userService.setUserInfo('', '');
-            toastService.showToast('با موفقیت خارج شدید.', 'success');
-            navigate('/');
-        } catch (err) {
-            // console.log('logout headerDropdown');
-=======
             userService.clearUserInfo();
             toastService.showToast('با موفقیت خارج شدید.', 'success');
             navigate('/');
         } catch (err) {
->>>>>>> bb479476bcf85ee00f92ffee1d4edc0662f57f1f
             toastService.showToast(err.message, 'danger');
         }
     }
