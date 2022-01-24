@@ -79,7 +79,7 @@ function UserApplicationsTable() {
     async function getUserApplications() {
         try {
             const userProfileRes = await userService.getUserProfile();
-            const { data } = userProfileRes.data;
+            const { data } = userProfileRes;
             let customApplicationsArr = [];
             data.applications.forEach(application =>
                 customApplicationsArr.push({
