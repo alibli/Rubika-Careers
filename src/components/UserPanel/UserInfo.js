@@ -6,25 +6,25 @@ import '../../styles/UserInfo.css';
 
 function UserInfo() {
 
-    // const [userInfo, setUserInfo] = useState({
-    //     firstname: '',
-    //     lastname: '',
-    //     resumeLink: '',
-    //     newResumeFile: {
-    //         byteCode: '',
-    //         format: '',
-    //     }
-    // });
-
     const [userInfo, setUserInfo] = useState({
-        firstname: 'پریناز',
-        lastname: 'ستایشگر',
-        resumeLink: 'https://www.google.com/search?q=resume&oq=resume&aqs=chrome.0.69i59.2049j0j7&sourceid=chrome&ie=UTF-8',
+        firstname: userService.getUserFirstname(),
+        lastname: '',
+        resumeLink: '',
         newResumeFile: {
-            bytecode: '',
+            byteCode: '',
             format: '',
         }
     });
+
+    // const [userInfo, setUserInfo] = useState({
+    //     firstname: 'پریناز',
+    //     lastname: 'ستایشگر',
+    //     resumeLink: 'https://www.google.com/search?q=resume&oq=resume&aqs=chrome.0.69i59.2049j0j7&sourceid=chrome&ie=UTF-8',
+    //     newResumeFile: {
+    //         bytecode: '',
+    //         format: '',
+    //     }
+    // });
 
     const [editingInfo, setEditingInfo] = useState(false);
 
@@ -82,24 +82,24 @@ function UserInfo() {
         }
     }
 
-    // async function getUserInfo() {
-    //     try {
-    //         const userProfileRes = await userService.getUserProfile();
-    //         const { data } = userProfileRes;
-    //         setUserInfo((prevState) => ({
-    //             ...prevState,
-    //             firstname: data.first_name,
-    //             lastname: data.last_name,
-    //             resumeLink: data.resume
-    //         }));
-    //     } catch (err) {
-    //         toastService.showToast(err.message, 'danger');
-    //     }
-    // }
+    async function getUserInfo() {
+        try {
+            const userProfileRes = await userService.getUserProfile();
+            const { data } = userProfileRes;
+            setUserInfo((prevState) => ({
+                ...prevState,
+                firstname: data.first_name,
+                lastname: data.last_name,
+                resumeLink: data.resume
+            }));
+        } catch (err) {
+            toastService.showToast(err.message, 'danger');
+        }
+    }
 
-    // useEffect(() => {
-    //     getUserInfo();
-    // }, []);
+    useEffect(() => {
+        getUserInfo();
+    }, []);
 
     return (
         <div className="user-info">
@@ -135,7 +135,7 @@ function UserInfo() {
                 </label>
 
                 {
-                    userInfo.resumeLink.length > 0 &&
+                    userInfo.resumeLink !== null &&
                     <a href={userInfo.resumeLink}>
                         دانلود
                     </a>

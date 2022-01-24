@@ -4,25 +4,23 @@ import APIModel from "./APIModel";
 class ApplicationService {
 
     //public
-    applyForJob({ resumeFile, taskAnswerFile, salaryInterestValue, durationInterestValue  }, jobId) {
+    applyForJob({ resumeFile, taskAnswerFile, salaryInterestValue, durationInterestValue }, jobId) {
 
         const apiModel = new APIModel({
             method: 'post',
-            url: '/apply',
+            url: 'applications/apply',
             body: {
-                applyInfo: {
-                    job_id: jobId,
-                    resume: {
-                        mime: resumeFile.format,
-                        data: resumeFile.bytecode
-                    },
-                    task_solution: {
-                        mime: taskAnswerFile.format,
-                        data: taskAnswerFile.bytecode
-                    },
-                    salary: salaryInterestValue,
-                    contract_interest: durationInterestValue
-                }
+                job_id: jobId,
+                resume: {
+                    mime: resumeFile.format,
+                    data: resumeFile.bytecode
+                },
+                task_solution: {
+                    mime: taskAnswerFile.format,
+                    data: taskAnswerFile.bytecode
+                },
+                salary: salaryInterestValue,
+                contract_interest: durationInterestValue
             }
         });
 
@@ -33,7 +31,7 @@ class ApplicationService {
     editJobApplication({ resumeFile, taskAnswerFile, salaryInterestValue, durationInterestValue }, applicaionId) {
         const apiModel = new APIModel({
             method: 'post',
-            url: '/user/profile/applications/'+ applicaionId + '/edit',
+            url: '/user/profile/applications/' + applicaionId + '/edit',
             body: {
                 editInfo: {
                     resume: {

@@ -8,7 +8,7 @@ import UserApplicationsTable from './components/UserPanel/UserApplicationsTable'
 import AdminJobsTable from './components/AdminPanel/AdminJobsTable';
 import JobRequestsTable from './components/AdminPanel/JobRequestsTable';
 import Notification from './components/Core/Notification';
-import BackForwardBtn from './components/Core/BackForwardBtn';
+// import BackForwardBtn from './components/Core/BackForwardBtn';
 
 function App() {
   return (
