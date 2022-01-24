@@ -76,4 +76,4 @@ class JobsService {
 
 const jobsService = new JobsService();
 
-export default jobsService;
+export default jobsService; 
