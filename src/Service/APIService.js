@@ -11,6 +11,8 @@ class APIService {
             let userToken = localStorage.getItem('userToken');
             if (userToken) {
                 config.headers['Authorization'] = 'Token ' + userToken;
+            } else {
+                config.headers['Authorization'] = '';
             }
             return config;
         });

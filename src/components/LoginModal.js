@@ -11,7 +11,7 @@ function LoginModal(props) {
         try {
             const loginResponse = await userService.login(loginInfo);
             const { data } = loginResponse;
-            if (data.isAdmin) {
+            if (data.administration_status) {
                 userService.setUserInfo(data.token, 'ادمین');
             } else {
                 userService.setUserInfo(data.token, data.first_name);

@@ -17,8 +17,6 @@ function SignupModal(props) {
             password: data.password
         }
 
-        console.log(signupRequestBody);
-
         try {
             const signupResponse = await userService.signup(signupRequestBody);
             const { data, status } = signupResponse;
