@@ -69,55 +69,55 @@ function UserApplicationsTable() {
 
     const [applications, setApplications] = useState(customApplicationsArr);
 
-    // const applyStateInPersian = {
-    //     'unknown': 'جدید',
-    //     'in progress': 'در حال بررسی', 
-    //     'accept': 'تایید شده',
-    //     'reject': 'رد شده'
-    // }
+    const applyStateInPersian = {
+        'unknown': 'جدید',
+        'in progress': 'در حال بررسی', 
+        'accept': 'تایید شده',
+        'reject': 'رد شده'
+    }
 
-    // async function getUserApplications() {
-    //     try {
-    //         const userProfileRes = await userService.getUserProfile();
-    //         const { data } = userProfileRes.data;
-    //         let customApplicationsArr = [];
-    //         data.applications.forEach(application =>
-    //             customApplicationsArr.push({
-    //                 id: application.id,
-    //                 fields: [
-    //                     {
-    //                         jobTitle: application.job_title
-    //                     },
-    //                     {
-    //                         applyDate: application.created_at
-    //                     },
-    //                     {
-    //                         applyState: applyStateInPersian[application.result_status]
-    //                     }
-    //                 ],
-    //                 modals: [
-    //                     {
-    //                         modalContainer:
-    //                             <EditApplyModalContainer
-    //                                 applicationId={application.id}
-    //                                 applyState={application.created_at}
-    //                                 salaryInterest={application.salary}
-    //                                 durationInterest={application.contract_interest}
-    //                                 resumeURL={application.resume}
-    //                                 taskAnswerURL={application.task_solution} />
-    //                     }
-    //                 ],
-    //                 linkers: []
-    //             }));
-    //         setApplications(customApplicationsArr);
-    //     } catch (err) {
-    //         toastService.showToast(err.message, 'danger');
-    //     }
-    // }
+    async function getUserApplications() {
+        try {
+            const userProfileRes = await userService.getUserProfile();
+            const { data } = userProfileRes.data;
+            let customApplicationsArr = [];
+            data.applications.forEach(application =>
+                customApplicationsArr.push({
+                    id: application.id,
+                    fields: [
+                        {
+                            jobTitle: application.job_title
+                        },
+                        {
+                            applyDate: application.created_at
+                        },
+                        {
+                            applyState: applyStateInPersian[application.result_status]
+                        }
+                    ],
+                    modals: [
+                        {
+                            modalContainer:
+                                <EditApplyModalContainer
+                                    applicationId={application.id}
+                                    applyState={application.created_at}
+                                    salaryInterest={application.salary}
+                                    durationInterest={application.contract_interest}
+                                    resumeURL={application.resume}
+                                    taskAnswerURL={application.task_solution} />
+                        }
+                    ],
+                    linkers: []
+                }));
+            setApplications(customApplicationsArr);
+        } catch (err) {
+            toastService.showToast(err.message, 'danger');
+        }
+    }
 
-    // useEffect(() => {
-    //     getUserApplications();
-    // }, [])
+    useEffect(() => {
+        getUserApplications();
+    }, [])
 
     const columns = [
         { id: 1, name: "عنوان" },

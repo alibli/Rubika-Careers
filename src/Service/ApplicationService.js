@@ -8,9 +8,8 @@ class ApplicationService {
 
         const apiModel = new APIModel({
             method: 'post',
-            url: '/apply',
+            url: 'applications/apply',
             body: {
-                applyInfo: {
                     job_id: jobId,
                     resume: {
                         mime: resumeFile.format,
@@ -23,7 +22,7 @@ class ApplicationService {
                     salary: salaryInterestValue,
                     contract_interest: durationInterestValue
                 }
-            }
+            
         });
 
         const editedApply = apiService.apiCall(apiModel);
