@@ -119,7 +119,6 @@ function UserApplicationsTable() {
     useEffect(() => {
         getUserApplications();
     }, [])
-  
 
     const columns = [
         { id: 1, name: "عنوان" },
