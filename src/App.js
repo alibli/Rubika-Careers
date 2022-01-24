@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <BackForwardBtn />
+        {/* <BackForwardBtn /> */}
         <Header></Header>
 
         <Routes>

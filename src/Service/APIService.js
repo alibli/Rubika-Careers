@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: 'https://0.0.0.0:8000/v1'
+    baseURL: 'http://192.168.88.49/'
 });
 
 class APIService {
@@ -10,7 +10,7 @@ class APIService {
         axiosInstance.interceptors.request.use(config => {
             let userToken = localStorage.getItem('userToken');
             if (userToken) {
-                config.headers['TOKEN'] = userToken;
+                config.headers['Authorization'] = 'Token ' + userToken;
             }
 
             return config;
@@ -42,7 +42,7 @@ class APIService {
     async getRequest({url}) {
         try {
             const res = await axiosInstance.get(url);
-            return res.json();
+            return res;
         }
         catch (err) {
             throw err;
@@ -52,7 +52,7 @@ class APIService {
     async postRequest({url, body}) {
         try {
             const res = await axiosInstance.post(url, body);
-            return res.json();
+            return res;
         } catch (err) {
             throw err;
         }
@@ -61,7 +61,7 @@ class APIService {
     async putRequest({url, body}) {
         try {
             const res = await axiosInstance.put(url, body);
-            return res.json();
+            return res;
         } catch (err) {
             throw err;
         }
@@ -70,7 +70,7 @@ class APIService {
     async patchRequest({url, body}) {
         try {
             const res = await axiosInstance.patch(url, body);
-            return res.json();
+            return res;
         } catch (err) {
             throw err;
         }
@@ -79,7 +79,7 @@ class APIService {
     async deleteRequest({url}) {
         try {
             const res = await axiosInstance.put(url);
-            return res.json();
+            return res;
         } catch (err) {
             throw err;
         }
