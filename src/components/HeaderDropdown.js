@@ -16,6 +16,7 @@ function HeaderDropdown() {
         switch (e.action) {
             case 'USER-LOGIN':
             case 'STORAGE-CHANGE':
+                debugger    
                 const userFirstnameValue = userService.getUserFirstname();
                 setUserFirstname(userFirstnameValue);
                 break;

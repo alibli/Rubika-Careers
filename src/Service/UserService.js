@@ -59,12 +59,10 @@ class UserService {
             method: 'post',
             url: '/user/register',
             body: {
-                createUserInfo: {
-                    first_name: firstname,
-                    last_name: lastname,
-                    email: email,
-                    password: password
-                }
+                first_name: firstname,
+                last_name: lastname,
+                email: email,
+                password: password
             }
         });
         const response = apiService.apiCall(apiModel);
@@ -81,6 +79,9 @@ class UserService {
     };
 
     setUserInfo = (token, firstname) => {
+        token = '' && firstname === ''
+            ? this.setLoggedin(false)
+            : this.setLoggedin(true);
         this.setUserToken(token);
         this.setUserFirstname(firstname);
     }
