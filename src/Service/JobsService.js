@@ -5,7 +5,7 @@ class JobsService {
     
     //public
     getJobsList(){
-        const apiModel = new APIModel({method: 'get', url: '/jobs'});
+        const apiModel = new APIModel({method: 'get', url: '/'});
         const jobsList = apiService.apiCall(apiModel);
         return jobsList;
     }

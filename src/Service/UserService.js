@@ -3,16 +3,16 @@ import Subject from "./Subject";
 import APIModel from "./APIModel";
 class UserService {
     constructor() {
-        // const localStorageToken = window.localStorage.getItem('userToken');
+        const localStorageToken = window.localStorage.getItem('userToken');
 
-        // this.loggedin = localStorageToken ? true : false;
-        this.loggedin = true;
+        this.loggedin = localStorageToken ? true : false;
+        // this.loggedin = true;
 
-        // this.userToken = localStorageToken ? localStorageToken : '';
+        this.userToken = localStorageToken ? localStorageToken : '';
 
-        // const localStorageFirstname = window.localStorage.getItem('userFirstname');
-        // this.userFirstname = localStorageFirstname ? localStorageFirstname : '';
-        this.userFirstname = 'علی';
+        const localStorageFirstname = window.localStorage.getItem('userFirstname');
+        this.userFirstname = localStorageFirstname ? localStorageFirstname : '';
+        // this.userFirstname = 'علی';
 
         this.userSubject = new Subject();
 
@@ -46,10 +46,8 @@ class UserService {
             method: 'post',
             url: '/user/login',
             body: {
-                loginInfo: {
-                    email: email,
-                    password: password
-                }
+                email: email,
+                password: password
             }
         });
         const loginResponse = apiService.apiCall(apiModel);
@@ -75,7 +73,7 @@ class UserService {
 
     logout = () => {
         const apiModel = new APIModel({
-            method: 'post',
+            method: 'get',
             url: '/user/logout',
         });
         const response = apiService.apiCall(apiModel);
