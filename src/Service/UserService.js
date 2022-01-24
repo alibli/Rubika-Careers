@@ -121,6 +121,7 @@ class UserService {
         this.userToken = token;
         if (token === '') {
             window.localStorage.removeItem('userToken');
+            
             this.setLoggedin(false);
         } else {
             window.localStorage.setItem('userToken', token);
