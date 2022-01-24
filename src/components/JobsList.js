@@ -40,7 +40,6 @@ function JobsList() {
         }
         catch (err) {
             toastService.showToast(err.message, 'danger');
-            console.log('err in getJobList');
         }
     }
 

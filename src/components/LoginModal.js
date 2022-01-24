@@ -15,10 +15,8 @@ function LoginModal(props) {
             const { data } = loginResponse;
             if (data.isAdmin) {
                 userService.setUserInfo(data.token, 'ادمین');
-                navigate('/admin-panel');
             } else {
                 userService.setUserInfo(data.token, data.first_name);
-                navigate('/user-panel');
             }
             toastService.showToast('با موفقیت وارد شدید.', 'success');
         props.onHide();
