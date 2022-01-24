@@ -2,12 +2,10 @@ import ModalComponent from "./Core/ModalComponent";
 import userService from '../Service/UserService';
 import { Container, Row, Button } from 'react-bootstrap';
 import toastService from "../Service/ToastService";
-import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 
 function LoginModal(props) {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const navigate = useNavigate();
 
     async function login(loginInfo) {
         try {

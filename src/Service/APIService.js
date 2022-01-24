@@ -12,7 +12,6 @@ class APIService {
             if (userToken) {
                 config.headers['Authorization'] = 'Token ' + userToken;
             }
-
             return config;
         });
     }

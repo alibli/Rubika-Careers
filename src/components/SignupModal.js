@@ -17,8 +17,11 @@ function SignupModal(props) {
             password: data.password
         }
 
+        console.log(signupRequestBody);
+
         try {
             const signupResponse = await userService.signup(signupRequestBody);
+            debugger
             const { data, status } = signupResponse;
             if (status === 200) {
                 toastService.showToast('ثبت‌نام شما با موفقیت انجام شد.', 'success');
@@ -47,14 +50,14 @@ function SignupModal(props) {
                             {
                                 required: true,
                                 maxLength: 50,
-                                pattern: /^[\u0600-\u06FF\s]+$/
+                                // pattern: /^[\u0600-\u06FF\s]+$/
                             }
                         )}
                     />
                     <div className="form-err">
                         {errors.firstname?.type === 'required' && "الزامی"}
                         {errors.firstname?.type === 'maxLength' && "نام کوتاه تری وارد کنید"}
-                        {errors.firstname?.type === 'pattern' && "فارسی تایپ کنید"}
+                        {/* {errors.firstname?.type === 'pattern' && "فارسی تایپ کنید"} */}
                     </div>
                 </Row>
 
@@ -71,14 +74,36 @@ function SignupModal(props) {
                             {
                                 required: true,
                                 maxLength: 80,
-                                pattern: /^[\u0600-\u06FF\s]+$/
+                                // pattern: /^[\u0600-\u06FF\s]+$/
                             }
                         )}
                     />
                     <div className="form-err">
                         {errors.lastname?.type === 'required' && "الزامی"}
                         {errors.lastname?.type === 'maxLength' && "نام کوتاه تری وارد کنید"}
-                        {errors.lastname?.type === 'pattern' && "فارسی تایپ کنید"}
+                        {/* {errors.lastname?.type === 'pattern' && "فارسی تایپ کنید"} */}
+                    </div>
+                </Row>
+
+                <Row>
+                    <label htmlFor='email'>
+                        ایمیل
+                    </label>
+                    <input
+                        className='modal-input'
+                        name='email'
+                        type='email'
+                        {...register(
+                            "email",
+                            {
+                                required: true,
+                                pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+                            }
+                        )}
+                    />
+                    <div className="form-err">
+                        {errors.email?.type === 'required' && "الزامی"}
+                        {errors.email?.type === 'pattern' && "نامعتبر"}
                     </div>
                 </Row>
 
