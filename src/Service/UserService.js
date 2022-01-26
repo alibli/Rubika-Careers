@@ -110,8 +110,9 @@ class UserService {
     }
 
     getAdminJobsList() {
-        const apiModel = new APIModel({ method: 'get', url: '/admin-panel' });
+        const apiModel = new APIModel({ method: 'get', url: 'admin-panel' });
         const adminJobsList = apiService.apiCall(apiModel);
+console.log(adminJobsList);
         return adminJobsList;
     }
 

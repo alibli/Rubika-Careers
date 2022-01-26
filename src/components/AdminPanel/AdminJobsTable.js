@@ -92,6 +92,8 @@ function AdminJobsTable() {
         try {
             const adminJobsRes = await userService.getAdminJobsList();
             const { data } = adminJobsRes.data;
+console.log(data, 'data adminJobResponse');
+console.log(adminJobs, 'adminJobResponse');
             let customAdminJobsArr = [];
             data.job_offers.forEach(job =>
                 customAdminJobsArr.push({
@@ -116,38 +118,40 @@ function AdminJobsTable() {
                         },
                         {
                             modalContainer:
-                                <editJobModalContainer 
-                                jobId={job.job_id}
-                                isJobDeactive={job.is_deactive}
-                                 />
+                                <editJobModalContainer
+                                    jobId={job.job_id}
+                                    isJobDeactive={job.is_deactive}
+                                />
                         },
                     ],
-                    linkers:[
-                         {    
-                             element:
-                                 <Link to={`/admin-panel/${job.job_id}/job-requests`}>
-                                     <i className='fa fa-eye fa-lg'></i>
-                                 </Link>
-                         }
+                    linkers: [
+                        {
+                            element:
+                                <Link to={`/admin-panel/${job.job_id}/job-requests`}>
+                                    <i className='fa fa-eye fa-lg'></i>
+                                </Link>
+                        }
                     ]
                 }));
             setAdminJobs(customAdminJobsArr);
         } catch (err) {
-    if (err.response) {
-        if (err.response.status === 403) {
-            toastService.showToast('احازه ی دسترسی ندارید.', 'danger');
-        } else {
-            console.log(err.response)
-            toastService.showToast(err.response.statusText, 'danger');
-        }
-    } else {
-        toastService.showToast(err.message, 'danger');
-    }
+            if (err.response) {
+                if (err.response.status === 403) {
+                    toastService.showToast('احازه ی دسترسی ندارید.', 'danger');
+                } else {
+console.log(err.response)
+                    toastService.showToast(err.response.statusText, 'danger');
+                }
+            }
+            else {
+                toastService.showToast(err.message, 'danger');
+            }
         }
     }
 
     useEffect(() => {
-        getAdminJobsList();
+        getAdminJobsList(); /* *** */
+console.log('adminJobsTable after calling getAdminJobsList');
     }, []);
 
     const columns = [

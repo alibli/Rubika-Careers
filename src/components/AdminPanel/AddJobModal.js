@@ -6,6 +6,7 @@ import '../../styles/EditJobModal.css';
 import { useState } from 'react';
 import toastService from "../../Service/ToastService";
 import jobsService from "../../Service/JobsService";
+import { EditorState, convertToRaw } from 'draft-js';
 
 function AddJobModal(props) {
     const [deactiveJob, setDeactiveJob] = useState(false);
@@ -18,6 +19,8 @@ function AddJobModal(props) {
             format: ''
         }
     });
+
+    const [editorState, handleEditorState] = useState('');
 
     function getBase64(file) {
         return new Promise((resolve, reject) => {
@@ -81,6 +84,18 @@ function AddJobModal(props) {
     }
 
 
+    const onEditorStateChange = (editorState) => {
+        let txt = '';
+        editorState.blocks.forEach((block) => {
+            txt = txt + '\n' + JSON.stringify(block.text);
+        })
+        setJobDetails((prevState) => ({
+            ...prevState,
+            jobDescription: txt
+        }));
+    };
+
+
     const body = <Container>
         <Row>
             <Button
@@ -127,16 +142,13 @@ function AddJobModal(props) {
             textDecoration: 'none'
         }}>
             <Editor
-                editorState={jobDetails.jobDescription}
+                // editorState={jobDetails.jobDescription}
                 wrapperClassName="job-position-editor-wrapper"
                 editorClassName="job-position-editor"
-                onEditorStateChange={(e) => {
-                    setJobDetails((prevState) => ({
-                        ...prevState,
-                        jobDescription: e.target.value
-                    }));
-                }}
+                // onEditorStateChange={onEditorStateChange}
+                onContentStateChange={onEditorStateChange}
             />
+
         </div>
 
         <Row>
