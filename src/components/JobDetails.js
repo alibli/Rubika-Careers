@@ -64,9 +64,9 @@ function JobDetails(props) {
         };
     }, []);
 
-    async function getJobDetails() {
+    async function getJobDetails(jobId) {
         try {
-            const jobDetailsResponse = await jobsService.getJobDetails(props.jobId);
+            const jobDetailsResponse = await jobsService.getJobDetails(jobId);
             const { data } = jobDetailsResponse;
             if (data.is_deactive ||
                 data.is_deleted) {
@@ -80,7 +80,7 @@ function JobDetails(props) {
     }
 
     useEffect(() => {
-        getJobDetails();
+        getJobDetails(props.jobId);
     }, [props.jobId]);
 
     return (

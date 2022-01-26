@@ -17,8 +17,6 @@ function LoginModal(props) {
                 userService.setUserInfo(data.token, data.first_name);
             }
             toastService.showToast('با موفقیت وارد شدید.', 'success');
-        props.onHide();
-
         } catch (err) {
             if (err.response) {
                 if (err.response.status === 400) {
