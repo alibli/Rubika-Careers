@@ -97,8 +97,8 @@ function ApplyModal(props) {
 
         applicationInfo = {
             ...applicationInfo,
-            salaryInterestValue: unrequiredInfo.salaryInterestValue,
-            durationInterestValue: unrequiredInfo.durationInterestValue,
+            salaryInterestValue: unrequiredInfo.salaryInterestValue ? unrequiredInfo.salaryInterestValue : '0',
+            durationInterestValue: unrequiredInfo.durationInterestValue ? unrequiredInfo.salaryInterestValue : '0',
         }
 
         props.applicationId
