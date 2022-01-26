@@ -1,8 +1,8 @@
 #notification{
     z-index: 999999 !important;
-    position: absolute;
-    right: 25%;
-    left: 25%;
+    position: fixed;
+    right: 25vh;
+    left: 25vh;
     top: 0;
     width: 50%;
 }
