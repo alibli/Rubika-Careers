@@ -120,7 +120,6 @@ class UserService {
         this.userToken = token;
 
         window.localStorage.setItem('userToken', token);
-        this.setLoggedin(true);
     };
 
     setUserFirstname = (firstname) => {

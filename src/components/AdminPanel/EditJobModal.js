@@ -96,6 +96,9 @@ function EditJobModal(props) {
                     toastService.showToast('اطلاعات وارد شده صحیح نیست.', 'danger');
                 } else if (err.response.status === 403) {
                     toastService.showToast('شما این موقعبت شغلی را ایجاد نکردید.', 'danger');
+                } else {
+                    console.log(err.response)
+                    toastService.showToast(err.response.statusText, 'danger');
                 }
             } else {
                 toastService.showToast(err.message, 'danger');

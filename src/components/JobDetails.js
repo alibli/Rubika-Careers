@@ -64,12 +64,10 @@ function JobDetails(props) {
         };
     }, []);
 
-    async function getJobDetails() {
+    async function getJobDetails(jobId) {
         try {
-            const jobDetailsResponse = await jobsService.getJobDetails(props.jobId);
+            const jobDetailsResponse = await jobsService.getJobDetails(jobId);
             const { data } = jobDetailsResponse;
-console.log(data);
-console.log(jobDetails.task);
             if (data.is_deactive ||
                 data.is_deleted) {
                 toastService.showToast('در حال حاضر موقعیت شغلی مورد نظر فعال نیست', 'warning');
@@ -82,7 +80,7 @@ console.log(jobDetails.task);
     }
 
     useEffect(() => {
-        getJobDetails();
+        getJobDetails(props.jobId);
     }, [props.jobId]);
 
     return (
@@ -100,7 +98,7 @@ console.log(jobDetails.task);
                         {
                             jobDetails.task !== null &&
                             <p>
-                                <a href={"http://192.168.88.49"+jobDetails.task}>
+                                <a href={"http://192.168.88.49" + jobDetails.task}>
                                     دانلود فایل تسک
                                 </a>
                             </p>

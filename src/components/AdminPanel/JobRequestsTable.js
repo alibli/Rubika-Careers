@@ -185,6 +185,9 @@ function JobRequestsTable() {
             if (err.response) {
                 if (err.response.status === 403) {
                     toastService.showToast('احازه ی دسترسی ندارید.', 'danger');
+                } else {
+                    console.log(err.response)
+                    toastService.showToast(err.response.statusText, 'danger');
                 }
             } else {
                 toastService.showToast(err.message, 'danger');
