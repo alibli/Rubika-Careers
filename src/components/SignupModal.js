@@ -4,9 +4,16 @@ import userService from "../Service/UserService";
 import toastService from "../Service/ToastService";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-
+import Eye from "./Core/Eye";
+import {useState} from 'react';
 function SignupModal(props) {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
+
+    const [eyeClass, setEyeClass] = useState('fa-eye');
+    const [passInputType, setPassInputType] = useState('password');
+    const [repeatEyeClass, setRepeatEyeClass] = useState('fa-eye');
+    const [repeatPassInputType, setRepeatPassInputType] = useState('password');
+
     const navigate = useNavigate();
 
     const signup = async (data) => {
@@ -30,6 +37,29 @@ function SignupModal(props) {
         }
     }
 
+
+    const togglePassword = () => {
+        if (passInputType === 'password') {
+            setPassInputType('text');
+            setEyeClass('fa-eye-slash')
+        }
+        else if (passInputType === 'text') {
+            setPassInputType('password');
+            setEyeClass('fa-eye')
+        }
+
+    }
+    const toggleRepeatPass = () => {
+        if (repeatPassInputType === 'password') {
+            setRepeatPassInputType('text');
+            setRepeatEyeClass('fa-eye-slash')
+        }
+        else if (repeatPassInputType === 'text') {
+            setRepeatPassInputType('password');
+            setRepeatEyeClass('fa-eye')
+        }
+
+    }
 
     const body =
         <form id="signup-form" onSubmit={handleSubmit(signup)}>
@@ -108,10 +138,12 @@ function SignupModal(props) {
                     <label htmlFor='password'>
                         رمزعبور
                     </label>
+                    {/* <Eye></Eye> */}
+                    <i className={`fa ${eyeClass} col-1 `} aria-hidden="true" onClick={togglePassword}></i>
                     <input
-                        className='modal-input'
+                        className='modal-input col-11'
                         name='password'
-                        type='password'
+                        type={passInputType}
                         {...register(
                             "password",
                             {
@@ -132,10 +164,11 @@ function SignupModal(props) {
                         <label htmlFor='passwordConfrim'>
                             تکرار رمزعبور
                         </label>
+                        <i className={`fa ${repeatEyeClass} col-1 `} aria-hidden="true" onClick={toggleRepeatPass}></i>
                         <input
-                            className='modal-input'
+                            className='modal-input col-11'
                             name='passwordConfrim'
-                            type='password'
+                            type={repeatPassInputType}
                             {...register(
                                 "passwordConfirm",
                                 {

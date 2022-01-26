@@ -3,9 +3,14 @@ import userService from '../Service/UserService';
 import { Container, Row, Button } from 'react-bootstrap';
 import toastService from "../Service/ToastService";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import Eye from "./Core/Eye";
 
 function LoginModal(props) {
     const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const [passInputType , setPassInputType] = useState('password');
+    const [eyeClass , setEyeClass] = useState('fa-eye');
 
     async function login(loginInfo) {
         try {
@@ -32,6 +37,18 @@ function LoginModal(props) {
 
     const onSubmitLogin = (data) => {
         login(data);
+    }
+
+    const togglePassword = () =>{
+        if (passInputType === 'password') {
+            setPassInputType('text');
+            setEyeClass('fa-eye-slash')
+        }
+        else if (passInputType === 'text') {
+            setPassInputType('password');
+            setEyeClass('fa-eye')
+        }
+
     }
 
     const body =
@@ -63,22 +80,29 @@ function LoginModal(props) {
                     <label htmlFor='password'>
                         رمزعبور
                     </label>
-                    <input
-                        {...register(
-                            "password",
-                            {
-                                required: true,
-                                // pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-                            }
-                        )}
-                        className='modal-input'
-                        name='password'
-                        type='password'
-                    />
+                    {/* <Eye></Eye> */}
+                    <div className="row">
+                        <i className={`fa ${eyeClass} col-1 `} aria-hidden="true" onClick={togglePassword}></i>
+                        <input
+                            {...register(
+                                "password",
+                                {
+                                    required: true,
+                                    // pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+                                }
+                            )}
+                            className='modal-input col-11'
+                            name='password'
+                            type={passInputType} 
+                            id="passInput"  
+                        />
+                    </div>
+                    
                     <div className="form-err">
                         {errors.password?.type === 'required' && "الزامی"}
                         {/* {errors.password?.type === 'pattern' && "حداقل ۸ کارکتر از حروف و اعداد انگلیسی"} */}
                     </div>
+                    
                 </Row>
             </Container>
         </form>;
