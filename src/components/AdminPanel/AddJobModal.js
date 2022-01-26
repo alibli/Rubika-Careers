@@ -70,6 +70,9 @@ function AddJobModal(props) {
             if (err.response) {
                 if (err.response.status === 400) {
                     toastService.showToast('عدم موفقیت در افزودن موقعیت شغلی جدید', 'danger');
+                } else {
+                    console.log(err.response)
+                    toastService.showToast(err.response.statusText, 'danger');
                 }
             } else {
                 toastService.showToast(err.message, 'danger');

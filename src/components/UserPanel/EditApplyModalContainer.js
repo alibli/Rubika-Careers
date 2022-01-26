@@ -19,6 +19,9 @@ function EditApplyModalContainer(props) {
             if (err.response) {
                 if (err.response.status === 403) {
                     toastService.showToast('امکان به روز رسانی درخواست وجود ندارد.', 'danger');
+                } else {
+                    console.log(err.response)
+                    toastService.showToast(err.response.statusText, 'danger');
                 }
             } else {
                 toastService.showToast(err.message, 'danger');

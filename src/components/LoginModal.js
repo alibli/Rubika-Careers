@@ -21,8 +21,12 @@ function LoginModal(props) {
             if (err.response) {
                 if (err.response.status === 400) {
                     toastService.showToast('اطلاعات وارد شده صحیح نیست.', 'danger');
+                } else {
+                    console.log(err.response)
+                    toastService.showToast(err.response.statusText, 'danger');
                 }
             } else {
+                debugger
                 toastService.showToast(err.message, 'danger');
             }
         }
