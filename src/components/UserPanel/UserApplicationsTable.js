@@ -73,7 +73,8 @@ function UserApplicationsTable() {
         'unknown': 'جدید',
         'in progress': 'در حال بررسی', 
         'accept': 'تایید شده',
-        'reject': 'رد شده'
+        'reject': 'رد شده',
+        "not seen" : 'دیده نشده'
     }
 
     var customApplicationsArr = [];
@@ -82,6 +83,7 @@ function UserApplicationsTable() {
         try {
             const userProfileRes = await userService.getUserProfile();
             const { data } = userProfileRes;
+console.log(data , 'getUser in UserAppTable');
             data.applications.forEach(application =>
                 customApplicationsArr.push({
                     id: application.id,
@@ -93,7 +95,7 @@ function UserApplicationsTable() {
                             applyDate: application.created_at
                         },
                         {
-                            applyState: applyStateInPersian[application.result_status]
+                            applyState: applyStateInPersian[application.result_status] //
                         }
                     ],
                     modals: [
@@ -104,8 +106,8 @@ function UserApplicationsTable() {
                                     applyState={application.created_at}
                                     salaryInterest={application.salary}
                                     durationInterest={application.contract_interest}
-                                    resumeURL={application.resume}
-                                    taskAnswerURL={application.task_solution} />
+                                    resumeURL={"http://192.168.88.49"+application.resume}
+                                    taskAnswerURL={"http://192.168.88.49"+application.task_solution} />
                         }
                     ],
                     linkers: []
