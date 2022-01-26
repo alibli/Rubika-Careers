@@ -1,9 +1,9 @@
 #notification{
     z-index: 999999 !important;
-    position: absolute;
+    position: fixed;
+    top: 100px;
     right: 25%;
-    left: 25%;
-    top: 0;
+    margin: auto;
     width: 50%;
 }
 .alert{

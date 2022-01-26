@@ -4,7 +4,6 @@ import userService from "../Service/UserService";
 import toastService from "../Service/ToastService";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-import Eye from "./Core/Eye";
 import {useState} from 'react';
 function SignupModal(props) {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
