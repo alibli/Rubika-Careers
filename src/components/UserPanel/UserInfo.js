@@ -67,6 +67,7 @@ function UserInfo() {
     })
 
     async function editResume(resumeFile) {
+        console.log(resumeFile);
         try {
             const editResumeRes = await userService.editUserResume(resumeFile);
             const { status, data } = editResumeRes;
@@ -129,31 +130,24 @@ function UserInfo() {
             </Row>
 
             <Row>
+                <label htmlFor='resume'>
+                    رزومه
+                </label>
                 {
                     userInfo.resumeLink !== null &&
-                    <>
-                        <label htmlFor='resume'>
-                            رزومه
-                        </label>
-                        <a href={userInfo.resumeLink}>
-                            دانلود
-                        </a>
-                    </>
+                    <a href={userInfo.resumeLink}>
+                        دانلود
+                    </a>
                 }
 
                 {
                     editingInfo &&
-                    <>
-                        <label htmlFor='resume'>
-                            رزومه
-                        </label>
-                        <input
-                            className='modal-input'
-                            name='resume'
-                            type='file'
-                            onChange={(e) => setNewResume(e)}
-                        />
-                    </>
+                    <input
+                        className='modal-input'
+                        name='resume'
+                        type='file'
+                        onChange={(e) => setNewResume(e)}
+                    />
                 }
             </Row>
 
