@@ -5,16 +5,16 @@ import { Row, Button } from 'react-bootstrap';
 import '../../styles/UserInfo.css';
 
 function UserInfo() {
-
+    const userFirstname = userService.getUserFirstname();
     const [userInfo, setUserInfo] = useState({
-        firstname: userService.getUserFirstname(),
+        firstname: userFirstname,
         lastname: '',
         resumeLink: '',
         newResumeFile: {
             byteCode: '',
             format: '',
         }
-    }); 
+    });
 
     // const [userInfo, setUserInfo] = useState({
     //     firstname: 'پریناز',
@@ -67,6 +67,7 @@ function UserInfo() {
     })
 
     async function editResume(resumeFile) {
+        console.log(resumeFile);
         try {
             const editResumeRes = await userService.editUserResume(resumeFile);
             const { status, data } = editResumeRes;
@@ -88,7 +89,6 @@ function UserInfo() {
             const { data } = userProfileRes;
             setUserInfo((prevState) => ({
                 ...prevState,
-                firstname: data.first_name,
                 lastname: data.last_name,
                 resumeLink: data.resume
             }));
@@ -111,8 +111,8 @@ function UserInfo() {
                     className='modal-input'
                     name='firstname'
                     type='text'
-                    disabled={true}
-                    value={userInfo.firstname}
+                    readOnly
+                    value={userInfo.firstname || ''}
                 />
             </Row>
 
@@ -124,8 +124,8 @@ function UserInfo() {
                     className='modal-input'
                     name='lastname'
                     type='text'
-                    disabled={true}
-                    value={userInfo.lastname}
+                    readOnly
+                    value={userInfo.lastname || ''}
                 />
             </Row>
 
@@ -133,7 +133,6 @@ function UserInfo() {
                 <label htmlFor='resume'>
                     رزومه
                 </label>
-
                 {
                     userInfo.resumeLink !== null &&
                     <a href={userInfo.resumeLink}>

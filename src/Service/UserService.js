@@ -44,7 +44,7 @@ class UserService {
     login({ email, password }) {
         const apiModel = new APIModel({
             method: 'post',
-            url: '/user/login',
+            url: '/user/login/',
             body: {
                 email: email,
                 password: password
@@ -57,7 +57,7 @@ class UserService {
     signup({ firstname, lastname, email, password }) {
         const apiModel = new APIModel({
             method: 'post',
-            url: '/user/register',
+            url: '/user/register/',
             body: {
                 first_name: firstname,
                 last_name: lastname,
@@ -72,7 +72,7 @@ class UserService {
     logout = () => {
         const apiModel = new APIModel({
             method: 'get',
-            url: '/user/logout',
+            url: '/user/logout/',
         });
         const response = apiService.apiCall(apiModel);
         return response;
@@ -87,7 +87,7 @@ class UserService {
     getUserProfile() {
         const apiModel = new APIModel({
             method: 'get',
-            url: '/user/profile',
+            url: '/user/profile/',
         });
         const userProfile = apiService.apiCall(apiModel);
         return userProfile;
@@ -96,7 +96,7 @@ class UserService {
     editUserResume(resumeFile) {
         const apiModel = new APIModel({
             method: 'patch',
-            url: '/user/profile',
+            url: '/user/profile/',
             body: {
                 resume: {
                     bytecode: resumeFile.bytecode,

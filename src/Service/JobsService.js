@@ -11,7 +11,7 @@ class JobsService {
     }
 
     getJobDetails(jobId) {
-        const apiModel = new APIModel({method: 'get', url: '/jobs/' + jobId});
+        const apiModel = new APIModel({method: 'get', url: '/jobs/' + jobId + '/'});
         const jobDetails = apiService.apiCall(apiModel);
         return jobDetails;
     }
@@ -19,7 +19,7 @@ class JobsService {
     editJobPosition(jobId, { jobTitle, jobDescription, jobTaskFile, deactiveJob, deletedJob}) {
         const apiModel = new APIModel({
             method: 'put', 
-            url: '/jobs/' + jobId + '/edit',
+            url: '/jobs/' + jobId + '/edit/',
             body: {
                 title: jobTitle,
                 description: jobDescription,
@@ -37,8 +37,8 @@ class JobsService {
 
     addJobPosition({ jobTitle, jobDescription, jobTaskFile, deactiveJob }) {
         const apiModel = new APIModel({
-            method: 'post', 
-            url: 'jobs/add',
+            method: 'put', 
+            url: 'jobs/add/',
             body: {
                 title: jobTitle,
                 description: jobDescription,
@@ -63,7 +63,7 @@ console.log(jobDetails);
     setApplicationStatus(jobId, reqId, newStatus) {
         const apiModel = new APIModel({
             method: 'patch', 
-            url: '/admin-panel/' + jobId + '/applications/' + reqId + '/edit-status',
+            url: '/admin-panel/' + jobId + '/applications/' + reqId + '/edit-status/',
             body: {
                 resultStatus: {
                     result_status: newStatus

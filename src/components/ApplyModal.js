@@ -9,7 +9,7 @@ function ApplyModal(props) {
     const URLParams = useParams();
 
     const isApplicationEditable =
-        props.applyState === 'unknown' || props.applyState === undefined
+        props.applyState === 'not seen' || props.applyState === undefined
             ? true
             : false;
 
@@ -97,8 +97,8 @@ function ApplyModal(props) {
 
         applicationInfo = {
             ...applicationInfo,
-            salaryInterestValue: unrequiredInfo.salaryInterestValue,
-            durationInterestValue: unrequiredInfo.durationInterestValue,
+            salaryInterestValue: unrequiredInfo.salaryInterestValue ? unrequiredInfo.salaryInterestValue : '0',
+            durationInterestValue: unrequiredInfo.durationInterestValue ? unrequiredInfo.durationInterestValue : '0',
         }
 
         props.applicationId

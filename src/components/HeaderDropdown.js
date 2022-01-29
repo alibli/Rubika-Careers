@@ -36,11 +36,15 @@ function HeaderDropdown() {
 
     const logout = async () => {
         try {
-            await userService.logout();
-            userService.clearUserInfo();
-            toastService.showToast('با موفقیت خارج شدید.', 'success');
-            navigate('/');
+            const logoutRes = await userService.logout();
+            const { status } = logoutRes;
+            if (status === 200) {
+                navigate('/');
+                userService.clearUserInfo();
+                toastService.showToast('با موفقیت خارج شدید.', 'success');
+            }
         } catch (err) {
+            console.log(err);
             toastService.showToast(err.message, 'danger');
         }
     }
@@ -88,12 +92,10 @@ function HeaderDropdown() {
                                     درخواست‌ها
                                 </Dropdown.Item>
                             </LinkContainer>
-                            <LinkContainer to="/">
-                                <Dropdown.Item
-                                    onClick={logout}>
-                                    خروج
-                                </Dropdown.Item>
-                            </LinkContainer>
+                            <Dropdown.Item
+                                onClick={logout}>
+                                خروج
+                            </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
             }
