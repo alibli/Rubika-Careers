@@ -142,10 +142,8 @@ function AddJobModal(props) {
             textDecoration: 'none'
         }}>
             <Editor
-                // editorState={jobDetails.jobDescription}
                 wrapperClassName="job-position-editor-wrapper"
                 editorClassName="job-position-editor"
-                // onEditorStateChange={onEditorStateChange}
                 onContentStateChange={onEditorStateChange}
             />
 

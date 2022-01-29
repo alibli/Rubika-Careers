@@ -147,13 +147,16 @@ function JobRequestsTable() {
     const getJobRequests = async () => {
         try {
             const jobReqsRes = await jobsService.getJobRequests(URLParams.jobId);
-            const { data } = jobReqsRes.data;
-            data.forEach(req =>
+console.log(jobReqsRes.data.applications);
+console.log(URLParams);
+            const res  = jobReqsRes.data.applications; /** */
+console.log(res);
+            res.forEach(req =>
                 customJobReqsArr.push({
                     id: req.id,
                     fields: [
                         {
-                            reqName: req.name
+                            reqName: req.user_full_name
                         },
                         {
                             reqDate: req.created_at
@@ -186,7 +189,7 @@ function JobRequestsTable() {
                 if (err.response.status === 403) {
                     toastService.showToast('احازه ی دسترسی ندارید.', 'danger');
                 } else {
-                    console.log(err.response)
+console.log(err.response)
                     toastService.showToast(err.response.statusText, 'danger');
                 }
             } else {

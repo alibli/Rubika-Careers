@@ -91,43 +91,44 @@ function AdminJobsTable() {
     async function getAdminJobsList() {
         try {
             const adminJobsRes = await userService.getAdminJobsList();
-            const { data } = adminJobsRes.data;
-console.log(data, 'data adminJobResponse');
-console.log(adminJobs, 'adminJobResponse');
+            const { data } = adminJobsRes;
+console.log(data.jobs[0], 'data adminJobResponse');
+
             let customAdminJobsArr = [];
-            data.job_offers.forEach(job =>
+            data.jobs.forEach(job =>
                 customAdminJobsArr.push({
                     id: job.job_id,
                     fields: [
                         {
-                            jobTitle: job.job_title
+                            jobTitle: job.title
                         },
                         {
-                            applicationsNum: job.number_of_applications.total
+                            applicationsNum: job.total_applications
                         }
                     ],
                     modals: [
                         {
                             modalContainer:
                                 <AppsCountModalContainer
-                                    newApplicationsNum={job.number_of_applications.unknown_status}
-                                    seenApplicationsNum={job.number_of_applications.in_progress}
-                                    acceptedApplicationsNum={job.number_of_applications.accepted}
-                                    rejectedApplicationsNum={job.number_of_applications.rejected}
+                                    newApplicationsNum={job.not_seen_applications}
+                                    seenApplicationsNum={job.in_progress_applications}
+                                    acceptedApplicationsNum={job.accepted_applications}
+                                    rejectedApplicationsNum={job.rejected_applications}
                                 />,
                         },
                         {
                             modalContainer:
                                 <editJobModalContainer
-                                    jobId={job.job_id}
+                                    jobId={job.id}
                                     isJobDeactive={job.is_deactive}
+                                    isJobDeactive = {false}
                                 />
                         },
                     ],
                     linkers: [
                         {
                             element:
-                                <Link to={`/admin-panel/${job.job_id}/job-requests`}>
+                                <Link to={`/admin-panel/${job.id}/job-requests/`}>
                                     <i className='fa fa-eye fa-lg'></i>
                                 </Link>
                         }
@@ -150,8 +151,7 @@ console.log(err.response)
     }
 
     useEffect(() => {
-        getAdminJobsList(); /* *** */
-console.log('adminJobsTable after calling getAdminJobsList');
+        getAdminJobsList();
     }, []);
 
     const columns = [

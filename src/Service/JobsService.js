@@ -37,7 +37,7 @@ class JobsService {
 
     addJobPosition({ jobTitle, jobDescription, jobTaskFile, deactiveJob }) {
         const apiModel = new APIModel({
-            method: 'put', 
+            method: 'post', 
             url: 'jobs/add',
             body: {
                 title: jobTitle,
@@ -54,8 +54,9 @@ class JobsService {
     }
 
     getJobRequests(jobId) {
-        const apiModel = new APIModel({method: 'get', url: '/admin-panel/' + jobId + '/applications'});
+        const apiModel = new APIModel({method: 'get', url: 'user/admin-panel/' + jobId + '/applications/'});
         const jobDetails = apiService.apiCall(apiModel);
+console.log(jobDetails);
         return jobDetails;
     }
 
