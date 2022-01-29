@@ -70,11 +70,10 @@ function UserApplicationsTable() {
     const [applications, setApplications] = useState([]);
 
     const applyStateInPersian = {
-        'unknown': 'جدید',
+        'not seen': 'دیده نشده',
         'in progress': 'در حال بررسی', 
         'accept': 'تایید شده',
         'reject': 'رد شده',
-        "not seen" : 'دیده نشده'
     }
 
     var customApplicationsArr = [];
@@ -82,9 +81,11 @@ function UserApplicationsTable() {
     async function getUserApplications() {
         try {
             const userProfileRes = await userService.getUserProfile();
-            const { data } = userProfileRes;
-console.log(data , 'getUser in UserAppTable');
-            data.applications.forEach(application =>
+            const { applications } = userProfileRes.data;
+            console.log(applications);
+            applications.forEach(application => {
+                const date = application.created_at;
+                const applyDate = date.substr(0, date.indexOf('T'));
                 customApplicationsArr.push({
                     id: application.id,
                     fields: [
@@ -92,10 +93,10 @@ console.log(data , 'getUser in UserAppTable');
                             jobTitle: application.job_title
                         },
                         {
-                            applyDate: application.created_at
+                            applyDate: applyDate
                         },
                         {
-                            applyState: applyStateInPersian[application.result_status] //
+                            applyState: applyStateInPersian[application.result_status]
                         }
                     ],
                     modals: [
@@ -103,7 +104,7 @@ console.log(data , 'getUser in UserAppTable');
                             modalContainer:
                                 <EditApplyModalContainer
                                     applicationId={application.id}
-                                    applyState={application.created_at}
+                                    applyState={application.result_status}
                                     salaryInterest={application.salary}
                                     durationInterest={application.contract_interest}
                                     resumeURL={"http://192.168.88.49"+application.resume}
@@ -111,7 +112,7 @@ console.log(data , 'getUser in UserAppTable');
                         }
                     ],
                     linkers: []
-                }));
+                })});
             setApplications(customApplicationsArr);
         } catch (err) {
             toastService.showToast(err.message, 'danger');

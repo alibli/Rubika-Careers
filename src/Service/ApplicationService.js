@@ -30,7 +30,7 @@ class ApplicationService {
 
     editJobApplication({ resumeFile, taskAnswerFile, salaryInterestValue, durationInterestValue }, applicaionId) {
         const apiModel = new APIModel({
-            method: 'post',
+            method: 'put',
             url: '/user/profile/applications/' + applicaionId + '/edit',
             body: {
                 editInfo: {
@@ -47,6 +47,8 @@ class ApplicationService {
                 }
             }
         });
+        console.log(apiModel.body);
+        debugger
 
         const jobApply = apiService.apiCall(apiModel);
         return jobApply;

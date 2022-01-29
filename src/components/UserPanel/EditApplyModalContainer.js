@@ -10,12 +10,16 @@ function EditApplyModalContainer(props) {
 
     async function editApplication(editedApplyInfo, applicationId) {
         try {
-            const editApplyRes = applicationService.editJobApplication(editedApplyInfo, applicationId);
-            if (editApplyRes.status === 202) {
-                window.location.reload();
-                toastService.showToast('درخواست شما با موفقیت به روزرسانی شد', 'success');
+            console.log(editedApplyInfo);
+            const editApplyRes = await applicationService.editJobApplication(editedApplyInfo, applicationId);
+            if (editApplyRes.status === 200) {
+                toastService.showToast('درخواست شما با موفقیت به روزرسانی شد.', 'success');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
             }
         } catch (err) {
+            console.log(err);
             if (err.response) {
                 if (err.response.status === 403) {
                     toastService.showToast('امکان به روز رسانی درخواست وجود ندارد.', 'danger');
