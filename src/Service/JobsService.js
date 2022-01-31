@@ -63,7 +63,7 @@ console.log(jobDetails);
     setApplicationStatus(jobId, reqId, newStatus) {
         const apiModel = new APIModel({
             method: 'patch', 
-            url: '/admin-panel/' + jobId + '/applications/' + reqId + '/edit-status/',
+            url: 'user/admin-panel/' + jobId + '/applications/' + reqId + '/edit-status/', /* 'user' added to url 11bahmn */
             body: {
                 resultStatus: {
                     result_status: newStatus
