@@ -95,7 +95,7 @@ function ApplyModal(props) {
             }
         }
 
-        applicationInfo = {
+        applicationInfo = { /* * */
             ...applicationInfo,
             salaryInterestValue: unrequiredInfo.salaryInterestValue ? unrequiredInfo.salaryInterestValue : '0',
             durationInterestValue: unrequiredInfo.durationInterestValue ? unrequiredInfo.durationInterestValue : '0',

@@ -30,11 +30,11 @@ class ApplicationService {
 
     editJobApplication({ resumeFile, taskAnswerFile, salaryInterestValue, durationInterestValue }, applicaionId) {
         const apiModel = new APIModel({
-            method: 'post',
+            method: 'put',
             url: '/user/profile/applications/' + applicaionId + '/edit/',
 
             body: {
-                editInfo: {
+                editInfo: { /** niazi be editInfo{} darim ? */
                     resume: {
                         mime: resumeFile.format,
                         data: resumeFile.bytecode
@@ -45,7 +45,7 @@ class ApplicationService {
                     },
                     salary: salaryInterestValue,
                     contract_interest: durationInterestValue
-                }
+                }/** */
             }
         });
         console.log(apiModel.body);

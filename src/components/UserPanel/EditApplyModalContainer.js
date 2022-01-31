@@ -12,11 +12,12 @@ function EditApplyModalContainer(props) {
         try {
             console.log(editedApplyInfo);
             const editApplyRes = await applicationService.editJobApplication(editedApplyInfo, applicationId);
+console.log(editApplyRes);
             if (editApplyRes.status === 200) {
                 toastService.showToast('درخواست شما با موفقیت به روزرسانی شد.', 'success');
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3000);
+                // setTimeout(() => {
+                    // window.location.reload();
+                // }, 2000);
             }
         } catch (err) {
             console.log(err);
@@ -45,7 +46,7 @@ function EditApplyModalContainer(props) {
                 show={editApplyModalShow}
                 onHide={() => setEditApplyModalShow(false)}
                 btnLabel="ویرایش"
-                editApplication={(editedInfo, id) => editApplication(editedInfo, id)}
+                editApplication={(editedInfo, id) => editApplication(editedInfo, id)}  /* editedInfo?? */
                 {...props} />
         </div >
     );
