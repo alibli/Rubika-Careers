@@ -147,8 +147,6 @@ function JobRequestsTable() {
     const getJobRequests = async () => {
         try {
             const jobReqsRes = await jobsService.getJobRequests(URLParams.jobId);
-console.log(jobReqsRes.data.applications);
-console.log(URLParams);
             const res  = jobReqsRes.data.applications; /** */
 console.log(res);
             res.forEach(req =>

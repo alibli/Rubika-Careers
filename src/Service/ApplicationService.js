@@ -49,7 +49,7 @@ class ApplicationService {
             }
         });
         console.log(apiModel.body);
-        debugger
+        // debugger
 
         const jobApply = apiService.apiCall(apiModel);
         return jobApply;

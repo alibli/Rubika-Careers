@@ -37,7 +37,7 @@ class JobsService {
 
     addJobPosition({ jobTitle, jobDescription, jobTaskFile, deactiveJob }) {
         const apiModel = new APIModel({
-            method: 'put', 
+            method: 'post', 
             url: 'jobs/add/',
             body: {
                 title: jobTitle,
@@ -65,9 +65,7 @@ console.log(jobDetails);
             method: 'patch', 
             url: 'user/admin-panel/' + jobId + '/applications/' + reqId + '/edit-status/', /* 'user' added to url 11bahmn */
             body: {
-                resultStatus: {
                     result_status: newStatus
-                }
             }
         });
         const editedStatus = apiService.apiCall(apiModel);

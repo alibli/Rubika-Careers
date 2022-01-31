@@ -12,7 +12,6 @@ function ApplyModalContainer() {
         try {
             console.log(applyInfo);
             const applyRes = await applicationService.applyForJob(applyInfo, jobId);
-            debugger
             if (applyRes.status === 201) {
                 toastService.showToast('درخواست شما با موفقیت ارسال شد', 'success');
                 setApplyModalShow(false);

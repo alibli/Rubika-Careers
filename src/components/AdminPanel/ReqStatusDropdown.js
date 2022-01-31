@@ -5,6 +5,7 @@ import '../../styles/ReqStatusDropdown.css';
 let currentStatus = '';
 function ReqStatusDropdown(props) {
     const [newStatus, setNewStatus] = useState(props.reqStatus);
+    // const [newStatus, setNewStatus] = useState("not seen");
 
     const disableStatusChangeValue = 
         props.reqStatus === 'not seen' || props.reqStatus === 'in progress'
@@ -13,12 +14,13 @@ function ReqStatusDropdown(props) {
     
     const [disableStatusChange, setDisableStatusChange] = useState(disableStatusChangeValue);
 
-    async function setApplicationStatus() {
+    async function setApplicationStatus(currentStatus) {
         try {
-            console.log(newStatus);
-            const changeStatusRes = await jobsService.setApplicationStatus(props.jobId, props.reqId, newStatus);
-            const { statusCode } = changeStatusRes;
-            if (statusCode === 202) {
+            let newStatus2 = currentStatus;
+            const changeStatusRes = await jobsService.setApplicationStatus(props.jobId, props.reqId, newStatus2);
+            const response  = changeStatusRes;
+console.log(changeStatusRes);
+            if (response.status === 200) {
                 if (newStatus === 'reject' || newStatus === 'accept') {
                     setDisableStatusChange(true);
                 }
@@ -48,8 +50,8 @@ function ReqStatusDropdown(props) {
             onChange={(e) => {
                 currentStatus = e.target.value;
                 setNewStatus(currentStatus);
-                console.log(currentStatus);
-                setApplicationStatus();
+// console.log(currentStatus , newStatus);
+                setApplicationStatus(currentStatus);
             }}
             value={newStatus}>
             <option value="not seen" disabled>
