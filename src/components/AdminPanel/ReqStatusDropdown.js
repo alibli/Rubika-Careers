@@ -2,12 +2,12 @@ import { useState } from 'react';
 import jobsService from '../../Service/JobsService';
 import toastService from '../../Service/ToastService';
 import '../../styles/ReqStatusDropdown.css';
-
+let currentStatus = '';
 function ReqStatusDropdown(props) {
     const [newStatus, setNewStatus] = useState(props.reqStatus);
 
     const disableStatusChangeValue = 
-        props.reqStatus === 'unknown' || props.reqStatus === 'in progress'
+        props.reqStatus === 'not seen' || props.reqStatus === 'in progress'
         ? false
         : true;
     
@@ -15,9 +15,10 @@ function ReqStatusDropdown(props) {
 
     async function setApplicationStatus() {
         try {
+            console.log(newStatus);
             const changeStatusRes = await jobsService.setApplicationStatus(props.jobId, props.reqId, newStatus);
-            const { status } = changeStatusRes;
-            if (status === 202) {
+            const { statusCode } = changeStatusRes;
+            if (statusCode === 202) {
                 if (newStatus === 'reject' || newStatus === 'accept') {
                     setDisableStatusChange(true);
                 }
@@ -28,7 +29,7 @@ function ReqStatusDropdown(props) {
                 if (err.response.status === 403) {
                     toastService.showToast('شما اجازه ی تغییر ندارید.', 'danger');
                 } else {
-                    console.log(err.response)
+                    // console.log(err.response)
                     toastService.showToast(err.response.statusText, 'danger');
                 }
             } else {
@@ -43,13 +44,15 @@ function ReqStatusDropdown(props) {
             className={disableStatusChange 
                 ? 'admin-status-dropdown disbale-dropdown' 
                 : 'admin-status-dropdown'}
-            disabled={disableStatusChange}
+            // disabled={disableStatusChange}
             onChange={(e) => {
-                setNewStatus(e.target.value);
+                currentStatus = e.target.value;
+                setNewStatus(currentStatus);
+                console.log(currentStatus);
                 setApplicationStatus();
             }}
             value={newStatus}>
-            <option value="unknown" disabled>
+            <option value="not seen" disabled>
                 جدید
             </option>
             <option value="accept">
