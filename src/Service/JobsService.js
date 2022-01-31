@@ -62,7 +62,7 @@ class JobsService {
     setApplicationStatus(jobId, reqId, newStatus) {
         const apiModel = new APIModel({
             method: 'patch', 
-            url: '/admin-panel/' + jobId + '/applications/' + reqId + '/edit-status',
+            url: '/admin-panel/' + jobId + '/applications/' + reqId + '/edit-status/',
             body: {
                 resultStatus: {
                     result_status: newStatus

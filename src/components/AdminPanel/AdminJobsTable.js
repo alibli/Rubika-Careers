@@ -91,17 +91,18 @@ function AdminJobsTable() {
     async function getAdminJobsList() {
         try {
             const adminJobsRes = await userService.getAdminJobsList();
-            const { data } = adminJobsRes.data;
+            const { data } = adminJobsRes;
+            console.log(data.jobs);
             let customAdminJobsArr = [];
-            data.job_offers.forEach(job =>
+            data.jobs.forEach(job =>
                 customAdminJobsArr.push({
-                    id: job.job_id,
+                    id: job.id,
                     fields: [
                         {
-                            jobTitle: job.job_title
+                            jobTitle: job.title
                         },
                         {
-                            applicationsNum: job.number_of_applications.total
+                            applicationsNum: job.total_applications
                         }
                     ],
                     modals: [
