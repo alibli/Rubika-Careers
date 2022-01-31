@@ -57,7 +57,6 @@ function SignupModal(props) {
             setRepeatPassInputType('password');
             setRepeatEyeClass('fa-eye')
         }
-
     }
 
     const body =
@@ -137,7 +136,6 @@ function SignupModal(props) {
                     <label htmlFor='password'>
                         رمزعبور
                     </label>
-                    {/* <Eye></Eye> */}
                     <i className={`fa ${eyeClass} col-1 `} aria-hidden="true" onClick={togglePassword}></i>
                     <input
                         className='modal-input col-11'
