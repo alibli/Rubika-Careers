@@ -13,7 +13,7 @@ function ApplyModal(props) {
             ? true
             : false;
 
-    const [unrequiredInfo, setApplicationInfo] = useState({
+    const [unrequiredInfo, setUnrequiredAppInfo] = useState({
         salaryInterestValue: props.salaryInterest ? props.salaryInterest : 0,
         durationInterestValue: props.durationInterest ? props.durationInterest : 0,
     });
@@ -128,7 +128,7 @@ function ApplyModal(props) {
                             disabled={!isApplicationEditable}
                             value={unrequiredInfo.salaryInterestValue}
                             onChange={(e) => {
-                                setApplicationInfo((prevState) => ({
+                                setUnrequiredAppInfo((prevState) => ({
                                     ...prevState,
                                     salaryInterestValue: e.target.value
                                 }));
@@ -153,7 +153,7 @@ function ApplyModal(props) {
                         disabled={!isApplicationEditable}
                         value={unrequiredInfo.durationInterestValue}
                         onChange={(e) => {
-                            setApplicationInfo((prevState) => ({
+                            setUnrequiredAppInfo((prevState) => ({
                                 ...prevState,
                                 durationInterestValue: e.target.value
                             }));
@@ -233,7 +233,7 @@ function ApplyModal(props) {
                     </>
                 </Row>
             </Container>
-        </form>;
+        </form>
 
     const footer = <>
         {

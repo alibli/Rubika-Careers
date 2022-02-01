@@ -7,10 +7,21 @@ import '../../styles/EditApplyModalContainer.css'
 function EditApplyModalContainer(props) {
 
     const [editApplyModalShow, setEditApplyModalShow] = useState(false);
+    const [initialData, setInitialData] = useState({});
+
+    // function initialModalData(data){
+    //     if(editApplyModalShow){
+    //         console.log(data);
+    //         return data;
+    //     }
+    // }
+
+
+    
 
     async function editApplication(editedApplyInfo, applicationId) {
+        console.log(editedApplyInfo);
         try {
-            console.log(editedApplyInfo);
             const editApplyRes = await applicationService.editJobApplication(editedApplyInfo, applicationId);
 console.log(editApplyRes);
             if (editApplyRes.status === 200) {
@@ -35,8 +46,8 @@ console.log(editApplyRes);
     }
 
     return (
+        
         <div className='edit-apply-modal'>
-
             <i
                 className="fa fa-eye fa-lg"
                 onClick={() => setEditApplyModalShow(true)}>
@@ -46,7 +57,11 @@ console.log(editApplyRes);
                 show={editApplyModalShow}
                 onHide={() => setEditApplyModalShow(false)}
                 btnLabel="ویرایش"
-                editApplication={(editedInfo, id) => editApplication(editedInfo, id)}  /* editedInfo?? */
+                editApplication={(editedInfo, id) =>{
+                    // initialModalData(editedInfo)
+                    editApplication(editedInfo, id)   /* editedInfo?? */
+                }
+                }
                 {...props} />
         </div >
     );

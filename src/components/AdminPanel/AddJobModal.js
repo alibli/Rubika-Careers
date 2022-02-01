@@ -18,7 +18,8 @@ function AddJobModal(props) {
             bytecode: '',
             format: ''
         }
-    });
+    }
+    );
 
     const [editorState, handleEditorState] = useState('');
 
@@ -62,6 +63,7 @@ function AddJobModal(props) {
                 jobDescription: jobDetails.jobDescription,
                 jobTaskFile: jobDetails.jobTaskFile,
                 deactiveJob: deactiveJob,
+                
             }
 
             const editJobRes = await jobsService.addJobPosition(addJobReqBody);

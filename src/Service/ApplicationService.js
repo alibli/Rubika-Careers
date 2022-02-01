@@ -48,8 +48,8 @@ class ApplicationService {
                 }/** */
             }
         });
-        console.log(apiModel.body);
-        // debugger
+        // console.log(apiModel.body);
+ 
 
         const jobApply = apiService.apiCall(apiModel);
         return jobApply;

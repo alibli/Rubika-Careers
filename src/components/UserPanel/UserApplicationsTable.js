@@ -82,7 +82,7 @@ function UserApplicationsTable() {
         try {
             const userProfileRes = await userService.getUserProfile();
             const { applications } = userProfileRes.data;
-            console.log(applications);
+console.log(applications);
             applications.forEach(application => {
                 const date = application.created_at;
                 const applyDate = date.substr(0, date.indexOf('T'));
@@ -114,6 +114,7 @@ function UserApplicationsTable() {
                     linkers: []
                 })});
             setApplications(customApplicationsArr);
+console.log(customApplicationsArr);
         } catch (err) {
             toastService.showToast(err.message, 'danger');
         }
