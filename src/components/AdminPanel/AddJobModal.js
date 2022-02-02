@@ -37,7 +37,7 @@ function AddJobModal(props) {
             const taskFileBase64 = await getBase64(taskFile);
             return taskFileBase64;
         } catch (err) {
-            console.log(err);
+            toastService.showToast(err.message, 'danger');
         }
     }
 
@@ -76,7 +76,6 @@ function AddJobModal(props) {
                 if (err.response.status === 400) {
                     toastService.showToast('عدم موفقیت در افزودن موقعیت شغلی جدید', 'danger');
                 } else {
-                    console.log(err.response)
                     toastService.showToast(err.response.statusText, 'danger');
                 }
             } else {

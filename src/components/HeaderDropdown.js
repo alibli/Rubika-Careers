@@ -44,7 +44,6 @@ function HeaderDropdown() {
                 toastService.showToast('با موفقیت خارج شدید.', 'success');
             }
         } catch (err) {
-            console.log(err);
             toastService.showToast(err.message, 'danger');
         }
     }

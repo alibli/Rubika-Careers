@@ -95,7 +95,7 @@ class UserService {
 
     editUserResume(resumeFile) {
         const apiModel = new APIModel({
-            method: 'patch',
+            method: 'put',
             url: '/user/profile/',
             body: {
                 resume: {
@@ -112,7 +112,6 @@ class UserService {
     getAdminJobsList() {
         const apiModel = new APIModel({ method: 'get', url: 'user/admin-panel' });
         const adminJobsList = apiService.apiCall(apiModel);
-console.log(adminJobsList);
         return adminJobsList;
     }
 

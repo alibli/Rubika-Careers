@@ -28,28 +28,15 @@ class ApplicationService {
         return editedApply;
     }
 
-    editJobApplication({ resumeFile, taskAnswerFile, salaryInterestValue, durationInterestValue }, applicaionId) {
+    editJobApplication(editedInfo, applicaionId) {
         const apiModel = new APIModel({
             method: 'put',
             url: '/user/profile/applications/' + applicaionId + '/edit/',
 
             body: {
-                editInfo: { /** niazi be editInfo{} darim ? */
-                    resume: {
-                        mime: resumeFile.format,
-                        data: resumeFile.bytecode
-                    },
-                    task_solution: {
-                        mime: taskAnswerFile.format,
-                        data: taskAnswerFile.bytecode
-                    },
-                    salary: salaryInterestValue,
-                    contract_interest: durationInterestValue
-                }/** */
+                    ...editedInfo
             }
         });
-        // console.log(apiModel.body);
- 
 
         const jobApply = apiService.apiCall(apiModel);
         return jobApply;

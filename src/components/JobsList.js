@@ -39,7 +39,6 @@ function JobsList() {
             }
         }
         catch (err) {
-            console.log(err);
             toastService.showToast(err.message, 'danger');
         }
     }

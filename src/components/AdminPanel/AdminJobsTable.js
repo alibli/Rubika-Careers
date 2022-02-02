@@ -92,7 +92,6 @@ function AdminJobsTable() {
         try {
             const adminJobsRes = await userService.getAdminJobsList();
             const { data } = adminJobsRes;
-console.log(data.jobs[0], 'data adminJobResponse');
 
             let customAdminJobsArr = [];
             data.jobs.forEach(job =>
@@ -140,7 +139,6 @@ console.log(data.jobs[0], 'data adminJobResponse');
                 if (err.response.status === 403) {
                     toastService.showToast('احازه ی دسترسی ندارید.', 'danger');
                 } else {
-console.log(err.response)
                     toastService.showToast(err.response.statusText, 'danger');
                 }
             }

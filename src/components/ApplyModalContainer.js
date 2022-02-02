@@ -10,7 +10,6 @@ function ApplyModalContainer() {
 
     async function applyForJob(applyInfo, jobId) {
         try {
-            console.log(applyInfo);
             const applyRes = await applicationService.applyForJob(applyInfo, jobId);
             if (applyRes.status === 201) {
                 toastService.showToast('درخواست شما با موفقیت ارسال شد', 'success');
@@ -24,10 +23,8 @@ function ApplyModalContainer() {
                 if (err.response.status === 400) {
                     toastService.showToast('اطلاعات وارد شده صحیح نیست.', 'danger');
                 } else if (err.response.status === 413) {
-                    console.log(err.response)
                     toastService.showToast('مجموع حجم فایل های آپلود شده زیاد است.', 'danger');
                 } else {
-                    console.log(err.response)
                     toastService.showToast(err.response.statusText, 'danger');
                 }
             } else {

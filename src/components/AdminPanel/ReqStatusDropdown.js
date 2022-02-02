@@ -19,7 +19,6 @@ function ReqStatusDropdown(props) {
             let newStatus2 = currentStatus;
             const changeStatusRes = await jobsService.setApplicationStatus(props.jobId, props.reqId, newStatus2);
             const response  = changeStatusRes;
-console.log(changeStatusRes);
             if (response.status === 200) {
                 if (newStatus === 'reject' || newStatus === 'accept') {
                     setDisableStatusChange(true);
@@ -31,7 +30,6 @@ console.log(changeStatusRes);
                 if (err.response.status === 403) {
                     toastService.showToast('شما اجازه ی تغییر ندارید.', 'danger');
                 } else {
-                    // console.log(err.response)
                     toastService.showToast(err.response.statusText, 'danger');
                 }
             } else {
@@ -50,7 +48,6 @@ console.log(changeStatusRes);
             onChange={(e) => {
                 currentStatus = e.target.value;
                 setNewStatus(currentStatus);
-// console.log(currentStatus , newStatus);
                 setApplicationStatus(currentStatus);
             }}
             value={newStatus}>

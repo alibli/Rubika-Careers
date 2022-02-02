@@ -147,8 +147,7 @@ function JobRequestsTable() {
     const getJobRequests = async () => {
         try {
             const jobReqsRes = await jobsService.getJobRequests(URLParams.jobId);
-            const res  = jobReqsRes.data.applications; /** */
-console.log(res);
+            const res  = jobReqsRes.data.applications;
             res.forEach(req =>
                 customJobReqsArr.push({
                     id: req.id,
@@ -187,7 +186,6 @@ console.log(res);
                 if (err.response.status === 403) {
                     toastService.showToast('احازه ی دسترسی ندارید.', 'danger');
                 } else {
-console.log(err.response)
                     toastService.showToast(err.response.statusText, 'danger');
                 }
             } else {

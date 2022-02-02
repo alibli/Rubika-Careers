@@ -56,7 +56,7 @@ class JobsService {
     getJobRequests(jobId) {
         const apiModel = new APIModel({method: 'get', url: 'user/admin-panel/' + jobId + '/applications/'});
         const jobDetails = apiService.apiCall(apiModel);
-console.log(jobDetails);
+        
         return jobDetails;
     }
 

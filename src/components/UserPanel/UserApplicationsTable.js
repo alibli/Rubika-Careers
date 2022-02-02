@@ -70,20 +70,21 @@ function UserApplicationsTable() {
 
     const [applications, setApplications] = useState([]);
 
-    const applyStateInPersian = {
-        'not seen': 'دیده نشده',
-        'in progress': 'در حال بررسی', 
-        'accept': 'تایید شده',
-        'reject': 'رد شده',
-    }
 
-    var customApplicationsArr = [];
+
 
     async function getUserApplications() {
+        var customApplicationsArr = [];
+        const applyStateInPersian = {
+            'not seen': 'دیده نشده',
+            'in progress': 'در حال بررسی',
+            'accept': 'تایید شده',
+            'reject': 'رد شده',
+        }
+
         try {
             const userProfileRes = await userService.getUserProfile();
             const { applications } = userProfileRes.data;
-console.log(applications);
             applications.forEach(application => {
                 const date = application.created_at;
                 const applyDate = date.substr(0, date.indexOf('T'));
@@ -113,9 +114,9 @@ console.log(applications);
                         }
                     ],
                     linkers: []
-                })});
+                })
+            });
             setApplications(customApplicationsArr);
-console.log(customApplicationsArr);
         } catch (err) {
             toastService.showToast(err.message, 'danger');
         }

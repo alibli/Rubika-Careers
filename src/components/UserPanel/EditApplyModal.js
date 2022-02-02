@@ -1,23 +1,21 @@
-import ModalComponent from "./Core/ModalComponent";
+import ModalComponent from "../Core/ModalComponent";
 import { Container, Row, Button } from 'react-bootstrap';
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import toastService from "../Service/ToastService";
-import userService from '../Service/UserService';
-import { useEffect } from 'react';
-import { baseURL } from "../Service/APIService";
+import toastService from "../../Service/ToastService";
 
-function ApplyModal(props) {
+function EditApplyModal(props) {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const URLParams = useParams();
+
+    const isApplicationEditable =
+        props.applyState === 'not seen' || props.applyState === undefined
+            ? true
+            : false;
 
     const [unrequiredInfo, setUnrequiredAppInfo] = useState({
-        salaryInterestValue: 0,
-        durationInterestValue: 0,
+        salaryInterestValue: props.salaryInterest ? props.salaryInterest : 0,
+        durationInterestValue: props.durationInterest ? props.durationInterest : 0,
     });
-
-    const [resumeLink, setResumeLink] = useState();
 
     let applicationInfo = {};
 
@@ -35,10 +33,10 @@ function ApplyModal(props) {
             const resumeFileBase64 = await getBase64(resumeFile);
             applicationInfo = {
                 ...applicationInfo,
-                resumeFile: {
-                    bytecode: resumeFileBase64.substring(
+                resume: {
+                    data: resumeFileBase64.substring(
                         resumeFileBase64.lastIndexOf(",") + 1),
-                    format: resumeFileBase64.substring(
+                    mime: resumeFileBase64.substring(
                         resumeFileBase64.lastIndexOf(":") + 1,
                         resumeFileBase64.lastIndexOf(";")
                     )
@@ -54,10 +52,10 @@ function ApplyModal(props) {
             const taskAnswerFileBase64 = await getBase64(taskAnswerFile);
             applicationInfo = {
                 ...applicationInfo,
-                taskAnswerFile: {
-                    bytecode: taskAnswerFileBase64.substring(
+                task_solution: {
+                    data: taskAnswerFileBase64.substring(
                         taskAnswerFileBase64.lastIndexOf(",") + 1),
-                    format: taskAnswerFileBase64.substring(
+                    mime: taskAnswerFileBase64.substring(
                         taskAnswerFileBase64.lastIndexOf(":") + 1,
                         taskAnswerFileBase64.lastIndexOf(";")
                     )
@@ -68,35 +66,34 @@ function ApplyModal(props) {
         }
     }
 
-    const onSubmitApplyForm = async (data) => {
+    const  onSubmitApplyForm = async (data) => {
 
-        const resumeFile = data.resumeFile['0'];
-        await getResumeFileBase64(resumeFile);
-
-        const taskAnswerFile = data.taskAnswerFile['0'];
-        await getTaskAnswerFileBase64(taskAnswerFile);
-
-        applicationInfo = {
-            ...applicationInfo,
-            salaryInterestValue: unrequiredInfo.salaryInterestValue ? unrequiredInfo.salaryInterestValue : '0',
-            durationInterestValue: unrequiredInfo.durationInterestValue ? unrequiredInfo.durationInterestValue : '0',
+        if (data.resumeFile['0']) {
+            const resumeFile = data.resumeFile['0'];
+            await getResumeFileBase64(resumeFile);
         }
 
-        props.applyForJob(applicationInfo, URLParams.jobId)
-    }
-
-    async function getuserResume() {
-        try {
-            const userResumeRes = await userService.getUserProfile();
-            setResumeLink(userResumeRes.data.resume);
-        } catch (err) {
-            toastService.showToast(err.message, 'danger');
+        if (data.taskAnswerFile['0']) {
+            const taskAnswerFile = data.taskAnswerFile['0'];
+            await getTaskAnswerFileBase64(taskAnswerFile);
         }
-    }
 
-    useEffect(() => {
-        getuserResume();
-    }, [])
+        if (unrequiredInfo.salaryInterestValue) {
+            applicationInfo = {
+                ...applicationInfo,
+                salary: unrequiredInfo.salaryInterestValue
+            }
+        }
+
+        if (unrequiredInfo.durationInterestValue) {
+            applicationInfo = {
+                ...applicationInfo,
+                contract_interest: unrequiredInfo.durationInterestValue
+            }
+        }
+
+        props.editApplication(applicationInfo, props.applicationId)
+    }
 
     const body =
         <form
@@ -117,6 +114,7 @@ function ApplyModal(props) {
                                 padding: '0 !important',
                                 margin: '0 !important'
                             }}
+                            disabled={!isApplicationEditable}
                             value={unrequiredInfo.salaryInterestValue}
                             onChange={(e) => {
                                 setUnrequiredAppInfo((prevState) => ({
@@ -141,6 +139,7 @@ function ApplyModal(props) {
                             padding: '0 !important',
                             margin: '0 !important'
                         }}
+                        disabled={!isApplicationEditable}
                         value={unrequiredInfo.durationInterestValue}
                         onChange={(e) => {
                             setUnrequiredAppInfo((prevState) => ({
@@ -158,27 +157,32 @@ function ApplyModal(props) {
                         </label>
 
                         {
-                           resumeLink &&
-                            <a href={baseURL + resumeLink}>
+                            props.resumeURL &&
+                            props.resumeURL.length > 0 &&
+                            <a href={props.resumeURL}>
                                 دانلود
                             </a>
                         }
 
-                        <input
-                            className='modal-input'
-                            name='resume'
-                            type='file'
-                            {...register(
-                                "resumeFile",
-                                {
-                                    required: true
-                                }
-                            )}
-                        />
-                        <div className="form-err">
-                            {errors.resumeFile?.type === 'required' && "الزامی"}
-                        </div>
-
+                        {
+                            isApplicationEditable &&
+                            <>
+                                <input
+                                    className='modal-input'
+                                    name='resume'
+                                    type='file'
+                                    {...register(
+                                        "resumeFile",
+                                        {
+                                            required: !props.resumeURL
+                                        }
+                                    )}
+                                />
+                                <div className="form-err">
+                                    {errors.resumeFile?.type === 'required' && "الزامی"}
+                                </div>
+                            </>
+                        }
                     </>
                 </Row>
 
@@ -188,38 +192,51 @@ function ApplyModal(props) {
                             پاسخ تسک
                         </label>
 
+                        {
+                            props.taskAnswerURL &&
+                            props.taskAnswerURL.length > 0 &&
+                            <a href={props.taskAnswerURL}>
+                                دانلود
+                            </a>
+                        }
 
-                        <input
-                            className='modal-input'
-                            name='taskAnswer'
-                            type='file'
-                            {...register(
-                                "taskAnswerFile",
-                                {
-                                    required: true
-                                }
-                            )}
-                        />
-                        <div className="form-err">
-                            {errors.taskAnswerFile?.type === 'required' && "الزامی"}
-                        </div>
-
+                        {
+                            isApplicationEditable &&
+                            <>
+                                <input
+                                    className='modal-input'
+                                    name='taskAnswer'
+                                    type='file'
+                                    {...register(
+                                        "taskAnswerFile",
+                                        {
+                                            required: !props.taskAnswerURL
+                                        }
+                                    )}
+                                />
+                                <div className="form-err">
+                                    {errors.taskAnswerFile?.type === 'required' && "الزامی"}
+                                </div>
+                            </>
+                        }
                     </>
                 </Row>
             </Container>
         </form>
 
     const footer = <>
-
-        <div
-            className='col-auto'>
-            <Button
-                type="submit"
-                form="apply-form"
-                variant="warning">
-                {props.btnLabel}
-            </Button>
-        </div>
+        {
+            isApplicationEditable &&
+            <div
+                className='col-auto'>
+                <Button
+                    type="submit"
+                    form="apply-form"
+                    variant="warning">
+                    {props.btnLabel}
+                </Button>
+            </div>
+        }
     </>;
 
     return (
@@ -232,4 +249,4 @@ function ApplyModal(props) {
     );
 }
 
-export default ApplyModal;
+export default EditApplyModal;

@@ -29,7 +29,6 @@ function LoginModal(props) {
                 } else if (err.response.status === 406) {
                     toastService.showToast('ثبت نام کنید.', 'danger');
                 } else {
-                    console.log(err.response)
                     toastService.showToast(err.response.statusText, 'danger');
                 }
             } else {

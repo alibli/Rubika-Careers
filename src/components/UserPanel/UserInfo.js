@@ -43,7 +43,7 @@ function UserInfo() {
             const resumeFileBase64 = await getBase64(resumeFile);
             return resumeFileBase64;
         } catch (err) {
-            console.log(err);
+            toastService.showToast(err.message, 'danger');
         }
     }
 
@@ -63,7 +63,7 @@ function UserInfo() {
             }));
 
         } catch (err) {
-            console.log(err);
+            toastService.showToast(err.message, 'danger');
         }
     })
 
@@ -78,6 +78,9 @@ function UserInfo() {
                 }));
             }
             toastService.showToast('رزومه شما با موفقیت بارگذاری شد.', 'success');
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
         } catch (err) {
             toastService.showToast(err.message, 'danger');
         }
