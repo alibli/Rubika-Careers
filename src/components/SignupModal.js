@@ -4,14 +4,15 @@ import userService from "../Service/UserService";
 import toastService from "../Service/ToastService";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-import {useState} from 'react';
+// import { useState } from 'react';
+
 function SignupModal(props) {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
-    const [eyeClass, setEyeClass] = useState('fa-eye');
-    const [passInputType, setPassInputType] = useState('password');
-    const [repeatEyeClass, setRepeatEyeClass] = useState('fa-eye');
-    const [repeatPassInputType, setRepeatPassInputType] = useState('password');
+    // const [eyeClass, setEyeClass] = useState('fa-eye');
+    // const [passInputType, setPassInputType] = useState('password');
+    // const [repeatEyeClass, setRepeatEyeClass] = useState('fa-eye');
+    // const [repeatPassInputType, setRepeatPassInputType] = useState('password');
 
     const navigate = useNavigate();
 
@@ -37,27 +38,28 @@ function SignupModal(props) {
     }
 
 
-    const togglePassword = () => {
-        if (passInputType === 'password') {
-            setPassInputType('text');
-            setEyeClass('fa-eye-slash')
-        }
-        else if (passInputType === 'text') {
-            setPassInputType('password');
-            setEyeClass('fa-eye')
-        }
+    // const togglePassword = () => {
+    //     if (passInputType === 'password') {
+    //         setPassInputType('text');
+    //         setEyeClass('fa-eye-slash')
+    //     }
+    //     else if (passInputType === 'text') {
+    //         setPassInputType('password');
+    //         setEyeClass('fa-eye')
+    //     }
 
-    }
-    const toggleRepeatPass = () => {
-        if (repeatPassInputType === 'password') {
-            setRepeatPassInputType('text');
-            setRepeatEyeClass('fa-eye-slash')
-        }
-        else if (repeatPassInputType === 'text') {
-            setRepeatPassInputType('password');
-            setRepeatEyeClass('fa-eye')
-        }
-    }
+    // }
+
+    // const toggleRepeatPass = () => {
+    //     if (repeatPassInputType === 'password') {
+    //         setRepeatPassInputType('text');
+    //         setRepeatEyeClass('fa-eye-slash')
+    //     }
+    //     else if (repeatPassInputType === 'text') {
+    //         setRepeatPassInputType('password');
+    //         setRepeatEyeClass('fa-eye')
+    //     }
+    // }
 
     const body =
         <form id="signup-form" onSubmit={handleSubmit(signup)}>
@@ -75,14 +77,14 @@ function SignupModal(props) {
                             {
                                 required: true,
                                 maxLength: 50,
-                                // pattern: /^[\u0600-\u06FF\s]+$/
+                                pattern: /^[\u0600-\u06FF\s]+$/
                             }
                         )}
                     />
                     <div className="form-err">
                         {errors.firstname?.type === 'required' && "الزامی"}
                         {errors.firstname?.type === 'maxLength' && "نام کوتاه تری وارد کنید"}
-                        {/* {errors.firstname?.type === 'pattern' && "فارسی تایپ کنید"} */}
+                        {errors.firstname?.type === 'pattern' && "فارسی تایپ کنید"}
                     </div>
                 </Row>
 
@@ -99,14 +101,14 @@ function SignupModal(props) {
                             {
                                 required: true,
                                 maxLength: 80,
-                                // pattern: /^[\u0600-\u06FF\s]+$/
+                                pattern: /^[\u0600-\u06FF\s]+$/
                             }
                         )}
                     />
                     <div className="form-err">
                         {errors.lastname?.type === 'required' && "الزامی"}
                         {errors.lastname?.type === 'maxLength' && "نام کوتاه تری وارد کنید"}
-                        {/* {errors.lastname?.type === 'pattern' && "فارسی تایپ کنید"} */}
+                        {errors.lastname?.type === 'pattern' && "فارسی تایپ کنید"}
                     </div>
                 </Row>
 
@@ -136,11 +138,13 @@ function SignupModal(props) {
                     <label htmlFor='password'>
                         رمزعبور
                     </label>
-                    <i className={`fa ${eyeClass} col-1 `} aria-hidden="true" onClick={togglePassword}></i>
+                    {/* <i className={`fa ${eyeClass} col-1 `} aria-hidden="true" onClick={togglePassword}></i> */}
                     <input
-                        className='modal-input col-11'
+                        // className='modal-input col-11'
+                        className='modal-input'
                         name='password'
-                        type={passInputType}
+                        // type={passInputType}
+                        type="password"
                         {...register(
                             "password",
                             {
@@ -161,11 +165,13 @@ function SignupModal(props) {
                         <label htmlFor='passwordConfrim'>
                             تکرار رمزعبور
                         </label>
-                        <i className={`fa ${repeatEyeClass} col-1 `} aria-hidden="true" onClick={toggleRepeatPass}></i>
+                        {/* <i className={`fa ${repeatEyeClass} col-1 `} aria-hidden="true" onClick={toggleRepeatPass}></i> */}
                         <input
-                            className='modal-input col-11'
+                            // className='modal-input col-11'
+                            className='modal-input'
                             name='passwordConfrim'
-                            type={repeatPassInputType}
+                            // type={repeatPassInputType}
+                            type='password'
                             {...register(
                                 "passwordConfirm",
                                 {
@@ -174,7 +180,7 @@ function SignupModal(props) {
                                     validate: (value) => value === watch('password')
                                 }
                             )}
-    
+
                         />
                         <div className="form-err">
                             {errors.passwordConfirm?.type === 'required' && "الزامی"}
