@@ -91,12 +91,11 @@ function AdminJobsTable() {
     async function getAdminJobsList() {
         try {
             const adminJobsRes = await userService.getAdminJobsList();
-            const { data } = adminJobsRes;
-
+            const { jobs } = adminJobsRes.data;
             let customAdminJobsArr = [];
-            data.jobs.forEach(job =>
+            jobs.forEach(job =>
                 customAdminJobsArr.push({
-                    id: job.job_id,
+                    id: job.id,
                     fields: [
                         {
                             jobTitle: job.title
@@ -117,10 +116,9 @@ function AdminJobsTable() {
                         },
                         {
                             modalContainer:
-                                <editJobModalContainer
+                                <EditJobModalContainer
                                     jobId={job.id}
                                     isJobDeactive={job.is_deactive}
-                                    isJobDeactive = {false}
                                 />
                         },
                     ],

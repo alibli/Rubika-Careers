@@ -6,7 +6,6 @@ import '../../styles/EditJobModal.css';
 import { useState } from 'react';
 import toastService from "../../Service/ToastService";
 import jobsService from "../../Service/JobsService";
-import { EditorState, convertToRaw } from 'draft-js';
 
 function AddJobModal(props) {
     const [deactiveJob, setDeactiveJob] = useState(false);
@@ -18,10 +17,7 @@ function AddJobModal(props) {
             bytecode: '',
             format: ''
         }
-    }
-    );
-
-    const [editorState, handleEditorState] = useState('');
+    });
 
     function getBase64(file) {
         return new Promise((resolve, reject) => {
@@ -57,23 +53,40 @@ function AddJobModal(props) {
     });
 
     async function addJobPosition() {
+        for (let detail in jobDetails) {
+            if (jobDetails[detail].length === 0) {
+                alert('تمام موارد را وارد کنید.');
+                return;
+            }
+        }
+        var addJobReqBody = {}
         try {
-            const addJobReqBody = {
-                jobTitle: jobDetails.jobTitle,
-                jobDescription: jobDetails.jobDescription,
-                jobTaskFile: jobDetails.jobTaskFile,
-                deactiveJob: deactiveJob,
-                
+            if (jobDetails.jobTaskFile.format === '' || jobDetails.jobTaskFile.data === '') {
+                addJobReqBody = {
+                    jobTitle: jobDetails.jobTitle,
+                    jobDescription: jobDetails.jobDescription,
+                    deactiveJob: deactiveJob,
+                }
+            } else {
+                addJobReqBody = {
+                    jobTitle: jobDetails.jobTitle,
+                    jobDescription: jobDetails.jobDescription,
+                    jobTaskFile: jobDetails.jobTaskFile,
+                    deactiveJob: deactiveJob,
+                }
             }
 
             const editJobRes = await jobsService.addJobPosition(addJobReqBody);
             if (editJobRes.status === 201) {
-                window.location.reload();
                 toastService.showToast('موقعیت شغلی مورد نظر اضافه شد.', 'success');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
             }
         } catch (err) {
             if (err.response) {
                 if (err.response.status === 400) {
+                    console.log(err.response);
                     toastService.showToast('عدم موفقیت در افزودن موقعیت شغلی جدید', 'danger');
                 } else {
                     toastService.showToast(err.response.statusText, 'danger');
@@ -86,10 +99,8 @@ function AddJobModal(props) {
 
 
     const onEditorStateChange = (editorState) => {
-        let txt = '';
-        editorState.blocks.forEach((block) => {
-            txt = txt + '\n' + JSON.stringify(block.text);
-        })
+        const content = editorState.getCurrentContent();
+        let txt = content.getPlainText();
         setJobDetails((prevState) => ({
             ...prevState,
             jobDescription: txt
@@ -145,7 +156,7 @@ function AddJobModal(props) {
             <Editor
                 wrapperClassName="job-position-editor-wrapper"
                 editorClassName="job-position-editor"
-                onContentStateChange={onEditorStateChange}
+                onEditorStateChange={onEditorStateChange}
             />
 
         </div>
