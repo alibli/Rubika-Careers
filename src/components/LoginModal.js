@@ -90,7 +90,7 @@ function LoginModal(props) {
                                 "password",
                                 {
                                     required: true,
-                                    pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+                                    pattern: /^(?=.*[A-Za-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
                                 }
                             )}
                             // className='modal-input col-11'
@@ -104,7 +104,7 @@ function LoginModal(props) {
 
                     <div className="form-err">
                         {errors.password?.type === 'required' && "الزامی"}
-                        {errors.password?.type === 'pattern' && "حداقل ۸ کارکتر از حروف و اعداد انگلیسی"}
+                        {errors.password?.type === 'pattern' && "حداقل ۸ کارکتر از نمادهای @$%^*=+?& و حروف انگلیسی"}
                     </div>
 
                 </Row>

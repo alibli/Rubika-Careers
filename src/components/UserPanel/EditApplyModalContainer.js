@@ -17,17 +17,17 @@ function EditApplyModalContainer(props) {
     // }
 
 
-    
+
 
     async function editApplication(editedApplyInfo, applicationId) {
         console.log(editedApplyInfo);
         try {
             const editApplyRes = await applicationService.editJobApplication(editedApplyInfo, applicationId);
-console.log(editApplyRes);
+            console.log(editApplyRes);
             if (editApplyRes.status === 200) {
                 toastService.showToast('درخواست شما با موفقیت به روزرسانی شد.', 'success');
                 // setTimeout(() => {
-                    // window.location.reload();
+                // window.location.reload();
                 // }, 2000);
             }
         } catch (err) {
@@ -46,7 +46,7 @@ console.log(editApplyRes);
     }
 
     return (
-        
+
         <div className='edit-apply-modal'>
             <i
                 className="fa fa-eye fa-lg"
@@ -57,7 +57,7 @@ console.log(editApplyRes);
                 show={editApplyModalShow}
                 onHide={() => setEditApplyModalShow(false)}
                 btnLabel="ویرایش"
-                editApplication={(editedInfo, id) =>{
+                editApplication={(editedInfo, id) => {
                     // initialModalData(editedInfo)
                     editApplication(editedInfo, id)   /* editedInfo?? */
                 }

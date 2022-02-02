@@ -1,4 +1,4 @@
-import apiService from "./APIService";
+import { apiService } from "./APIService";
 import Subject from "./Subject";
 import APIModel from "./APIModel";
 class UserService {
@@ -99,8 +99,8 @@ class UserService {
             url: '/user/profile/',
             body: {
                 resume: {
-                    bytecode: resumeFile.bytecode,
-                    format: resumeFile.format
+                    mime: resumeFile.format,
+                    data: resumeFile.bytecode
                 }
             }
         });

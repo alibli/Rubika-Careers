@@ -6,6 +6,7 @@ import toastService from '../Service/ToastService';
 import { useState, useEffect } from 'react';
 import '../styles/JobDetails.css';
 import { Button } from 'react-bootstrap';
+import { baseURL } from '../Service/APIService';
 
 function JobDetails(props) {
     // const jobsListValue = [
@@ -98,7 +99,7 @@ function JobDetails(props) {
                         {
                             jobDetails.task !== null &&
                             <p>
-                                <a href={"http://192.168.88.49" + jobDetails.task}>
+                                <a href={baseURL + jobDetails.task}>
                                     دانلود فایل تسک
                                 </a>
                             </p>

@@ -1,7 +1,9 @@
 import axios from "axios";
 
+export const baseURL = 'http://192.168.88.49/';
+
 const axiosInstance = axios.create({
-    baseURL: 'http://192.168.88.49/'
+    baseURL: baseURL
 });
 
 class APIService {
@@ -88,5 +90,4 @@ class APIService {
 
 }
 
-const apiService = new APIService();
-export default apiService;
+export const apiService = new APIService();

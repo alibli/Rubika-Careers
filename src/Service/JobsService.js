@@ -1,4 +1,4 @@
-import apiService from "./APIService";
+import { apiService } from "./APIService";
 import APIModel from './APIModel';
 
 class JobsService {

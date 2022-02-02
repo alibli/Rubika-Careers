@@ -4,6 +4,7 @@ import userService from '../../Service/UserService';
 import { useEffect, useState } from 'react';
 import toastService from '../../Service/ToastService';
 import EditApplyModalContainer from './EditApplyModalContainer';
+import { baseURL } from '../../Service/APIService';
 
 function UserApplicationsTable() {
     // const customApplicationsArr = [
@@ -107,8 +108,8 @@ console.log(applications);
                                     applyState={application.result_status}
                                     salaryInterest={application.salary}
                                     durationInterest={application.contract_interest}
-                                    resumeURL={"http://192.168.88.49"+application.resume}
-                                    taskAnswerURL={"http://192.168.88.49"+application.task_solution} />
+                                    resumeURL={baseURL + application.resume}
+                                    taskAnswerURL={baseURL + application.task_solution} />
                         }
                     ],
                     linkers: []

@@ -3,6 +3,7 @@ import userService from '../../Service/UserService';
 import toastService from '../../Service/ToastService';
 import { Row, Button } from 'react-bootstrap';
 import '../../styles/UserInfo.css';
+import { baseURL } from '../../Service/APIService';
 
 function UserInfo() {
     const userFirstname = userService.getUserFirstname();
@@ -67,7 +68,6 @@ function UserInfo() {
     })
 
     async function editResume(resumeFile) {
-        console.log(resumeFile);
         try {
             const editResumeRes = await userService.editUserResume(resumeFile);
             const { status, data } = editResumeRes;
@@ -135,7 +135,7 @@ function UserInfo() {
                 </label>
                 {
                     userInfo.resumeLink !== null &&
-                    <a href={userInfo.resumeLink}>
+                    <a href={baseURL + userInfo.resumeLink}>
                         دانلود
                     </a>
                 }
