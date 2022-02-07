@@ -34,11 +34,7 @@ class UserService {
     };
 
     getUserFirstname = () => {
-        if (this.loggedin) {
-            return this.userFirstname;
-        }
-        console.log('User is not logged in. (getUserFirstname from UserService)');
-        return;
+        return this.userFirstname;
     };
 
     login({ email, password }) {

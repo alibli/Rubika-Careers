@@ -39,8 +39,8 @@ function HeaderDropdown() {
             const logoutRes = await userService.logout();
             const { status } = logoutRes;
             if (status === 200) {
-                navigate('/');
                 userService.clearUserInfo();
+                navigate('/');
                 toastService.showToast('با موفقیت خارج شدید.', 'success');
             }
         } catch (err) {

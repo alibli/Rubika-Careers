@@ -149,14 +149,14 @@ function SignupModal(props) {
                             "password",
                             {
                                 required: true,
-                                pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+                                pattern: /^(?=.*[A-Za-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
                             }
                         )}
 
                     />
                     <div className="form-err">
                         {errors.password?.type === 'required' && "الزامی"}
-                        {errors.password?.type === 'pattern' && "حداقل ۸ کارکتر از حروف و اعداد انگلیسی"}
+                        {errors.password?.type === 'pattern' && "حداقل ۸ کارکتر از نمادهای @$%^*=+?& و حروف انگلیسی"}
                     </div>
                 </Row>
 
@@ -176,7 +176,7 @@ function SignupModal(props) {
                                 "passwordConfirm",
                                 {
                                     required: true,
-                                    pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                                    // pattern:/^(?=.*[A-Za-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
                                     validate: (value) => value === watch('password')
                                 }
                             )}
@@ -184,7 +184,7 @@ function SignupModal(props) {
                         />
                         <div className="form-err">
                             {errors.passwordConfirm?.type === 'required' && "الزامی"}
-                            {errors.passwordConfirm?.type === 'pattern' && "حداقل ۸ کارکتر از حروف و اعداد انگلیسی"}
+                            {/* {errors.passwordConfirm?.type === 'pattern' && "حداقل ۸ کارکتر از نمادهای @$%^*=+?& و حروف انگلیسی"} */}
                             {errors.passwordConfirm?.type === 'validate' && "عدم مطابقت با رمز عبور"}
 
                         </div>

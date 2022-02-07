@@ -10,6 +10,10 @@ import { baseURL } from "../Service/APIService";
 
 function ApplyModal(props) {
     const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const userFirstname = userService.getUserFirstname();
+    const [firstname, setUerFirstname] = useState(userFirstname);
+
     const URLParams = useParams();
 
     const [unrequiredInfo, setUnrequiredAppInfo] = useState({
@@ -20,6 +24,27 @@ function ApplyModal(props) {
     const [resumeLink, setResumeLink] = useState();
 
     let applicationInfo = {};
+
+    const userObserver = (e) => {
+        switch (e.action) {
+            case 'USER-LOGIN':
+                const newFirstname = userService.getUserFirstname();
+                setUerFirstname(newFirstname);
+                break;
+
+            case 'USER-LOGOUT':
+                setUerFirstname('');
+                break;
+
+            case 'STORAGE-CHANGE':
+                const newFirstnameVal = userService.getUserFirstname();
+                setUerFirstname(newFirstnameVal);
+                break;
+
+            default:
+                break;
+        }
+    };
 
     function getBase64(file) {
         return new Promise((resolve, reject) => {
@@ -95,8 +120,18 @@ function ApplyModal(props) {
     }
 
     useEffect(() => {
-        getuserResume();
-    }, [])
+        userService.userSubject.subscribe(userObserver);
+
+        return () => {
+            userService.userSubject.unsubscribe(userObserver);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (firstname !== 'ادمین') {
+            getuserResume();
+        }
+    }, [firstname]);
 
     const body =
         <form

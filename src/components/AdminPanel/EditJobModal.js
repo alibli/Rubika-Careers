@@ -6,7 +6,7 @@ import '../../styles/EditJobModal.css';
 import { useState, useEffect } from 'react';
 import toastService from "../../Service/ToastService";
 import jobsService from "../../Service/JobsService";
-import { EditorState, ContentState, convertFromRaw } from 'draft-js';
+import { EditorState, ContentState } from 'draft-js';
 
 let editedFields = [];
 
@@ -33,7 +33,7 @@ function EditJobModal(props) {
             const taskFileBase64 = await getBase64(taskFile);
             return taskFileBase64;
         } catch (err) {
-            console.log(err);
+            toastService.showToast(err.message, 'danger');
         }
     }
 
@@ -101,11 +101,11 @@ function EditJobModal(props) {
                         break;
                     case 'deletedJob':
                         editedJobInfo['is_deleted'] = true;
+                        break;
                     default:
                         break;
                 }
             })
-            console.log(editedJobInfo);
     
             try {
                 const editJobRes = await jobsService.editJobPosition(jobId, editedJobInfo);
